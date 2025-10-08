@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -90,7 +90,7 @@ export default function AskWidget() {
       <button
         onClick={() => setOpen(!open)}
         aria-expanded={open}
-        className="fixed sm:bottom-6 sm:right-6 bottom-4 right-4 z-[2147483646] rounded-full bg-cyan-400 text-slate-900 px-4 py-3 min-h-[44px] min-w-[44px] shadow-lg hover:brightness-95 active:translate-y-px transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 touch-manipulation"
+        className="ask-toggle fixed sm:bottom-6 sm:right-6 bottom-4 right-4 z-[2147483646] rounded-full bg-cyan-400 text-slate-900 px-4 py-3 min-h-[44px] min-w-[44px] shadow-lg hover:brightness-95 active:translate-y-px transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 touch-manipulation"
       >
         {open ? "Close Q&A" : "Ask Venkatesh"}
       </button>
@@ -129,7 +129,7 @@ export default function AskWidget() {
                 className="flex-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               />
               <button onClick={ask} disabled={loading} className="rounded-lg bg-cyan-400 text-slate-900 px-3 py-2 text-sm min-h-[36px] sm:min-h-[40px] hover:brightness-95 disabled:opacity-60">
-                {loading ? "…" : "Ask"}
+                {loading ? "â€¦" : "Ask"}
               </button>
             </div>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -186,3 +186,5 @@ export default function AskWidget() {
 
   return createPortal(widget, document.body);
 }
+
+
