@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import useBlip from "./useBlip";
 
 type Item = {
   id: string;
@@ -39,6 +40,7 @@ const ITEMS: Item[] = [
 
 export default function Loadout() {
   const [active, setActive] = useState<Item>(ITEMS[0]);
+  const blip = useBlip();
 
   return (
     <section className="container-max py-10">
@@ -60,7 +62,7 @@ export default function Loadout() {
           {ITEMS.map((it) => (
             <button
               key={it.id}
-              onClick={() => setActive(it)}
+              onClick={() => { blip(); setActive(it); }}
               className={`group relative h-28 rounded-2xl border p-3 text-left transition ${
                 active.id === it.id
                   ? "border-cyan-400/60 bg-white/10 shadow-[0_0_0_1px_rgba(34,211,238,0.18)]"
@@ -78,6 +80,7 @@ export default function Loadout() {
                   "linear-gradient(270deg, rgba(163,230,53,.35), rgba(163,230,53,0)) 100% 100%/24px 2px no-repeat, " +
                   "linear-gradient(0deg, rgba(163,230,53,.35), rgba(163,230,53,0)) 100% 100%/2px 24px no-repeat",
               }} />
+              {active.id === it.id ? <span key={it.id + '-sweep'} className="hud-sweep" /> : null}
             </button>
           ))}
         </div>
@@ -130,4 +133,3 @@ function Stat({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-

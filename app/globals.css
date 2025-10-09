@@ -224,6 +224,30 @@ body::after {
   animation: orb-pulse 1.2s ease-in-out infinite;
 }
 
+/* HUD scan sweep for tile selection */
+@keyframes hud-scan {
+  0% { transform: translateX(-120%) skewX(-12deg); opacity: .0; }
+  10% { opacity: .35; }
+  70% { opacity: .25; }
+  100% { transform: translateX(120%) skewX(-12deg); opacity: 0; }
+}
+.hud-sweep {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hud-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -120%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(34,211,238,0.18), rgba(34,211,238,0.45), rgba(34,211,238,0.18), transparent);
+  mix-blend-mode: screen;
+  filter: blur(0.5px);
+  animation: hud-scan .7s ease-out forwards;
+}
+
 
 /* Base header styling */
 .site-header {
