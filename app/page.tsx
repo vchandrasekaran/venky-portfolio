@@ -1,5 +1,6 @@
-﻿import Hero from '@/components/Hero'
+import Hero from '@/components/Hero'
 import Section from '@/components/Section'
+import Scene from '@/components/3d/Scene'
 import SkillsGrid from '@/components/SkillsGrid'
 import ProjectCard from '@/components/ProjectCard'
 
@@ -7,6 +8,9 @@ export default function HomePage() {
   return (
     <main>
       <Hero />
+      <div className="container-max py-10">
+        <Scene />
+      </div>
       <SkillsGrid />
 
       <Section

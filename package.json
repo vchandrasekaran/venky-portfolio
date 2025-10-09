@@ -10,10 +10,16 @@
     "index": "node scripts/build-index.mjs"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.6",
+    "@react-three/fiber": "^9.3.0",
+    "@react-three/postprocessing": "^3.0.4",
     "classnames": "2.5.1",
+    "framer-motion": "^12.23.22",
     "next": "14.2.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "three": "^0.180.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@types/node": "24.6.2",
@@ -26,4 +32,3 @@
     "typescript": "5.5.4"
   }
 }
-
