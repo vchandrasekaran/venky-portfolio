@@ -1,5 +1,3 @@
-import ThreeLiteShowcase from '@/components/three-lite/Showcase'
-
 export default function Hero() {
   return (
     <section className="container-max relative overflow-hidden pt-24 pb-16">
@@ -38,9 +36,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="relative z-10">
-          <ThreeLiteShowcase />
-        </div>
+        
       </div>
     </section>
   )

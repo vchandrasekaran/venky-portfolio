@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 import AIOrbAssistant from '@/components/AIOrbAssistant'
 import Header from '@/components/Header'
+import PointerAura from '@/components/hud/PointerAura'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300','400','500','600','700'] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         {children}
         <AIOrbAssistant />
+        <PointerAura />
       </body>
     </html>
   )
