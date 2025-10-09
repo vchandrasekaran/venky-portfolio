@@ -158,35 +158,7 @@ body::after {
   opacity: 0.85;
 }
 
-/* Aurora Neon theme preview */
-html[data-theme="aurora"] body {
-  background-size: 1400px 1400px, 80px 80px;
-  background-position: top -260px center, center;
-}
-html[data-theme="aurora"] body::after {
-  background:
-    radial-gradient(1200px 900px at 15% 10%, rgba(34,211,238,0.22), transparent 60%),
-    radial-gradient(1000px 800px at 85% 20%, rgba(167,139,250,0.20), transparent 55%),
-    radial-gradient(1100px 900px at 20% 85%, rgba(244,114,182,0.16), transparent 60%);
-  opacity: 0.9;
-}
-
-/* Cards, links, and focus rings under aurora */
-html[data-theme="aurora"] .card {
-  border-color: rgba(34,211,238,0.28);
-  background: linear-gradient(135deg, rgba(9,14,28,0.75) 0%, rgba(6,11,25,0.62) 100%);
-  box-shadow: 0 0 40px rgba(34,211,238,0.18);
-}
-html[data-theme="aurora"] .card:hover {
-  border-color: rgba(167,139,250,0.55);
-  box-shadow: 0 0 50px rgba(167,139,250,0.28);
-}
-html[data-theme="aurora"] :focus-visible {
-  outline: 2px solid rgba(34,211,238,0.9);
-}
-html[data-theme="aurora"] .neon-text {
-  background-image: linear-gradient(120deg, rgba(34,211,238,1) 0%, rgba(167,139,250,1) 50%, rgba(244,114,182,1) 100%);
-}
+/* Removed aurora theme; HUD is the single theme */
 
 .container-max {
   @apply mx-auto max-w-6xl px-6;
