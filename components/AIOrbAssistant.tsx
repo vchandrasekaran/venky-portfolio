@@ -185,7 +185,23 @@ export default function AIOrbAssistant() {
             </div>
             <div className="mt-2 flex flex-wrap gap-2">
               {SUGGESTIONS.map((s) => (
-                <button key={s} onClick={() => { setQ(s); setTimeout(() => ask(s), 0); }} className="text-xs rounded-full px-2.5 py-1 border border-slate-700 bg-slate-900/60 text-slate-300 hover:bg-slate-800/80">
+                <button
+                  key={s}
+                  onClick={() => {
+                    const t = s.toLowerCase();
+                    // Handle common nav intents directly to avoid API calls and errors
+                    if (t.includes('open projects') || t.includes('projects')) {
+                      setOpen(false); router.push('/projects'); return;
+                    }
+                    if (t.includes('experience')) { setOpen(false); router.push('/experience'); return; }
+                    if (t.includes('contact')) { setOpen(false); router.push('/contact'); return; }
+                    if (t.includes('skills')) { setOpen(false); router.push('/#skills'); return; }
+                    if (t.includes('ai talent')) { setOpen(false); router.push('/projects/ai-talent-pulse'); return; }
+                    // Fallback to asking if not a nav chip
+                    setQ(s); setTimeout(() => ask(s), 0);
+                  }}
+                  className="text-xs rounded-full px-2.5 py-1 border border-slate-700 bg-slate-900/60 text-slate-300 hover:bg-slate-800/80"
+                >
                   {s}
                 </button>
               ))}

@@ -159,7 +159,7 @@ export async function POST(req: Request) {
           }
         }
       } catch (e) {
-        controller.enqueue(encoder.encode('\n(Assistant encountered a network error)'))
+        // Silently end the stream on network errors; UI can show a non-intrusive toast
       } finally {
         controller.close()
       }
