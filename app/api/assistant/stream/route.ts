@@ -3,6 +3,7 @@ import path from 'node:path'
 import { NextResponse } from 'next/server'
 import { suggestNav } from '@/lib/assistant/nav'
 import { searchNav } from '@/lib/assistant/navSearch'
+import { siteMap } from '@/lib/assistant/sitemap'
 
 export const runtime = 'nodejs'
 
@@ -30,11 +31,14 @@ function chunk(md: string, size = 900) {
 }
 
 function systemPrompt() {
-  return (
-    'You are Venkatesh\'s BI assistant. Answer clearly and concisely. ' +
-    'Use the provided context verbatim where relevant. Cite sources by file name at the end. ' +
-    'If unsure, say you do not have that in the docs yet.'
-  )
+  return [
+    'You are Venkatesh\'s conversational portfolio guide and BI copilot.',
+    'Tone: warm, concise, helpful. Keep replies under ~120 words unless asked for detail.',
+    'Knowledge: Use ONLY the provided Context and the known site routes. Do not invent facts.',
+    'Citations: When you quote or summarize from Context, add (Source: filename) at the end.',
+    'Navigation: If the user intent implies going somewhere, mention the likely destination in one short line like "Navigation: Projects" — UI chips will also appear.',
+    'If unsure, say you don\'t have that in the docs yet and suggest a nearby topic.'
+  ].join(' ')
 }
 
 async function loadIndex(base: string) {
@@ -108,7 +112,8 @@ export async function POST(req: Request) {
     sources = top.map(t=>({ source: t.source }))
   }
 
-  const prompt = systemPrompt() + `\n\nContext:\n${context}\n\nUser question: ${question}`
+  const routes = siteMap().map(r => `- ${r.label} -> ${r.path}${r.hash ?? ''}`).join('\n')
+  const prompt = systemPrompt() + `\n\nAvailable Routes (for navigation hints):\n${routes}\n\nContext:\n${context}\n\nUser question: ${question}`
 
   const encoder = new TextEncoder()
   const stream = new ReadableStream<Uint8Array>({

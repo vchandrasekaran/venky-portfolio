@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 
 type QAResponse = { answer: string; sources: { source: string }[] };
 
-const SUGGESTIONS = ["Snowflake", "dbt", "Power BI", "Domo", "AI Job Market"];
+const SUGGESTIONS = [
+  "Open Projects",
+  "Show Experience",
+  "Contact Venkatesh",
+  "Skills and Tools",
+  "AI Talent Pulse"
+];
 
 export default function AIOrbAssistant() {
   const [mounted, setMounted] = useState(false);
