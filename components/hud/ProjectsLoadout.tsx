@@ -47,7 +47,7 @@ export default function ProjectsLoadout(){
   const statusColor = (s: Project['status']) => s === 'Live' ? 'text-emerald-300' : s === 'In Flight' ? 'text-amber-300' : s === 'Prototype' ? 'text-cyan-300' : 'text-slate-300';
 
   return (
-    <section className="container-max py-12">
+    <section id="projects" className="container-max py-12">
       <header className="mb-6 flex items-center justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-[0.3em] text-brand.subtle">Operations Deck</p>

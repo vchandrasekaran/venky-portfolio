@@ -60,7 +60,7 @@ export default function SkillsLoadout(){
   const blip = useBlip();
 
   return (
-    <section className="container-max py-10">
+    <section id="skills" className="container-max py-10">
       <header className="mb-6">
         <p className="text-[10px] uppercase tracking-[0.3em] text-brand.subtle">Skills Core</p>
         <h2 className="mt-2 text-2xl md:text-3xl font-semibold text-slate-100">Select Capability</h2>
@@ -128,4 +128,3 @@ export default function SkillsLoadout(){
     </section>
   );
 }
-

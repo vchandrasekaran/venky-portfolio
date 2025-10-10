@@ -43,7 +43,7 @@ export default function Loadout() {
   const blip = useBlip();
 
   return (
-    <section className="container-max py-10">
+    <section id="ops" className="container-max py-10">
       <header className="mb-6 flex items-center justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-[0.3em] text-brand.subtle">Ops Loadout</p>

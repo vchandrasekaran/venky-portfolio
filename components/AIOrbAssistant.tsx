@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 
 type QAResponse = { answer: string; sources: { source: string }[] };
 
@@ -13,6 +14,8 @@ export default function AIOrbAssistant() {
   const [loading, setLoading] = useState(false);
   const [resp, setResp] = useState<QAResponse | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [navHint, setNavHint] = useState<{ path: string; hash?: string; label: string } | null>(null);
+  const router = useRouter();
 
   // Voice
   const [isListening, setIsListening] = useState(false);
@@ -65,7 +68,7 @@ export default function AIOrbAssistant() {
           if (!metaParsed && buffer.startsWith('META ')) {
             const nl = buffer.indexOf('\n');
             if (nl !== -1) {
-              try { const j = JSON.parse(buffer.slice(5, nl)); sources = j.sources || []; } catch {}
+              try { const j = JSON.parse(buffer.slice(5, nl)); sources = j.sources || []; if (j.nav) setNavHint(j.nav); } catch {}
               metaParsed = true; buffer = buffer.slice(nl+1);
               setResp({ answer: '', sources });
             } else {
@@ -186,6 +189,12 @@ export default function AIOrbAssistant() {
               ) : resp ? (
                 <>
                   <div className="text-slate-200">{resp.answer}</div>
+                  {navHint ? (
+                    <div className="mt-3 flex items-center justify-between rounded-lg border border-slate-700 bg-slate-900/60 px-2 py-2 text-xs">
+                      <span className="text-slate-300">Navigate: {navHint.label}</span>
+                      <button onClick={() => { setOpen(false); router.push(navHint.path + (navHint.hash || '')); }} className="rounded border border-cyan-400/40 px-2 py-0.5 text-cyan-200 hover:bg-cyan-400/10">Open</button>
+                    </div>
+                  ) : null}
                   {resp.sources?.length ? (
                     <div className="mt-2 text-slate-400 flex flex-wrap items-center gap-2">
                       <span className="opacity-80">Sources:</span>
