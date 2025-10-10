@@ -17,7 +17,7 @@ export default function Hero() {
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <a className="inline-flex items-center justify-center rounded-full bg-brand.accent px-6 py-3 text-slate-900 font-medium shadow-glow transition hover:-translate-y-0.5" href="/experience">
-              Explore Playbooks
+              Work Experience
               <span className="ml-2 text-slate-900/80">-&gt;</span>
             </a>
             <a className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-slate-200 transition hover:border-brand.glow/60 hover:text-brand.accent" href="/contact">
@@ -27,7 +27,7 @@ export default function Hero() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
               <p className="text-sm uppercase tracking-wide text-brand.subtle">Signal Chain</p>
-              <p className="mt-2 text-lg text-slate-200">Snowflake -&gt; dbt -&gt; Feature Store -&gt; GPT Coach</p>
+              <p className="mt-2 text-lg text-slate-200">Snowflake -&gt; DBT -&gt; Business Intelligence -&gt; Data Intelligence</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
               <p className="text-sm uppercase tracking-wide text-brand.subtle">Speed to Insight</p>

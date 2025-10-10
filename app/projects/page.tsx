@@ -1,14 +1,36 @@
 ﻿import Link from 'next/link'
 import Section from '@/components/Section'
-import ProjectCard from '@/components/ProjectCard'
 
-const tableauProfile = 'https://public.tableau.com/app/profile/venkateshnaidu/vizzes'
-
-const tableauProjects = [
+const projects = [
   {
-    title: 'Interactive Tableau Portfolio',
-    desc: 'Browse every published dashboard in one place - revenue intelligence, operations, and sports analytics.',
-    href: tableauProfile
+    id: 'tableau',
+    title: 'Interactive Dashboards. Real Metrics',
+    desc: 'Tableau portfolio with revenue intelligence, ops KPIs, and experiments.',
+    href: 'https://public.tableau.com/app/profile/venkateshnaidu/vizzes'
+  },
+  {
+    id: 'ai-talent-pulse',
+    title: 'AI Talent Pulse',
+    desc: 'Streaming labor signals to track AI job market shifts.',
+    href: '/projects/ai-talent-pulse'
+  },
+  {
+    id: 'trucklexa',
+    title: 'Trucklexa — Alexa Search',
+    desc: 'Voice-driven search assistant for trucking data (prototype).',
+    href: '#'
+  },
+  {
+    id: 'revenue-neuronet',
+    title: 'Revenue NeuroNet',
+    desc: 'Attribution brain blending Salesforce, product usage, and CS notes.',
+    href: '#'
+  },
+  {
+    id: 'sports-intel',
+    title: 'Sports Intelligence Grid',
+    desc: 'Sentiment, telemetry, and sponsor ROI models for growth.',
+    href: '#'
   }
 ]
 
@@ -17,64 +39,22 @@ export default function ProjectsPage() {
     <main>
       <Section
         title="Projects"
-        subtitle="Live projects hosted on Tableau Public - each built to answer executive questions in seconds."
+        subtitle="Click a module to open its project. Each tile mirrors the HUD loadout style for quick scanning."
       >
-        <div className="card overflow-hidden p-0">
-          <div className="grid gap-0 md:grid-cols-[1.1fr,0.9fr]">
-            <div className="p-6 md:p-8">
-              <div className="chip bg-brand.accent/15 text-brand.accent w-fit">Tableau Portfolio</div>
-              <h3 className="mt-4 text-2xl font-semibold text-slate-100">Interactive Dashboards. Real Metrics.</h3>
-              <p className="mt-3 text-slate-300">
-                Explore a collection of production-grade Tableau dashboards spanning revenue intelligence, operational KPIs,
-                and sports analytics experiments. Each viz mirrors the systems I deploy in Snowflake, dbt, and BI platforms -
-                with governance, performance, and storytelling baked in.
-              </p>
-              <a
-                className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand.accent/40 px-5 py-2 text-sm text-brand.accent transition hover:bg-brand.accent hover:text-slate-900"
-                href={tableauProfile}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Tableau Public Profile
-                <span aria-hidden>-></span>
-              </a>
-              <p className="mt-3 text-xs text-slate-500">
-                Tableau restricts profile embeds, so tap the button to explore the full interactive gallery.
-              </p>
-            </div>
-            <div className="relative flex min-h-[260px] flex-col items-center justify-center gap-4 bg-white/5 px-6 py-12">
-              <div className="grid grid-cols-3 gap-3 text-brand.accent">
-                {[...Array(9)].map((_, idx) => (
-                  <div
-                    key={idx}
-                    className="h-6 w-6 rounded-full bg-brand.accent/20"
-                    style={{ opacity: 0.5 + (idx % 3) * 0.15 }}
-                  />
-                ))}
+        <div className="grid gap-4 sm:grid-cols-2">
+          {projects.map(p => (
+            <Link key={p.id} href={p.href} className="group">
+              <div className="relative h-32 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-cyan-400/45">
+                <div className="text-[10px] uppercase tracking-widest text-brand.subtle">Project</div>
+                <h3 className="mt-1 text-lg font-semibold text-slate-100">{p.title}</h3>
+                <p className="mt-1 text-sm text-slate-300">{p.desc}</p>
+                <span className="absolute right-4 top-4 text-cyan-300 opacity-0 transition group-hover:opacity-100">-></span>
+                <span className="hud-sweep" />
               </div>
-              <p className="text-center text-sm text-slate-400">
-                Tableau Public preview not supported in-frame.
-                <br />Open the profile to interact with the dashboards.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          <Link href="/projects/ai-talent-pulse">
-            <div className="card hover:shadow-lg transition">
-              <h3 className="text-xl font-semibold">🤖 AI Talent Pulse</h3>
-              <p className="text-slate-400">Interactive dashboard exploring the AI job market.</p>
-            </div>
-          </Link>
-          {tableauProjects.map((project) => (
-            <ProjectCard key={project.title} title={project.title} desc={project.desc} href={project.href} />
+            </Link>
           ))}
-          <div className="card flex items-center justify-center border-dashed border-brand.accent/30 p-6 text-center text-sm text-slate-400">
-            More projects coming soon. We'll add each Tableau dashboard as a dedicated case study here.
-          </div>
         </div>
       </Section>
     </main>
   )
 }
-
