@@ -231,6 +231,10 @@ body::after {
   70% { opacity: .25; }
   100% { transform: translateX(120%) skewX(-12deg); opacity: 0; }
 }
+
+/* hide scrollbars utility */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
 .hud-sweep {
   position: absolute;
   inset: 0;

@@ -1,12 +1,10 @@
-import SkillsReel from '@/components/hud/SkillsReel'
-
 export default function Hero() {
   return (
     <section className="container-max relative overflow-hidden pt-24 pb-16">
       <div className="pointer-events-none absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-brand.glow/20 blur-3xl" aria-hidden="true" />
       <div className="pointer-events-none absolute -bottom-32 right-10 h-80 w-80 rounded-full bg-brand.accent/10 blur-3xl" aria-hidden="true" />
 
-      <div className="grid items-start gap-12 lg:grid-cols-[1.2fr,1fr]">
+      <div className="grid items-start gap-12">
         <div className="relative z-10">
           <span className="chip bg-brand.accent/15 text-brand.accent">Business Intelligence Data Analyst</span>
           <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-6xl">
@@ -38,10 +36,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right column: HUD Skills reel */}
-        <div className="relative z-10">
-          <SkillsReel />
-        </div>
+        
       </div>
     </section>
   )
