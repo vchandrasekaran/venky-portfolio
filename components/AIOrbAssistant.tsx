@@ -23,20 +23,9 @@ export default function AIOrbAssistant() {
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const recognitionRef = useRef<any>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const transcriptRef = useRef("");
 
-  const [dock, setDock] = useState<HTMLElement | null>(null);
-  useEffect(() => {
-    setMounted(true);
-    const findDock = () => {
-      const el = document.getElementById('ai-orb-dock');
-      setDock(el as HTMLElement | null);
-    };
-    findDock();
-    const obs = new MutationObserver(findDock);
-    obs.observe(document.body, { childList: true, subtree: true });
-    window.addEventListener('resize', findDock);
-    return () => { obs.disconnect(); window.removeEventListener('resize', findDock); };
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -114,19 +103,34 @@ export default function AIOrbAssistant() {
       setTimeout(() => setToast(null), 1400);
       return;
     }
+    try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch {}
     const rec = new Rec();
     recognitionRef.current = rec;
     rec.lang = 'en-US';
     rec.interimResults = true;
     rec.continuous = false;
+    transcriptRef.current = "";
     rec.onresult = (ev: any) => {
-      const t = Array.from(ev.results).map((r: any) => r[0]?.transcript || '').join(' ');
-      setQ(t);
+      let final = ""; let interim = "";
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        const res = ev.results[i];
+        if (res.isFinal) final += res[0].transcript;
+        else interim += res[0].transcript;
+      }
+      const combined = (transcriptRef.current + " " + (final || interim)).trim();
+      transcriptRef.current = (transcriptRef.current + " " + final).trim();
+      setQ(combined);
     };
-    rec.onerror = () => { setIsListening(false); };
+    rec.onerror = (e: any) => {
+      setIsListening(false);
+      if (e?.error) {
+        setToast(`Voice error: ${e.error}`);
+        setTimeout(() => setToast(null), 1500);
+      }
+    };
     rec.onend = () => {
       setIsListening(false);
-      const finalText = (q || '').trim();
+      const finalText = (transcriptRef.current || q || '').trim();
       if (finalText) ask(finalText);
     };
     try { rec.start(); setIsListening(true); } catch {}
@@ -137,7 +141,7 @@ export default function AIOrbAssistant() {
       onClick={() => setOpen(!open)}
       aria-expanded={open}
       aria-label="Open AI assistant"
-      className={`ai-orb ${dock ? '' : 'fixed sm:bottom-6 sm:right-6 bottom-4 right-4'} z-[2147483646] h-16 w-16 rounded-full outline-none ${isListening ? 'listening' : ''}`}
+      className={`ai-orb fixed sm:bottom-6 sm:right-6 bottom-4 right-4 z-[2147483646] h-16 w-16 rounded-full outline-none ${isListening ? 'listening' : ''}`}
       title={isListening ? 'Listening…' : 'AI Assistant'}
     >
       <HoloOrb listening={isListening} />
@@ -232,7 +236,7 @@ export default function AIOrbAssistant() {
 
   if (!mounted) return null;
   return <>
-    {createPortal(orbButton, dock || document.body)}
+    {createPortal(orbButton, document.body)}
     {panel && createPortal(panel, document.body)}
   </>;
 }

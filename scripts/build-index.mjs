@@ -1,8 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const OPENAI_URL = 'https://api.openai.com/v1/embeddings';
-const MODEL = 'text-embedding-3-small';
+// No external embeddings. We precompute chunks for fast keyword retrieval.
 
 function chunk(md, size = 900) {
   const parts = md.split(/\n(?=# |\*\*|## |- |\d+\. )/);
@@ -20,21 +19,7 @@ function chunk(md, size = 900) {
   return chunks.filter(Boolean);
 }
 
-async function embed(text) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error('OPENAI_API_KEY not set');
-  const r = await fetch(OPENAI_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({ model: MODEL, input: text }),
-  });
-  if (!r.ok) throw new Error(`Embedding failed ${r.status}`);
-  const j = await r.json();
-  return j.data[0].embedding;
-}
+// (legacy embedding code removed)
 
 async function walk(dir) {
   const out = [];
@@ -77,27 +62,21 @@ async function main() {
     process.exit(1);
   }
 
-  const vectors = [];
+  const chunks = [];
   for (const d of docs) {
     const parts = chunk(d.text);
     let i = 0;
     for (const c of parts) {
-      const emb = await embed(c);
-      vectors.push({ id: `${d.source}#${i}`, source: d.source, chunkIndex: i, text: c, embedding: emb });
+      chunks.push({ id: `${d.source}#${i}`, source: d.source, chunkIndex: i, text: c });
       i++;
     }
   }
 
   const outDir = path.join(base, 'data');
   await fs.mkdir(outDir, { recursive: true });
-  const out = {
-    createdAt: new Date().toISOString(),
-    model: MODEL,
-    dimensions: vectors[0]?.embedding?.length || 0,
-    vectors,
-  };
+  const out = { createdAt: new Date().toISOString(), model: 'local-chunks', chunks };
   await fs.writeFile(path.join(outDir, 'index.json'), JSON.stringify(out, null, 2), 'utf-8');
-  console.log(`Indexed ${vectors.length} chunks -> data/index.json`);
+  console.log(`Indexed ${chunks.length} chunks -> data/index.json`);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });
