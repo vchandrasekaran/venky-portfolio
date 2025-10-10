@@ -42,11 +42,29 @@ async function loadIndex(base: string) {
   }
 }
 
+async function walk(dir: string): Promise<string[]> {
+  const out: string[] = []
+  const entries = await fs.readdir(dir, { withFileTypes: true }).catch(() => [])
+  for (const e of entries) {
+    const p = path.join(dir, e.name)
+    if (e.isDirectory()) out.push(...(await walk(p)))
+    else out.push(p)
+  }
+  return out
+}
+
 async function naiveDocs(base: string) {
-  const files = [
-    path.join(base, 'content', 'resume.md'),
-    path.join(base, 'content', 'case-studies', 'ai-job-market.md'),
+  // Include all markdown-like content under content/ plus key app pages
+  const contentDir = path.join(base, 'content')
+  const mdFiles = (await walk(contentDir)).filter(f => /\.(md|mdx|txt)$/i.test(f))
+  const appPages = [
+    path.join(base, 'app', 'page.tsx'),
+    path.join(base, 'app', 'experience', 'page.tsx'),
+    path.join(base, 'app', 'projects', 'page.tsx'),
+    path.join(base, 'app', 'sports', 'page.tsx'),
+    path.join(base, 'app', 'contact', 'page.tsx'),
   ]
+  const files = [...mdFiles, ...appPages]
   const out: { source: string; text: string }[] = []
   for (const f of files) {
     try { out.push({ source: path.relative(base, f), text: await fs.readFile(f, 'utf-8') }) } catch {}
@@ -147,4 +165,3 @@ export async function POST(req: Request) {
 
   return new NextResponse(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } })
 }
-

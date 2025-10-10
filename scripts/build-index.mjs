@@ -36,18 +36,41 @@ async function embed(text) {
   return j.data[0].embedding;
 }
 
+async function walk(dir) {
+  const out = [];
+  const entries = await fs.readdir(dir, { withFileTypes: true }).catch(() => []);
+  for (const e of entries) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) out.push(...(await walk(p)));
+    else out.push(p);
+  }
+  return out;
+}
+
+async function readIfExists(file) {
+  try { return await fs.readFile(file, 'utf-8'); } catch { return null }
+}
+
 async function main() {
   const base = process.cwd();
-  const files = [
-    path.join(base, 'content', 'resume.md'),
-    path.join(base, 'content', 'case-studies', 'ai-job-market.md'),
+  // 1) Ingest all markdown-like content under content/
+  const contentDir = path.join(base, 'content');
+  const all = (await walk(contentDir)).filter(f => /\.(md|mdx|txt)$/i.test(f));
+  // 2) Add selected app pages that contain portfolio narrative text
+  const extraFiles = [
+    path.join(base, 'app', 'page.tsx'),
+    path.join(base, 'app', 'experience', 'page.tsx'),
+    path.join(base, 'app', 'projects', 'page.tsx'),
+    path.join(base, 'app', 'sports', 'page.tsx'),
+    path.join(base, 'app', 'contact', 'page.tsx'),
   ];
+  const files = [...all, ...extraFiles];
+
   const docs = [];
   for (const f of files) {
-    try {
-      const txt = await fs.readFile(f, 'utf-8');
-      docs.push({ source: path.relative(base, f), text: txt });
-    } catch {}
+    const txt = await readIfExists(f);
+    if (!txt) continue;
+    docs.push({ source: path.relative(base, f), text: txt });
   }
   if (!docs.length) {
     console.error('No docs found in content/.');
@@ -78,4 +101,3 @@ async function main() {
 }
 
 main().catch(err => { console.error(err); process.exit(1); });
-
