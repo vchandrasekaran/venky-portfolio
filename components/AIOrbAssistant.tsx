@@ -15,6 +15,7 @@ export default function AIOrbAssistant() {
   const [resp, setResp] = useState<QAResponse | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [navHint, setNavHint] = useState<{ path: string; hash?: string; label: string } | null>(null);
+  const [navList, setNavList] = useState<{ path: string; hash?: string; label: string }[] | null>(null);
   const router = useRouter();
 
   // Voice
@@ -68,7 +69,7 @@ export default function AIOrbAssistant() {
           if (!metaParsed && buffer.startsWith('META ')) {
             const nl = buffer.indexOf('\n');
             if (nl !== -1) {
-              try { const j = JSON.parse(buffer.slice(5, nl)); sources = j.sources || []; if (j.nav) setNavHint(j.nav); } catch {}
+              try { const j = JSON.parse(buffer.slice(5, nl)); sources = j.sources || []; if (j.nav) setNavHint(j.nav); if (j.navList) setNavList(j.navList); } catch {}
               metaParsed = true; buffer = buffer.slice(nl+1);
               setResp({ answer: '', sources });
             } else {
@@ -189,10 +190,17 @@ export default function AIOrbAssistant() {
               ) : resp ? (
                 <>
                   <div className="text-slate-200">{resp.answer}</div>
-                  {navHint ? (
-                    <div className="mt-3 flex items-center justify-between rounded-lg border border-slate-700 bg-slate-900/60 px-2 py-2 text-xs">
-                      <span className="text-slate-300">Navigate: {navHint.label}</span>
-                      <button onClick={() => { setOpen(false); router.push(navHint.path + (navHint.hash || '')); }} className="rounded border border-cyan-400/40 px-2 py-0.5 text-cyan-200 hover:bg-cyan-400/10">Open</button>
+                  {navHint || navList?.length ? (
+                    <div className="mt-3 rounded-lg border border-slate-700 bg-slate-900/60 px-2 py-2 text-xs">
+                      <div className="mb-2 text-slate-300">Navigate:</div>
+                      <div className="flex flex-wrap gap-2">
+                        {[navHint, ...(navList || [])].filter(Boolean).map((n, i) => (
+                          <button key={i}
+                            onClick={() => { if (!n) return; setOpen(false); router.push(n.path + (n.hash || '')); }}
+                            className="rounded-full border border-cyan-400/40 bg-cyan-400/10 px-2 py-1 text-cyan-200 hover:bg-cyan-400/20"
+                          >{n!.label}</button>
+                        ))}
+                      </div>
                     </div>
                   ) : null}
                   {resp.sources?.length ? (

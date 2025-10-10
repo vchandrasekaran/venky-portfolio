@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { NextResponse } from 'next/server'
 import { suggestNav } from '@/lib/assistant/nav'
+import { searchNav } from '@/lib/assistant/navSearch'
 
 export const runtime = 'nodejs'
 
@@ -121,9 +122,10 @@ export async function POST(req: Request) {
   const encoder = new TextEncoder()
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
-      // Navigation hint (client may decide to use it)
-      const nav = suggestNav(question)
-      controller.enqueue(encoder.encode(`META ${JSON.stringify({ sources, nav })}\n`))
+      // Navigation suggestions (rules + fuzzy search over site map)
+      const rule = suggestNav(question)
+      const fuzzy = searchNav(question, 3)
+      controller.enqueue(encoder.encode(`META ${JSON.stringify({ sources, nav: rule, navList: fuzzy })}\n`))
       try {
         const r = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
