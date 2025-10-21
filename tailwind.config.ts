@@ -9,12 +9,12 @@ export default {
     extend: {
       colors: {
         brand: {
-          bg: '#020617',
-          surface: '#0B1220',
-          primary: '#16213A',
-          accent: '#38BDF8',
-          glow: '#8B5CF6',
-          subtle: '#94A3B8'
+          bg: '#02050A',
+          surface: '#071019',
+          primary: '#0B1624',
+          accent: '#00E5FF',
+          glow: '#FF6A00',
+          subtle: '#7AA2B8'
         }
       },
       fontFamily: {
@@ -22,12 +22,12 @@ export default {
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
       },
       backgroundImage: {
-        'radial-glow': 'radial-gradient(circle at top, rgba(139,92,246,0.25), transparent 55%)',
-        'grid-lines': 'linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 0), linear-gradient(180deg, rgba(148,163,184,0.06) 1px, transparent 0)'
+        'radial-glow': 'radial-gradient(circle at top, rgba(0,229,255,0.22), transparent 60%)',
+        'grid-lines': 'linear-gradient(90deg, rgba(0,229,255,0.10) 1px, transparent 0), linear-gradient(180deg, rgba(0,229,255,0.08) 1px, transparent 0)'
       },
       boxShadow: {
-        soft: '0 8px 32px rgba(15,23,42,0.45)',
-        glow: '0 0 40px rgba(56,189,248,0.35)'
+        soft: '0 8px 32px rgba(2,8,15,0.55)',
+        glow: '0 0 40px rgba(0,229,255,0.45)'
       },
       borderRadius: {
         '2xl': '1rem'
