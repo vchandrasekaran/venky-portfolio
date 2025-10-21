@@ -16,11 +16,12 @@
       <div className="mt-6 flex items-center justify-between text-sm text-brand.subtle">
         <span className="flex items-center gap-2 text-brand.accent">
           Dive In
-          <span className="transition-transform duration-300 group-hover:translate-x-1">-></span>
+          <span className="transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
         </span>
         <span className="hidden uppercase tracking-widest text-xs sm:inline-flex">AI Ready</span>
       </div>
     </a>
   )
 }
+
 

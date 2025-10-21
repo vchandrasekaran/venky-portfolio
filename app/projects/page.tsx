@@ -1,4 +1,5 @@
-﻿import Section from '@/components/Section'\nimport HUDTile from '@/components/hud/HUDTile'
+﻿import Section from '@/components/Section'
+import ProjectsShowcase from '@/components/projects/ProjectsShowcase'
 
 const projects = [
   {
@@ -36,17 +37,11 @@ const projects = [
 export default function ProjectsPage() {
   return (
     <main>
-      <Section
-        title="Projects"
-        subtitle="Modules from the Ares grid — open a project to view details."
-      >
-        <div className="grid gap-4 sm:grid-cols-2">
-          {projects.map(p => (
-            <HUDTile key={p.id} title={p.title} desc={p.desc} href={p.href} />
-          ))}
-        </div>
-      </Section>
+      <Section title="Projects" subtitle="Pick a module below — details render in the Ares console above.">`r`n        <ProjectsShowcase />`r`n      </Section>
     </main>
   )
 }
+
+
+
 
