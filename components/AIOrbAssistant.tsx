@@ -150,7 +150,7 @@ export default function AIOrbAssistant() {
       className={`ai-orb fixed sm:bottom-6 sm:right-6 bottom-4 right-4 z-[2147483646] h-16 w-16 rounded-full outline-none ${isListening ? 'listening' : ''}`}
       title={isListening ? 'Listening…' : 'AI Assistant'}
     >
-      <HoloOrb listening={isListening} />
+      <HoloBot listening={isListening} />
     </button>
   );
 
@@ -263,27 +263,33 @@ export default function AIOrbAssistant() {
   </>;
 }
 
-function HoloOrb({ listening }: { listening?: boolean }){
+function HoloBot({ listening }: { listening?: boolean }){
+  // Simple SVG "bot head" placeholder with visor animation
   return (
-    <div className={`relative h-full w-full ${listening ? 'listening' : ''}`}>
-      <div className="absolute inset-0 rounded-full"
-        style={{
-          background: "radial-gradient(circle at 45% 40%, rgba(56,189,248,0.9), rgba(56,189,248,0.25) 35%, rgba(139,92,246,0.15) 55%, rgba(2,6,23,0.2) 70%, transparent 75%)",
-          boxShadow: "0 0 40px rgba(56,189,248,0.35), inset 0 0 26px rgba(139,92,246,0.25)",
-        }}
-      />
-      <div className="absolute inset-0 rounded-full border border-cyan-300/30" />
-      <div className="absolute inset-[-30%] rounded-full animate-spin-slow"
-        style={{
-          background: "conic-gradient(from 0deg, rgba(56,189,248,0.0), rgba(56,189,248,0.55), rgba(139,92,246,0.0) 40%, rgba(139,92,246,0.45), rgba(56,189,248,0.0) 80%)",
-          WebkitMask: "radial-gradient(farthest-side, transparent 60%, #000 61%)",
-          mask: "radial-gradient(farthest-side, transparent 60%, #000 61%)",
-        }}
-      />
-      <div className="absolute inset-0 rounded-full" style={{ boxShadow: "0 0 60px rgba(56,189,248,0.35)" }} />
-      {listening ? <Waveform /> : null}
-    </div>
-  );
+    <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
+      <defs>
+        <radialGradient id="g1" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stopColor="rgba(255,59,0,0.9)" />
+          <stop offset="60%" stopColor="rgba(255,59,0,0.25)" />
+          <stop offset="100%" stopColor="transparent" />
+        </radialGradient>
+      </defs>
+      <circle cx="50" cy="50" r="46" fill="url(#g1)" />
+      <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,138,0,0.45)" strokeWidth="2" />
+      <rect x="22" y="38" width="56" height="18" rx="9" fill="rgba(10,12,16,0.9)" stroke="rgba(255,59,0,0.6)" />
+      <rect x="26" y="42" width="48" height="10" rx="5" fill={listening ? 'rgba(255,59,0,0.8)' : 'rgba(255,138,0,0.7)'}>
+        {listening ? (
+          <animate attributeName="x" values="24;26;24" dur="1s" repeatCount="indefinite" />
+        ) : null}
+      </rect>
+      <circle cx="32" cy="70" r="3" fill="rgba(255,138,0,0.9)">
+        {listening ? (<animate attributeName="r" values="3;4;3" dur="0.8s" repeatCount="indefinite" />) : null}
+      </circle>
+      <circle cx="68" cy="70" r="3" fill="rgba(255,138,0,0.9)">
+        {listening ? (<animate attributeName="r" values="3;4;3" dur="0.8s" repeatCount="indefinite" />) : null}
+      </circle>
+    </svg>
+  )
 }
 
 function Waveform(){
