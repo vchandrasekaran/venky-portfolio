@@ -24,6 +24,7 @@ export default function AIOrbAssistant() {
   const [navHint, setNavHint] = useState<{ path: string; hash?: string; label: string } | null>(null);
   const [navList, setNavList] = useState<{ path: string; hash?: string; label: string }[] | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const [mode3D, setMode3D] = useState(false);
   const router = useRouter();
 
   // Voice
@@ -289,13 +290,19 @@ export default function AIOrbAssistant() {
           </div>
           <div className="mt-4 grid gap-6 md:grid-cols-[0.9fr,1.1fr] items-center">
             <div className="assistant-breath h-56 w-56 mx-auto">
-              <AssistantAvatar listening={isListening} speaking={speaking} />
+              {mode3D ? (
+                // Lazy import via dynamic would be ideal; keeping simple here
+                require('@/components/assistant3d/AssistantStage').default()
+              ) : (
+                <AssistantAvatar listening={isListening} speaking={speaking} />
+              )}
             </div>
             <div>
               <div className="text-slate-200 text-lg">How can I help?</div>
               <div className="mt-3 flex gap-2">
                 <button onClick={toggleListen} className={`rounded-lg px-3 py-2 text-sm border ${isListening ? 'border-emerald-400 text-emerald-300' : 'border-slate-700 text-slate-300'}`}>{isListening ? 'Stop Listening' : 'Start Listening'}</button>
                 <button onClick={() => setOpen(true)} className="rounded-lg border border-[rgba(255,59,0,0.45)] bg-[rgba(255,59,0,0.12)] px-3 py-2 text-sm text-[rgba(255,200,180,0.95)]">Open Chat</button>
+                <button onClick={() => setMode3D(m => !m)} className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:text-white">{mode3D ? '2D' : '3D Beta'}</button>
               </div>
               <div className="mt-4 text-xs text-slate-400">Tip: Say "Open Projects" or "Go to Experience" — I'll navigate and highlight the target.</div>
             </div>
