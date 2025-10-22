@@ -24,7 +24,7 @@ export default function AIOrbAssistant() {
   const [navHint, setNavHint] = useState<{ path: string; hash?: string; label: string } | null>(null);
   const [navList, setNavList] = useState<{ path: string; hash?: string; label: string }[] | null>(null);
   const [expanded, setExpanded] = useState(false);
-  const [mode3D, setMode3D] = useState(false);
+  const [mode3D] = useState(false);
   const router = useRouter();
 
   // Voice
@@ -283,26 +283,21 @@ export default function AIOrbAssistant() {
     {panel && createPortal(panel, document.body)}
     {expanded && createPortal(
       <div className="fixed inset-0 z-[2147483646] bg-black/70 backdrop-blur-sm flex items-center justify-center">
-        <div className="relative w-[92vw] max-w-[720px] rounded-3xl border border-[rgba(255,59,0,0.35)] bg-[rgba(10,12,16,0.9)] p-6 shadow-[0_0_0_1px_rgba(255,59,0,0.12),0_24px_60px_rgba(5,6,10,0.7)]">
+        <div className="relative w-[min(92vw,1000px)] max-h-[85vh] overflow-auto rounded-3xl border border-[rgba(255,59,0,0.35)] bg-[rgba(10,12,16,0.9)] p-6 shadow-[0_0_0_1px_rgba(255,59,0,0.12),0_24px_60px_rgba(5,6,10,0.7)]">
           <div className="flex items-start justify-between">
             <div className="text-sm text-slate-300">Ares Assistant</div>
             <button onClick={() => setExpanded(false)} className="text-xs rounded border border-slate-700 px-2 py-1 text-slate-300 hover:text-white">Collapse</button>
           </div>
-          <div className="mt-4 grid gap-6 md:grid-cols-[0.9fr,1.1fr] items-center">
-            <div className="assistant-breath h-56 w-56 mx-auto">
-              {mode3D ? (
-                // Lazy import via dynamic would be ideal; keeping simple here
-                require('@/components/assistant3d/AssistantStage').default()
-              ) : (
-                <AssistantAvatar listening={isListening} speaking={speaking} />
-              )}
+          <div className="mt-4 grid gap-6 md:grid-cols-[1fr,1.1fr] items-center">
+            <div className="assistant-breath relative mx-auto aspect-square w-[min(70vw,70vh,520px)]">
+              <AssistantAvatar listening={isListening} speaking={speaking} />
             </div>
             <div>
               <div className="text-slate-200 text-lg">How can I help?</div>
               <div className="mt-3 flex gap-2">
                 <button onClick={toggleListen} className={`rounded-lg px-3 py-2 text-sm border ${isListening ? 'border-emerald-400 text-emerald-300' : 'border-slate-700 text-slate-300'}`}>{isListening ? 'Stop Listening' : 'Start Listening'}</button>
                 <button onClick={() => setOpen(true)} className="rounded-lg border border-[rgba(255,59,0,0.45)] bg-[rgba(255,59,0,0.12)] px-3 py-2 text-sm text-[rgba(255,200,180,0.95)]">Open Chat</button>
-                <button onClick={() => setMode3D(m => !m)} className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:text-white">{mode3D ? '2D' : '3D Beta'}</button>
+                {/* 3D toggle hidden until R3F pipeline is added without TS friction */}
               </div>
               <div className="mt-4 text-xs text-slate-400">Tip: Say "Open Projects" or "Go to Experience" — I'll navigate and highlight the target.</div>
             </div>
