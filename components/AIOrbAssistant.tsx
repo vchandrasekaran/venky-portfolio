@@ -23,6 +23,7 @@ export default function AIOrbAssistant() {
   const [toast, setToast] = useState<string | null>(null);
   const [navHint, setNavHint] = useState<{ path: string; hash?: string; label: string } | null>(null);
   const [navList, setNavList] = useState<{ path: string; hash?: string; label: string }[] | null>(null);
+  const [expanded, setExpanded] = useState(false);
   const router = useRouter();
 
   // Voice
@@ -179,6 +180,7 @@ export default function AIOrbAssistant() {
             <div className="mb-2 flex items-center justify-between gap-2">
               <div className="text-sm text-slate-300">Ask about my experience, projects, or tools.</div>
               <div className="flex items-center gap-2">
+                <button onClick={() => setExpanded(true)} className="text-xs rounded border border-slate-700 px-2 py-1 text-slate-300 hover:text-white" title="Expand portrait">Expand</button>
                 <button onClick={() => setVoiceEnabled(v => !v)} className="text-xs rounded border border-slate-700 px-2 py-1 text-slate-300 hover:text-white" title="Toggle voice">
                   {voiceEnabled ? 'Voice On' : 'Voice Off'}
                 </button>
@@ -240,7 +242,7 @@ export default function AIOrbAssistant() {
                       <div className="flex flex-wrap gap-2">
                         {[navHint, ...(navList || [])].filter(Boolean).map((n, i) => (
                           <button key={i}
-                            onClick={() => { if (!n) return; setOpen(false); router.push(n.path + (n.hash || '')); }}
+                            onClick={() => { if (!n) return; setOpen(false); router.push(n.path + (n.hash || '')); setTimeout(() => { window.dispatchEvent(new CustomEvent('assistant-highlight', { detail: { path: n.path, hash: n.hash } })); }, 350); }}
                             className="rounded-full border border-cyan-400/40 bg-cyan-400/10 px-2 py-1 text-cyan-200 hover:bg-cyan-400/20"
                           >{n!.label}</button>
                         ))}
@@ -278,6 +280,28 @@ export default function AIOrbAssistant() {
   return <>
     {createPortal(orbButton, document.body)}
     {panel && createPortal(panel, document.body)}
+    {expanded && createPortal(
+      <div className="fixed inset-0 z-[2147483646] bg-black/70 backdrop-blur-sm flex items-center justify-center">
+        <div className="relative w-[92vw] max-w-[720px] rounded-3xl border border-[rgba(255,59,0,0.35)] bg-[rgba(10,12,16,0.9)] p-6 shadow-[0_0_0_1px_rgba(255,59,0,0.12),0_24px_60px_rgba(5,6,10,0.7)]">
+          <div className="flex items-start justify-between">
+            <div className="text-sm text-slate-300">Ares Assistant</div>
+            <button onClick={() => setExpanded(false)} className="text-xs rounded border border-slate-700 px-2 py-1 text-slate-300 hover:text-white">Collapse</button>
+          </div>
+          <div className="mt-4 grid gap-6 md:grid-cols-[0.9fr,1.1fr] items-center">
+            <div className="assistant-breath h-56 w-56 mx-auto">
+              <AssistantAvatar listening={isListening} speaking={speaking} />
+            </div>
+            <div>
+              <div className="text-slate-200 text-lg">How can I help?</div>
+              <div className="mt-3 flex gap-2">
+                <button onClick={toggleListen} className={`rounded-lg px-3 py-2 text-sm border ${isListening ? 'border-emerald-400 text-emerald-300' : 'border-slate-700 text-slate-300'}`}>{isListening ? 'Stop Listening' : 'Start Listening'}</button>
+                <button onClick={() => setOpen(true)} className="rounded-lg border border-[rgba(255,59,0,0.45)] bg-[rgba(255,59,0,0.12)] px-3 py-2 text-sm text-[rgba(255,200,180,0.95)]">Open Chat</button>
+              </div>
+              <div className="mt-4 text-xs text-slate-400">Tip: Say "Open Projects" or "Go to Experience" — I'll navigate and highlight the target.</div>
+            </div>
+          </div>
+        </div>
+      </div>, document.body)}
   </>;
 }
 
