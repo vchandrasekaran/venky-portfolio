@@ -27,6 +27,7 @@ export default function AIOrbAssistant() {
 
   // Voice
   const [isListening, setIsListening] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const recognitionRef = useRef<any>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -167,7 +168,7 @@ export default function AIOrbAssistant() {
       className={`ai-orb fixed sm:bottom-6 sm:right-6 bottom-4 right-4 z-[2147483646] h-16 w-16 rounded-full outline-none ${isListening ? 'listening' : ''}`}
       title={isListening ? 'Listeningâ€¦' : 'AI Assistant'}
     >
-      <AssistantAvatar listening={isListening} />
+      <AssistantAvatar listening={isListening} speaking={speaking} />
     </button>
   );
 
@@ -280,58 +281,5 @@ export default function AIOrbAssistant() {
   </>;
 }
 
-function AssistantAvatar({ listening }: { listening?: boolean }){
-  // Simple SVG "bot head" placeholder with visor animation
-  return (
-    <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
-      <defs>
-        <radialGradient id="g1" cx="50%" cy="50%" r="60%">
-          <stop offset="0%" stopColor="rgba(255,59,0,0.9)" />
-          <stop offset="60%" stopColor="rgba(255,59,0,0.25)" />
-          <stop offset="100%" stopColor="transparent" />
-        </radialGradient>
-      </defs>
-      <circle cx="50" cy="50" r="46" fill="url(#g1)" />
-      <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,138,0,0.45)" strokeWidth="2" />
-      <rect x="22" y="38" width="56" height="18" rx="9" fill="rgba(10,12,16,0.9)" stroke="rgba(255,59,0,0.6)" />
-      <rect x="26" y="42" width="48" height="10" rx="5" fill={listening ? 'rgba(255,59,0,0.8)' : 'rgba(255,138,0,0.7)'}>
-        {listening ? (
-          <animate attributeName="x" values="24;26;24" dur="1s" repeatCount="indefinite" />
-        ) : null}
-      </rect>
-      <circle cx="32" cy="70" r="3" fill="rgba(255,138,0,0.9)">
-        {listening ? (<animate attributeName="r" values="3;4;3" dur="0.8s" repeatCount="indefinite" />) : null}
-      </circle>
-      <circle cx="68" cy="70" r="3" fill="rgba(255,138,0,0.9)">
-        {listening ? (<animate attributeName="r" values="3;4;3" dur="0.8s" repeatCount="indefinite" />) : null}
-      </circle>
-    </svg>
-  )
-}
-
-function Waveform(){
-  const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(()=>{
-    const c = ref.current; if(!c) return; const ctx = c.getContext('2d'); if(!ctx) return;
-    let raf = 0; const dpr = Math.min(2, window.devicePixelRatio||1);
-    const resize=()=>{ const s=c.parentElement?.getBoundingClientRect(); if(!s) return; c.width=s.width*dpr; c.height=s.height*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); };
-    resize();
-    const bars = 40; let t=0;
-    const step=()=>{
-      const w=c.width/dpr, h=c.height/dpr; ctx.clearRect(0,0,w,h);
-      const cx=w/2, cy=h/2, r=Math.min(w,h)/2*0.68;
-      for(let i=0;i<bars;i++){
-        const a = (i/bars)*Math.PI*2 + t; const amp = 8 + 6*Math.sin(t*2 + i*0.6);
-        const x1 = cx + Math.cos(a)*(r-amp), y1 = cy + Math.sin(a)*(r-amp);
-        const x2 = cx + Math.cos(a)*(r+amp), y2 = cy + Math.sin(a)*(r+amp);
-        ctx.strokeStyle = 'rgba(34,211,238,0.55)'; ctx.lineWidth=1.2; ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
-      }
-      t += 0.03; raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    const onResize=()=>resize(); window.addEventListener('resize', onResize);
-    return ()=>{ cancelAnimationFrame(raf); window.removeEventListener('resize', onResize); };
-  },[]);
-  return <canvas ref={ref} className="absolute inset-0 rounded-full" aria-hidden />
-}
+// (local avatar and waveform moved to components/assistant/AssistantAvatar)
 

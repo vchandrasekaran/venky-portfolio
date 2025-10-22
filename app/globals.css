@@ -210,6 +210,14 @@ body::after {
 @keyframes spin-slower { to { transform: rotate(360deg) } }
 .animate-spin-slower { animation: spin-slower 28s linear infinite; }
 
+@keyframes breath { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-0.8px) } }
+.assistant-breath { animation: breath 5s ease-in-out infinite; transform-origin: 60px 60px; }
+
+@keyframes pointer-pulse { 0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.9 } 60% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.4 } 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0 } }
+.animate-pointer-pulse { animation: pointer-pulse 1.2s ease-out infinite; }
+
+@keyframes rail { from { transform: translateX(-40%); opacity: .4 } to { transform: translateX(40%); opacity: .1 } }
+
 /* orb hover pulse */
 @keyframes orb-pulse { 0%,100%{ transform: scale(1); filter: brightness(1);} 50%{ transform: scale(1.03); filter: brightness(1.05);} }
 .ai-orb:hover { animation: orb-pulse 1.6s ease-in-out infinite; }

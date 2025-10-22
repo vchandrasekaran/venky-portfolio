@@ -6,6 +6,7 @@ import Header from '@/components/Header'
 import PointerAura from '@/components/hud/PointerAura'
 import HashScroller from '@/components/util/HashScroller'
 import HUDShell from '@/components/hud/HUDShell'
+import PointerHighlight from '@/components/assistant/PointerOverlay'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300','400','500','600','700'] })
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AIOrbAssistant />
         <PointerAura />
         <HashScroller />
+        <PointerHighlight />
       </body>
     </html>
   )
