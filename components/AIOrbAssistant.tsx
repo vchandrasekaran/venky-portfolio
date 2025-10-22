@@ -1,7 +1,8 @@
-"use client";
+﻿"use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
+import AssistantAvatar from "@/components/assistant/AssistantAvatar";
 
 type QAResponse = { answer: string; sources: { source: string }[] };
 
@@ -77,7 +78,15 @@ export default function AIOrbAssistant() {
           }
         }
         if (voiceEnabled && answer && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-          try { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(answer.replace(/[#*`>-]/g,' ')); u.rate=1.02; u.pitch=1.02; window.speechSynthesis.speak(u);} catch {}
+          try { 
+            window.speechSynthesis.cancel(); 
+            const u = new SpeechSynthesisUtterance(answer.replace(/[#*`>-]/g,' ')); 
+            u.rate=1.02; u.pitch=1.02; 
+            u.onstart = () => setSpeaking(true);
+            u.onend = () => setSpeaking(false);
+            u.onboundary = () => setSpeaking(prev => !prev);
+            window.speechSynthesis.speak(u);
+          } catch {}
         }
       } else {
         // Fallback to simple keyword API
@@ -85,7 +94,15 @@ export default function AIOrbAssistant() {
         const data = (await r2.json()) as QAResponse
         setResp(data)
         if (voiceEnabled && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-          try { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(data.answer.replace(/[#*`>-]/g,' ')); u.rate=1.02; u.pitch=1.02; window.speechSynthesis.speak(u);} catch {}
+          try { 
+            window.speechSynthesis.cancel(); 
+            const u = new SpeechSynthesisUtterance(data.answer.replace(/[#*`>-]/g,' '));
+            u.onstart = () => setSpeaking(true);
+            u.onend = () => setSpeaking(false);
+            u.onboundary = () => setSpeaking(prev => !prev);
+            u.rate=1.02; u.pitch=1.02; 
+            window.speechSynthesis.speak(u);
+          } catch {}
         }
       }
     } catch (e) {
@@ -148,9 +165,9 @@ export default function AIOrbAssistant() {
       aria-expanded={open}
       aria-label="Open AI assistant"
       className={`ai-orb fixed sm:bottom-6 sm:right-6 bottom-4 right-4 z-[2147483646] h-16 w-16 rounded-full outline-none ${isListening ? 'listening' : ''}`}
-      title={isListening ? 'Listening…' : 'AI Assistant'}
+      title={isListening ? 'Listeningâ€¦' : 'AI Assistant'}
     >
-      <HoloBot listening={isListening} />
+      <AssistantAvatar listening={isListening} />
     </button>
   );
 
@@ -173,11 +190,11 @@ export default function AIOrbAssistant() {
                 value={q}
                 onChange={e => setQ(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && ask()}
-                placeholder={isListening ? 'Listening… speak your question' : 'Type a question'}
+                placeholder={isListening ? 'Listeningâ€¦ speak your question' : 'Type a question'}
                 className="flex-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               />
               <button onClick={() => ask()} disabled={loading} className="rounded-lg bg-cyan-400 text-slate-900 px-3 py-2 text-sm min-h-[36px] hover:brightness-95 disabled:opacity-60">
-                {loading ? '…' : 'Ask'}
+                {loading ? 'â€¦' : 'Ask'}
               </button>
               <button onClick={toggleListen} className={`rounded-lg px-3 py-2 text-sm border ${isListening ? 'border-emerald-400 text-emerald-300' : 'border-slate-700 text-slate-300'}`} title="Speak your question">
                 {isListening ? 'Stop' : 'Mic'}
@@ -263,7 +280,7 @@ export default function AIOrbAssistant() {
   </>;
 }
 
-function HoloBot({ listening }: { listening?: boolean }){
+function AssistantAvatar({ listening }: { listening?: boolean }){
   // Simple SVG "bot head" placeholder with visor animation
   return (
     <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
@@ -317,3 +334,4 @@ function Waveform(){
   },[]);
   return <canvas ref={ref} className="absolute inset-0 rounded-full" aria-hidden />
 }
+
