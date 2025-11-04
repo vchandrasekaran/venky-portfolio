@@ -218,6 +218,14 @@ body::after {
 
 @keyframes rail { from { transform: translateX(-40%); opacity: .4 } to { transform: translateX(40%); opacity: .1 } }
 
+/* TRON portrait frame */
+.portrait-frame { position: relative; border-radius: 1rem; }
+.frame-corner { position: absolute; width: 20px; height: 20px; border-color: rgba(255,59,0,0.55); }
+.frame-corner.tl { left: 6px; top: 6px; border-left: 2px solid; border-top: 2px solid; }
+.frame-corner.tr { right: 6px; top: 6px; border-right: 2px solid; border-top: 2px solid; }
+.frame-corner.bl { left: 6px; bottom: 6px; border-left: 2px solid; border-bottom: 2px solid; }
+.frame-corner.br { right: 6px; bottom: 6px; border-right: 2px solid; border-bottom: 2px solid; }
+
 /* orb hover pulse */
 @keyframes orb-pulse { 0%,100%{ transform: scale(1); filter: brightness(1);} 50%{ transform: scale(1.03); filter: brightness(1.05);} }
 .ai-orb:hover { animation: orb-pulse 1.6s ease-in-out infinite; }
