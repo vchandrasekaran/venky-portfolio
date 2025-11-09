@@ -5,7 +5,6 @@ import AIOrbAssistant from '@/components/AIOrbAssistant'
 import Header from '@/components/Header'
 import PointerAura from '@/components/hud/PointerAura'
 import HashScroller from '@/components/util/HashScroller'
-import HUDShell from '@/components/hud/HUDShell'
 import PointerHighlight from '@/components/assistant/PointerOverlay'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300','400','500','600','700'] })
@@ -23,12 +22,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="hud">
-      <body className={`${spaceGrotesk.className} text-slate-200 antialiased`}>
+    <html lang="en">
+      <body className={`${spaceGrotesk.className} bg-brand-bg text-[#111111] antialiased`}>
         <Header />
-        <HUDShell>
-          {children}
-        </HUDShell>
+        <main>{children}</main>
         <AIOrbAssistant />
         <PointerAura />
         <HashScroller />
