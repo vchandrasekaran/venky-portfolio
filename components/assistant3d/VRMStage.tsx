@@ -1,6 +1,6 @@
 ﻿// @ts-nocheck
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { GLTFLoader } from "three-stdlib";
@@ -15,7 +15,7 @@ function VRMModel({ speaking, variant }: { speaking?: boolean; variant: 'mini'|'
   const baseOffset = useRef(variant === 'mini' ? 0.48 : 0.58);
   const vrmRef = useRef<VRM | null>(null);
 
-  const normalizeVRM = (v: VRM) => {
+  const normalizeVRM = useCallback((v: VRM) => {
     v.scene.updateMatrixWorld(true);
     const initialBox = new THREE.Box3().setFromObject(v.scene);
     const currentHeight = Math.max(0.01, initialBox.max.y - initialBox.min.y);
@@ -29,7 +29,7 @@ function VRMModel({ speaking, variant }: { speaking?: boolean; variant: 'mini'|'
     v.scene.position.sub(center);
     baseOffset.current = variant === 'mini' ? 0.52 : 0.62;
     v.scene.position.y += baseOffset.current;
-  };
+  }, [variant]);
 
   useEffect(() => {
     const loader = new GLTFLoader();
@@ -45,12 +45,12 @@ function VRMModel({ speaking, variant }: { speaking?: boolean; variant: 'mini'|'
     return () => {
       if (vrmRef.current) scene.remove(vrmRef.current.scene);
     }
-  }, []);
+  }, [normalizeVRM, scene]);
 
   useEffect(() => {
     if (!vrmRef.current) return;
     normalizeVRM(vrmRef.current);
-  }, [variant]);
+  }, [normalizeVRM]);
 
   useFrame((state, delta) => {
     const current = vrmRef.current;

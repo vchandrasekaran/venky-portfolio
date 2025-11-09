@@ -23,12 +23,12 @@ function AssistantVisual({ variant, speaking, listening }: { variant: StageVaria
   const glowSize = variant === "mini" ? "h-20 w-20 blur-xl" : "h-[min(78vw,78vh,620px)] w-[min(78vw,78vh,620px)] blur-2xl";
   const frameClass =
     variant === "mini"
-      ? "rounded-full border border-[rgba(255,200,180,0.35)] bg-[rgba(12,18,30,0.75)] shadow-[0_12px_40px_rgba(10,12,16,0.65)]"
-      : "rounded-[18px] border border-[rgba(255,200,180,0.28)] bg-[rgba(12,14,18,0.85)] shadow-[0_20px_60px_rgba(2,6,23,0.55)]";
+      ? "rounded-full border border-[rgba(255,235,243,0.35)] bg-[rgba(12,18,30,0.75)] shadow-[0_12px_40px_rgba(10,12,16,0.65)]"
+      : "rounded-[18px] border border-[rgba(255,235,243,0.28)] bg-[rgba(12,14,18,0.85)] shadow-[0_20px_60px_rgba(2,6,23,0.55)]";
   return (
     <div className={`relative flex items-center justify-center ${shellSize}`}>
-      <div className={`pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-[rgba(255,200,180,0.08)] via-[rgba(255,59,0,0.08)] to-transparent`} />
-      <div className={`pointer-events-none absolute ${glowSize} rounded-full bg-[rgba(255,138,0,0.18)]`} />
+      <div className={`pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-[rgba(255,235,243,0.08)] via-[rgba(255,109,174,0.08)] to-transparent`} />
+      <div className={`pointer-events-none absolute ${glowSize} rounded-full bg-[rgba(127,93,255,0.18)]`} />
       <div className={`relative flex h-full w-full items-center justify-center ${frameClass}`}>
         <AssistantAvatar listening={listening} speaking={speaking} />
       </div>
@@ -221,7 +221,7 @@ export default function AIOrbAssistant() {
         onClick={() => setOpen(!open)}
         aria-expanded={open}
         aria-label="Open AI assistant"
-        className={`relative ai-orb h-16 w-16 pointer-events-auto rounded-full outline-none overflow-hidden border border-[rgba(255,59,0,0.35)] bg-[rgba(10,12,16,0.85)] shadow-[0_0_0_1px_rgba(255,59,0,0.12),0_8px_20px_rgba(5,6,10,0.6)] ${isListening ? "listening" : ""}`}
+        className={`relative ai-orb h-16 w-16 pointer-events-auto rounded-full outline-none overflow-hidden border border-[rgba(255,109,174,0.35)] bg-[rgba(10,12,16,0.85)] shadow-[0_0_0_1px_rgba(255,109,174,0.12),0_8px_20px_rgba(5,6,10,0.6)] ${isListening ? "listening" : ""}`}
         title={isListening ? "Listening..." : "AI Assistant"}
       >
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
@@ -233,7 +233,7 @@ export default function AIOrbAssistant() {
             <AssistantVisual variant="mini" speaking={speaking} listening={isListening} />
           )}
         </div>
-        <span className="absolute inset-0 rounded-full border border-[rgba(255,138,0,0.35)]" />
+        <span className="absolute inset-0 rounded-full border border-[rgba(127,93,255,0.35)]" />
       </button>
     </div>
   );
@@ -367,7 +367,7 @@ export default function AIOrbAssistant() {
       {panel && createPortal(panel, document.body)}
       {expanded && createPortal(
         <div className="fixed inset-0 z-[2147483646] bg-black/70 backdrop-blur-sm flex items-center justify-center">
-          <div className="relative w-[min(92vw,1000px)] max-h-[85vh] overflow-auto rounded-3xl border border-[rgba(255,59,0,0.35)] bg-[rgba(10,12,16,0.9)] p-6 shadow-[0_0_0_1px_rgba(255,59,0,0.12),0_24px_60px_rgba(5,6,10,0.7)]">
+          <div className="relative w-[min(92vw,1000px)] max-h-[85vh] overflow-auto rounded-3xl border border-[rgba(255,109,174,0.35)] bg-[rgba(10,12,16,0.9)] p-6 shadow-[0_0_0_1px_rgba(255,109,174,0.12),0_24px_60px_rgba(5,6,10,0.7)]">
             <div className="flex items-start justify-between">
               <div className="text-sm text-slate-300">Ares Assistant</div>
               <button onClick={() => setExpanded(false)} className="text-xs rounded border border-slate-700 px-2 py-1 text-slate-300 hover:text-white">Collapse</button>
@@ -389,9 +389,9 @@ export default function AIOrbAssistant() {
                 <div className="text-slate-200 text-lg">How can I help?</div>
                 <div className="mt-3 flex gap-2">
                   <button onClick={toggleListen} className={`rounded-lg px-3 py-2 text-sm border ${isListening ? "border-emerald-400 text-emerald-300" : "border-slate-700 text-slate-300"}`}>{isListening ? "Stop Listening" : "Start Listening"}</button>
-                  <button onClick={() => setOpen(true)} className="rounded-lg border border-[rgba(255,59,0,0.45)] bg-[rgba(255,59,0,0.12)] px-3 py-2 text-sm text-[rgba(255,200,180,0.95)]">Open Chat</button>
+                  <button onClick={() => setOpen(true)} className="rounded-lg border border-[rgba(255,109,174,0.45)] bg-[rgba(255,109,174,0.12)] px-3 py-2 text-sm text-[rgba(255,235,243,0.95)]">Open Chat</button>
                 </div>
-                <div className="mt-4 text-xs text-slate-400">Tip: Say "Open Projects" or "Go to Experience" - I'll navigate and highlight the target.</div>
+                <div className="mt-4 text-xs text-slate-400">Tip: Say &ldquo;Open Projects&rdquo; or &ldquo;Go to Experience&rdquo; - I&apos;ll navigate and highlight the target.</div>
               </div>
             </div>
           </div>

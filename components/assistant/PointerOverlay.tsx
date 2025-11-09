@@ -38,8 +38,8 @@ export default function PointerOverlay(){
   return createPortal(
     <div className="pointer-events-none fixed inset-0 z-[2147483647]">
       {/* target ring */}
-      <div className="absolute h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[rgba(255,138,0,0.9)] shadow-[0_0_24px_rgba(255,59,0,0.6)] animate-pointer-pulse" style={{ left: pos.x, top: pos.y }} />
+      <div className="absolute h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[rgba(127,93,255,0.9)] shadow-[0_0_24px_rgba(255,109,174,0.6)] animate-pointer-pulse" style={{ left: pos.x, top: pos.y }} />
       {/* beam from avatar to target */}
-      <div className="absolute origin-left h-[2px] bg-gradient-to-r from-[rgba(255,59,0,0.0)] via-[rgba(255,59,0,0.7)] to-[rgba(255,138,0,0.2)] shadow-[0_0_12px_rgba(255,59,0,0.6)]" style={{ left: origin.x, top: origin.y, width: dist, transform: `rotate(${angle}deg)` }} />
+      <div className="absolute origin-left h-[2px] bg-gradient-to-r from-[rgba(255,109,174,0.0)] via-[rgba(255,109,174,0.7)] to-[rgba(127,93,255,0.2)] shadow-[0_0_12px_rgba(255,109,174,0.6)]" style={{ left: origin.x, top: origin.y, width: dist, transform: `rotate(${angle}deg)` }} />
     </div>, document.body);
 }

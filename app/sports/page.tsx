@@ -7,7 +7,7 @@ export default function SportsPage(){
         <div className="grid md:grid-cols-3 gap-6">
           <div className="card p-6">
             <h3 className="text-lg font-semibold">PPA Milwaukee Open</h3>
-            <p className="text-slate-300 mt-2">Gold (Men's Doubles), Silver (Men's Singles).</p>
+            <p className="text-slate-300 mt-2">Gold (Men&apos;s Doubles), Silver (Men&apos;s Singles).</p>
           </div>
           <div className="card p-6">
             <h3 className="text-lg font-semibold">Minor League Nationals</h3>

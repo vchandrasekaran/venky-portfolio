@@ -65,7 +65,7 @@ export default function Loadout() {
               onClick={() => { blip(); setActive(it); }}
               className={`group relative h-28 rounded-2xl border p-3 text-left transition ${
                 active.id === it.id
-                  ? "border-cyan-400/60 bg-white/10 shadow-[0_0_0_1px_rgba(34,211,238,0.18)]"
+                  ? "border-cyan-400/60 bg-white/10 shadow-[0_0_0_1px_rgba(61,229,196,0.18)]"
                   : "border-white/10 bg-white/5 hover:border-cyan-400/35"
               }`}
             >
@@ -75,10 +75,10 @@ export default function Loadout() {
               </div>
               <div className="pointer-events-none absolute inset-0 rounded-2xl" style={{
                 background:
-                  "linear-gradient(90deg, rgba(34,211,238,.35), rgba(34,211,238,0)) 0 0/24px 2px no-repeat, " +
-                  "linear-gradient(180deg, rgba(34,211,238,.35), rgba(34,211,238,0)) 0 0/2px 24px no-repeat, " +
-                  "linear-gradient(270deg, rgba(163,230,53,.35), rgba(163,230,53,0)) 100% 100%/24px 2px no-repeat, " +
-                  "linear-gradient(0deg, rgba(163,230,53,.35), rgba(163,230,53,0)) 100% 100%/2px 24px no-repeat",
+                  "linear-gradient(90deg, rgba(61,229,196,.35), rgba(61,229,196,0)) 0 0/24px 2px no-repeat, " +
+                  "linear-gradient(180deg, rgba(61,229,196,.35), rgba(61,229,196,0)) 0 0/2px 24px no-repeat, " +
+                  "linear-gradient(270deg, rgba(255,109,174,.35), rgba(255,109,174,0)) 100% 100%/24px 2px no-repeat, " +
+                  "linear-gradient(0deg, rgba(255,109,174,.35), rgba(255,109,174,0)) 100% 100%/2px 24px no-repeat",
               }} />
               {active.id === it.id ? <span key={it.id + '-sweep'} className="hud-sweep" /> : null}
             </button>

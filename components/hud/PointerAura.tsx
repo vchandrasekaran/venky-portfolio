@@ -16,7 +16,7 @@ export default function PointerAura(){
   },[mounted]);
   if (!mounted) return null;
   return createPortal(
-    <div ref={dotRef} className="pointer-events-none fixed z-[2147483646] h-5 w-5 rounded-full border border-cyan-300/40 shadow-[0_0_24px_rgba(34,211,238,0.35)] mix-blend-screen" aria-hidden/>,
+    <div ref={dotRef} className="pointer-events-none fixed z-[2147483646] h-5 w-5 rounded-full border border-cyan-300/40 shadow-[0_0_24px_rgba(61,229,196,0.35)] mix-blend-screen" aria-hidden/>,
     document.body
   );
 }

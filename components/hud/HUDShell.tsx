@@ -19,10 +19,10 @@ export default function HUDShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative">
       {/* Top HUD rail */}
-      <div className="sticky top-0 z-[900] h-14 w-full bg-[rgba(10,12,16,0.7)] backdrop-blur border-b border-[rgba(255,59,0,0.32)] shadow-[0_0_0_1px_rgba(255,59,0,0.12)]">
+      <div className="sticky top-0 z-[900] h-14 w-full bg-[rgba(10,12,16,0.7)] backdrop-blur border-b border-[rgba(255,109,174,0.32)] shadow-[0_0_0_1px_rgba(255,109,174,0.12)]">
         <div className="container-max flex h-full items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="inline-block h-2 w-2 rounded-full bg-[rgba(255,59,0,0.9)] shadow-[0_0_12px_rgba(255,59,0,0.9)]" />
+            <span className="inline-block h-2 w-2 rounded-full bg-[rgba(255,109,174,0.9)] shadow-[0_0_12px_rgba(255,109,174,0.9)]" />
             <span className="text-sm font-semibold text-slate-100 tracking-widest uppercase">{title}</span>
             <span className="ml-3 text-[10px] uppercase tracking-[0.25em] text-brand.subtle hidden sm:block">{pathname}</span>
           </div>
@@ -32,7 +32,7 @@ export default function HUDShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         {/* animated rail */}
-        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[rgba(255,59,0,0.6)] to-transparent animate-[rail_3s_linear_infinite]" />
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[rgba(255,109,174,0.6)] to-transparent animate-[rail_3s_linear_infinite]" />
       </div>
 
       <div>{children}</div>
