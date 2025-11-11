@@ -23,6 +23,19 @@ export const PROJECTS: ProjectSummary[] = [
     ]
   },
   {
+    id: 'text-to-sql-cortex',
+    title: 'Text → SQL (Snowflake + Cortex)',
+    desc: 'Natural-language queries against Tasty Bytes with live Snowflake results.',
+    href: '/projects/text-to-sql-cortex',
+    tag: 'LIVE',
+    status: 'Live',
+    highlights: [
+      'Cortex Analyst turns questions into vetted SQL for MENU data',
+      'Snowflake stored procedure TEXT_TO_SQL_MENU executes safely',
+      'UI streams generated/executed SQL plus result rows'
+    ]
+  },
+  {
     id: 'ai-talent-pulse',
     title: 'AI Talent Pulse',
     desc: 'Streaming labor signals to track AI job market shifts.',
