@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import ResultChart from "@/components/ResultChart";
 
 type Row = Record<string, any>;
 
@@ -100,30 +101,37 @@ export default function TextToSQLCortexPage() {
       )}
 
       {hasRows && (
-        <div className="mt-6 overflow-auto">
-          <table className="min-w-full border border-gray-300 rounded-lg">
-            <thead className="bg-gray-50">
-              <tr>
-                {columns.map((c) => (
-                  <th key={c} className="text-left px-3 py-2 border-b border-gray-200">
-                    {c}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r, i) => (
-                <tr key={i} className="odd:bg-white even:bg-gray-50">
+        <>
+          <div className="mt-6 overflow-auto">
+            <table className="min-w-full border border-gray-300 rounded-lg">
+              <thead className="bg-gray-50">
+                <tr>
                   {columns.map((c) => (
-                    <td key={c} className="px-3 py-2 border-b border-gray-100">
-                      {String(r[c])}
-                    </td>
+                    <th key={c} className="text-left px-3 py-2 border-b border-gray-200">
+                      {c}
+                    </th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {rows.map((r, i) => (
+                  <tr key={i} className="odd:bg-white even:bg-gray-50">
+                    {columns.map((c) => (
+                      <td key={c} className="px-3 py-2 border-b border-gray-100">
+                        {String(r[c])}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold mb-2">Quick Visualization</h3>
+            <ResultChart rows={rows} prefer="bar" />
+          </div>
+        </>
       )}
     </div>
   );
