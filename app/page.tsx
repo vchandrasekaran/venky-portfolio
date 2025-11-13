@@ -3,6 +3,7 @@ import AssistantOrbPlaceholder from '@/components/home/AssistantOrbPlaceholder'
 import SkillsCoreCompact from '@/components/home/SkillsCoreCompact'
 import SmoothReveal from '@/components/home/SmoothReveal'
 import ProjectsShowcase from '@/components/projects/ProjectsShowcase'
+import AdkChat from '@/components/AdkChat'
 import { FEATURED_HOME_PROJECTS } from '@/data/projects'
 
 export default function HomePage() {
@@ -21,6 +22,9 @@ export default function HomePage() {
 
       <SmoothReveal className="block" delay={0.08}>
         <AssistantOrbPlaceholder />
+      </SmoothReveal>
+      <SmoothReveal className="block" delay={0.08}>
+        <AdkChat />
       </SmoothReveal>
 
       <SmoothReveal as="section" className="container-max pb-16" delay={0.1}>

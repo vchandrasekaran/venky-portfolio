@@ -6,9 +6,9 @@ export default function SkillsCoreCompact() {
   return (
     <section className="container-max pb-20">
       <div className="text-center">
-        <p className="text-[10px] uppercase tracking-[0.35em] text-[#b3b3b3]">Skills Core</p>
-        <h3 className="mt-3 text-2xl font-semibold text-white md:text-3xl">Governed pods across the stack</h3>
-        <p className="mx-auto mt-2 max-w-2xl text-sm text-slate-300 md:text-base">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-[#555555]">Skills Core</p>
+        <h3 className="mt-3 text-2xl font-semibold text-[#111111] md:text-3xl">Governed pods across the stack</h3>
+        <p className="mx-auto mt-2 max-w-2xl text-sm text-[#3f3f3f] md:text-base">
           Pipelines, BI, and application tooling presented in horizontal pods so you can scan the stack at a glance.
         </p>
       </div>
