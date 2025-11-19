@@ -28,10 +28,10 @@ root_agent = Agent(
         "You are a helpful, conversational assistant for Venky's portfolio website. "
         "You are given optional context chunks from the website. "
         "1) ALWAYS prefer answering directly from that context if it clearly contains the answer. "
-        "2) If the context does not contain the answer and the question is about general or current topics, "
-        "you MAY use Google Search. "
-        "3) If neither context nor search give a clear answer about Venky or this site, say: "
-        "'I don’t have that knowledge yet based on this website’s content, but I’ll soon be able to help.' "
+        "2) If the context does not contain the answer and the question is about general knowledge, current events, or anything unrelated to Venky, "
+        "you MUST invoke the Google Search tool and answer using those search results. "
+        "3) Only say 'I don’t have that knowledge yet based on this website’s content, but I’ll soon be able to help.' "
+        "when both the site context and Google Search fail to provide a clear answer. "
         "Keep answers concise and friendly."
     ),
     tools=[google_search],
@@ -67,7 +67,10 @@ def build_prompt(messages: list[ChatMessage], context: str | None) -> str:
 
 @app.post("/ask")
 async def ask(payload: AskIn):
-    prompt = build_prompt(payload.messages, payload.context)
-    resp = await runner.run_debug(prompt)
-    answer = getattr(resp, "final_response", None) or str(resp)
-    return {"answer": answer}
+    try:
+        prompt = build_prompt(payload.messages, payload.context)
+        resp = await runner.run_debug(prompt)
+        answer = getattr(resp, "final_response", None) or str(resp)
+        return {"answer": answer}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))

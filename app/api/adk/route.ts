@@ -39,12 +39,20 @@ export async function POST(req: Request) {
       body: JSON.stringify(payload),
     });
 
-    const data = await r.json();
-    if (!r.ok) {
-      return NextResponse.json({ error: data?.detail || "ADK backend error" }, { status: 502 });
+    const raw = await r.text();
+    let data: any = null;
+    try {
+      data = raw ? JSON.parse(raw) : null;
+    } catch {
+      console.error("ADK response not JSON:", raw);
+      return NextResponse.json({ error: raw || "ADK returned invalid response" }, { status: r.status || 502 });
     }
 
-    return NextResponse.json({ answer: data.answer });
+    if (!r.ok) {
+      return NextResponse.json({ error: data?.detail || "ADK backend error" }, { status: r.status || 502 });
+    }
+
+    return NextResponse.json({ answer: data?.answer });
   } catch (e: any) {
     return NextResponse.json({ error: e.message || String(e) }, { status: 500 });
   }
