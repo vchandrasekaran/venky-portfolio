@@ -7,10 +7,8 @@ export function siteMap(): NavItem[] {
     { path: '/', hash: '#ops', label: 'Ops Loadout', keywords: ['ops','loadout','modules'] },
     { path: '/', hash: '#projects', label: 'Projects', keywords: ['projects','portfolio','case studies','operations deck'] },
     { path: '/projects', label: 'Projects Index', keywords: ['projects page','portfolio projects'] },
-    { path: '/projects/ai-talent-pulse', label: 'AI Talent Pulse', keywords: ['ai talent','talent pulse','job market','hiring','layoffs'] },
     { path: '/experience', label: 'Experience', keywords: ['experience','resume','work history','roles'] },
     { path: '/contact', label: 'Contact', keywords: ['contact','email','linkedin','message'] },
     { path: '/sports', label: 'Sports', keywords: ['sports','media','dupr'] },
   ];
 }
-

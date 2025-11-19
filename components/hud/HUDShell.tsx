@@ -6,7 +6,6 @@ export default function HUDShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const title = useMemo(() => {
     if (pathname === "/") return "Command Console";
-    if (pathname?.startsWith("/projects/ai-talent-pulse")) return "AI Talent Pulse";
     if (pathname?.startsWith("/projects")) return "Projects Deck";
     if (pathname?.startsWith("/experience")) return "Experience Log";
     if (pathname?.startsWith("/contact")) return "Comms";

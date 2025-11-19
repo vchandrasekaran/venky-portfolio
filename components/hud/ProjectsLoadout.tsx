@@ -16,14 +16,6 @@ const tableauProfile = 'https://public.tableau.com/app/profile/venkateshnaidu/vi
 
 const PROJECTS: Project[] = [
   {
-    id: 'ai-talent-pulse',
-    title: 'AI Talent Pulse',
-    tag: 'Labor Signals',
-    desc: 'Streaming job, skills, and comp signals to track AI disruption across roles and regions.',
-    status: 'Prototype',
-    href: '/projects/ai-talent-pulse',
-  },
-  {
     id: 'tableau-portfolio',
     title: 'Interactive Tableau Portfolio',
     tag: 'Executive Vizzes',

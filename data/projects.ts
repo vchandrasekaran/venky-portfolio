@@ -34,33 +34,7 @@ export const PROJECTS: ProjectSummary[] = [
       'Snowflake stored procedure TEXT_TO_SQL_MENU executes safely',
       'UI streams generated/executed SQL plus result rows'
     ]
-  },
-  {
-    id: 'ai-talent-pulse',
-    title: 'AI Talent Pulse',
-    desc: 'Streaming labor signals to track AI job market shifts.',
-    href: '/projects/ai-talent-pulse',
-    tag: 'PROTOTYPE',
-    status: 'Prototype',
-    highlights: [
-      'Snowflake + Streamlit embed with filters',
-      'Skills heatmap for emerging AI roles',
-      'Phase 2: dbt metric layer + voice copilot'
-    ]
-  },
-  {
-    id: 'sports-intel',
-    title: 'Sports Intelligence Grid',
-    desc: 'Sentiment, telemetry, and sponsor ROI models for growth.',
-    href: '#',
-    tag: 'CONCEPT',
-    status: 'Concept',
-    highlights: [
-      'Wearables + DUPR telemetry for coaching cues',
-      'Brand lift attribution for sponsors',
-      'Fan sentiment insights for content planning'
-    ]
   }
 ];
 
-export const FEATURED_HOME_PROJECTS = PROJECTS.slice(0, 4);
+export const FEATURED_HOME_PROJECTS = PROJECTS.slice(0, PROJECTS.length);
