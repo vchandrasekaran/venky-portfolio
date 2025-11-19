@@ -4,6 +4,6 @@ export const metadata = {
 }
 
 export default function ProjectsLayout({ children }: { children: React.ReactNode }) {
-  // Defer html/body to the root layout so global UI (orb assistant) stays mounted
+  // Defer html/body to the root layout so shared UI wrappers stay mounted
   return <>{children}</>;
 }
