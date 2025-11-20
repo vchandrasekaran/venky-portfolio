@@ -23,6 +23,19 @@ export const PROJECTS: ProjectSummary[] = [
     ]
   },
   {
+    id: 'trucklexa',
+    title: 'Trucklexa Alexa Skill',
+    desc: 'Voice-enabled load booking assistant built with Node.js, Python, and AWS Lambda.',
+    href: '/projects/trucklexa',
+    tag: 'LIVE',
+    status: 'Live',
+    highlights: [
+      'Hands-free brokerage workflow that reduces booking steps dramatically',
+      'Alexa + Lambda workflow pipes requests into Truckstop APIs securely',
+      'Showcases conversational BI concepts Venky is applying to freight data'
+    ]
+  },
+  {
     id: 'text-to-sql-cortex',
     title: 'Text → SQL (Snowflake + Cortex)',
     desc: 'Natural-language queries against Tasty Bytes with live Snowflake results.',

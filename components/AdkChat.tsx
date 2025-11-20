@@ -7,6 +7,37 @@ type ChatMessage = {
   content: string;
 };
 
+function extractFromEventString(input: string): string | null {
+  const matches = [...input.matchAll(/text=(["']{1,3})([\s\S]*?)\1/g)]
+    .map((m) => m[2]?.trim())
+    .filter(Boolean);
+  if (matches.length) return matches.join("\n").trim();
+  return null;
+}
+
+function formatAnswer(answer: any): string {
+  if (answer === null || answer === undefined) return "";
+  if (typeof answer === "string") {
+    const trimmed = answer.trim();
+    if (!trimmed) return "";
+    const eventText = extractFromEventString(trimmed);
+    if (eventText) return eventText;
+    try {
+      const parsed = JSON.parse(trimmed);
+      return typeof parsed === "string" ? parsed : JSON.stringify(parsed, null, 2);
+    } catch {
+      return trimmed;
+    }
+  }
+  if (typeof answer === "object") {
+    if ("content" in answer && typeof (answer as any).content === "string") {
+      return (answer as any).content;
+    }
+    return JSON.stringify(answer, null, 2);
+  }
+  return String(answer);
+}
+
 export default function AdkChat({
   title = "Chat with Venky's Assistant",
   placeholder = "Ask anything about Venky's BI work, pickleball journey, or general questions",
@@ -33,6 +64,7 @@ export default function AdkChat({
   const [speakReplies, setSpeakReplies] = useState(false);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [autoListen, setAutoListen] = useState(false);
 
   useEffect(() => {
     messagesRef.current = messages;
@@ -42,6 +74,7 @@ export default function AdkChat({
     if (typeof window === "undefined") return;
     if ("speechSynthesis" in window) {
       setSpeechOutputSupported(true);
+      setSpeakReplies(true);
     }
     return () => {
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
@@ -50,76 +83,89 @@ export default function AdkChat({
     };
   }, []);
 
-  function extractFromEventString(input: string): string | null {
-    const matches = [...input.matchAll(/text=(["']{1,3})([\s\S]*?)\1/g)]
-      .map((m) => m[2]?.trim())
-      .filter(Boolean);
-    if (matches.length) return matches.join("\n").trim();
-    return null;
-  }
+  const stopSpeaking = useCallback(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    if (speechRef.current) {
+      speechRef.current.onend = null;
+      speechRef.current.onerror = null;
+      speechRef.current = null;
+    }
+    setIsSpeaking(false);
+  }, []);
 
-  function formatAnswer(answer: any): string {
-    if (answer === null || answer === undefined) return "";
-    if (typeof answer === "string") {
-      const trimmed = answer.trim();
-      if (!trimmed) return "";
-      const eventText = extractFromEventString(trimmed);
-      if (eventText) return eventText;
-      try {
-        const parsed = JSON.parse(trimmed);
-        return typeof parsed === "string" ? parsed : JSON.stringify(parsed, null, 2);
-      } catch {
-        return trimmed;
-      }
+  const startListening = useCallback(() => {
+    const recognition = recognitionRef.current;
+    if (!recognition) return false;
+    try {
+      recognition.start();
+      setIsListening(true);
+      setInterimTranscript("");
+      return true;
+    } catch {
+      return false;
     }
-    if (typeof answer === "object") {
-      if ("content" in answer && typeof answer.content === "string") return answer.content;
-      return JSON.stringify(answer, null, 2);
+  }, []);
+
+  const stopListening = useCallback(() => {
+    const recognition = recognitionRef.current;
+    if (!recognition) return;
+    try {
+      recognition.stop();
+    } catch {
+      // SpeechRecognition can throw if already stopped; ignore.
     }
-    return String(answer);
-  }
+    setIsListening(false);
+  }, []);
 
   const normalizeSpeakText = (text: string) => {
     if (!text) return "";
-    const bulletMap: Record<string, string> = {
-      "\\*": "•",
-      "-": "•",
-      "•": "•",
-    };
-
-    let sanitized = text;
-    sanitized = sanitized.replace(/\*\*(.*?)\*\*/g, "$1");
-    sanitized = sanitized.replace(
-      /([•\-\*]\s+)([^•\-\*]+)/g,
-      (_match, prefix, content) => {
-        return `• ${content.trim()}\n`;
-      }
-    );
-    sanitized = sanitized.replace(/\\s+/g, " ");
-    sanitized = sanitized.replace(/#+/g, " number ");
-    return sanitized.trim();
+    return text
+      .replace(/\*\*(.*?)\*\*/g, "$1")
+      .replace(/`([^`]+)`/g, "$1")
+      .replace(/^[\s]*[-*\u2022]\s*/gm, " bullet ")
+      .replace(/[-*\u2022]\s+/g, " bullet ")
+      .replace(/#/g, " number ")
+      .replace(/\s{2,}/g, " ")
+      .replace(/[\r\n]+/g, ". ")
+      .trim();
   };
 
   const speakText = useCallback(
     (text: string) => {
       if (!speechOutputSupported || !text) return;
       try {
-        window.speechSynthesis.cancel();
+        stopSpeaking();
         const utterance = new SpeechSynthesisUtterance(normalizeSpeakText(text));
         utterance.pitch = 1.1;
         utterance.rate = 1.2;
         utterance.onstart = () => setIsSpeaking(true);
-        utterance.onend = () => setIsSpeaking(false);
-        utterance.onerror = () => setIsSpeaking(false);
+        utterance.onend = () => {
+          setIsSpeaking(false);
+          if (autoListen) {
+            startListening();
+          }
+        };
+        utterance.onerror = () => {
+          setIsSpeaking(false);
+          if (autoListen) {
+            startListening();
+          }
+        };
         speechRef.current = utterance;
         window.speechSynthesis.speak(utterance);
-      } catch {}
+      } catch {
+        if (autoListen) {
+          startListening();
+        }
+      }
     },
-    [speechOutputSupported]
+    [autoListen, speechOutputSupported, startListening, stopSpeaking]
   );
 
   const handleSend = useCallback(
-    async (text: string) => {
+    async (text: string, opts?: { fromVoice?: boolean }) => {
       if (!text || loading) return;
 
       const base = messagesRef.current;
@@ -146,7 +192,7 @@ export default function AdkChat({
             content: formatted,
           };
           setMessages([...newMessages, assistantReply]);
-          if (speakReplies || isListening) {
+          if ((speakReplies || opts?.fromVoice) && speechOutputSupported) {
             speakText(formatted);
           }
         }
@@ -156,7 +202,7 @@ export default function AdkChat({
         setLoading(false);
       }
     },
-    [loading, speakReplies, speakText]
+    [loading, speakReplies, speakText, speechOutputSupported]
   );
 
   useEffect(() => {
@@ -186,7 +232,7 @@ export default function AdkChat({
       setInterimTranscript(interim);
       if (finalText.trim()) {
         setInterimTranscript("");
-        handleSend(finalText.trim());
+        handleSend(finalText.trim(), { fromVoice: true });
       }
     };
 
@@ -210,38 +256,53 @@ export default function AdkChat({
     };
   }, [handleSend]);
 
+  useEffect(() => {
+    if (!autoListen || !speechSupported) return;
+    if (!isListening && !isSpeaking) {
+      startListening();
+    }
+  }, [autoListen, speechSupported, isListening, isSpeaking, startListening]);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const text = input.trim();
     await handleSend(text);
   }
 
+  const handleStopAll = useCallback(() => {
+    stopSpeaking();
+    stopListening();
+    setInterimTranscript("");
+  }, [stopListening, stopSpeaking]);
+
   const toggleListening = () => {
-    const recognition = recognitionRef.current;
-    if (!recognition) return;
+    if (!speechSupported) return;
     if (isListening) {
-      recognition.stop();
-      setIsListening(false);
+      stopListening();
       return;
     }
-    try {
-      recognition.start();
-      setIsListening(true);
-      setInterimTranscript("");
-    } catch (_err) {
-      setIsListening(false);
-    }
+    stopSpeaking();
+    startListening();
   };
 
+  const engaged = isListening || isSpeaking;
   const orbState = isListening ? "listening" : isSpeaking ? "speaking" : loading ? "thinking" : "idle";
-  const orbGlow =
+  const orbGradient =
     orbState === "listening"
-      ? "from-[#1b52ff] via-[#2ca4ff] to-[#66f2ff]"
+      ? "linear-gradient(145deg, #1b52ff 0%, #2ca4ff 50%, #66f2ff 100%)"
       : orbState === "speaking"
-      ? "from-[#6a5bff] via-[#9c7dff] to-[#c3a7ff]"
+      ? "linear-gradient(145deg, #6a5bff 0%, #9c7dff 45%, #c3a7ff 100%)"
       : orbState === "thinking"
-      ? "from-[#ff9b5f] via-[#ffb677] to-[#ffd7a3]"
-      : "from-[#0f1b3f] via-[#163966] to-[#1b52ff]";
+      ? "linear-gradient(145deg, #ff9b5f 0%, #ffb677 45%, #ffd7a3 100%)"
+      : "linear-gradient(145deg, #0f1b3f 0%, #163966 45%, #1b52ff 100%)";
+  const orbShadow =
+    orbState === "listening"
+      ? "0 0 55px rgba(38,160,255,0.55)"
+      : orbState === "speaking"
+      ? "0 0 55px rgba(156,125,255,0.55)"
+      : orbState === "thinking"
+      ? "0 0 45px rgba(255,166,110,0.45)"
+      : "0 0 35px rgba(52,92,255,0.45)";
   const statusLabel =
     orbState === "listening"
       ? "Listening..."
@@ -251,9 +312,125 @@ export default function AdkChat({
       ? "Thinking..."
       : "Tap to talk";
 
+  const waveStyles = `
+    .adk-wave-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .adk-wave {
+      position: absolute;
+      width: 180%;
+      height: 80%;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1.05);
+      opacity: 0.85;
+      background-size: 200% 100%;
+      filter: drop-shadow(0 25px 45px rgba(24, 173, 255, 0.35));
+    }
+    .adk-wave-two {
+      animation-duration: 13s;
+      animation-direction: alternate-reverse;
+      opacity: 0.65;
+      filter: drop-shadow(0 25px 45px rgba(255, 118, 187, 0.3));
+    }
+    .adk-wave-three {
+      width: 210%;
+      height: 95%;
+      opacity: 0.55;
+      filter: blur(8px);
+      animation-duration: 16s;
+    }
+    .adk-wave-one {
+      background-image: linear-gradient(115deg, rgba(103,79,255,0.05), rgba(103,79,255,0.65) 30%, rgba(255,53,167,0.8) 70%, rgba(255,240,158,0.6));
+      clip-path: polygon(0% 68%, 7% 63%, 14% 60%, 21% 63%, 28% 58%, 36% 61%, 44% 55%, 52% 58%, 60% 52%, 68% 56%, 76% 50%, 84% 54%, 92% 48%, 100% 51%, 100% 100%, 0% 100%);
+      animation: adkWaveDrift 10s ease-in-out infinite alternate, adkWaveShift 18s linear infinite;
+    }
+    .adk-wave-two {
+      background-image: linear-gradient(105deg, rgba(51,232,255,0.3), rgba(68,149,255,0.7) 40%, rgba(255,55,155,0.85) 70%, rgba(255,153,102,0.4));
+      clip-path: polygon(0% 78%, 8% 73%, 16% 70%, 24% 74%, 32% 67%, 40% 72%, 48% 64%, 56% 69%, 64% 62%, 72% 66%, 80% 59%, 88% 64%, 96% 56%, 100% 60%, 100% 100%, 0% 100%);
+      animation: adkWaveDrift 13s ease-in-out infinite alternate-reverse, adkWaveShiftReverse 24s linear infinite;
+    }
+    .adk-wave-three {
+      background-image: linear-gradient(140deg, rgba(143, 76, 255, 0.15), rgba(84, 220, 255, 0.65) 45%, rgba(255, 80, 156, 0.45) 80%);
+      clip-path: polygon(0% 60%, 7% 55%, 15% 58%, 23% 53%, 31% 56%, 39% 50%, 47% 54%, 55% 48%, 63% 52%, 71% 47%, 79% 49%, 87% 45%, 95% 47%, 100% 44%, 100% 100%, 0% 100%);
+      animation: adkWaveDriftSlow 16s ease-in-out infinite alternate, adkWaveShift 28s linear infinite;
+    }
+    .adk-wave-glow {
+      position: absolute;
+      inset: 12%;
+      border-radius: 999px;
+      background: radial-gradient(circle at 40% 50%, rgba(41,196,255,0.45), transparent 70%);
+      filter: blur(30px);
+      animation: adkWavePulse 6s ease-in-out infinite;
+    }
+    @keyframes adkWaveDrift {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        transform: translate(-48%, -52%) scale(1.05);
+      }
+      100% {
+        transform: translate(-52%, -48%) scale(1.08);
+      }
+    }
+    @keyframes adkWaveDriftSlow {
+      0% {
+        transform: translate(-50%, -50%) scale(1.02);
+      }
+      100% {
+        transform: translate(-49%, -51%) scale(1.08);
+      }
+    }
+    @keyframes adkWaveShift {
+      from {
+        background-position: 0% 50%;
+      }
+      to {
+        background-position: 200% 50%;
+      }
+    }
+    @keyframes adkWaveShiftReverse {
+      from {
+        background-position: 200% 50%;
+      }
+      to {
+        background-position: 0% 50%;
+      }
+    }
+    @keyframes adkWavePulse {
+      0% {
+        opacity: 0.35;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 0.35;
+        transform: scale(0.95);
+      }
+    }
+  `;
+
   return (
-    <section className="container-max mt-12">
-      <div className="rounded-3xl border border-white/10 bg-[#0b0d18] shadow-[0_35px_80px_rgba(3,7,18,0.65)] p-6 md:p-8 flex flex-col gap-6">
+    <>
+      <section className="container-max mt-12">
+        <div className="rounded-3xl border border-white/10 bg-[#0b0d18] shadow-[0_35px_80px_rgba(3,7,18,0.65)] p-6 md:p-8 relative overflow-hidden">
+          {engaged && (
+            <div className="adk-wave-wrap">
+              <div className="adk-wave adk-wave-one" />
+              <div className="adk-wave adk-wave-two" />
+              <div className="adk-wave adk-wave-three" />
+              <div className="adk-wave-glow" />
+            </div>
+          )}
+          <div className="relative z-10 flex flex-col gap-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="text-center lg:text-left">
             <span className="inline-flex items-center rounded-full border border-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#a1a6c4]">
@@ -261,7 +438,7 @@ export default function AdkChat({
             </span>
             <h2 className="mt-3 text-2xl font-semibold text-white">{title}</h2>
             <p className="text-sm text-[#a6abc9]">
-              Powered by Venky's site context, Gemini 2.5, and Google Search.
+              Powered by Venky&apos;s site context, Gemini 2.5, and Google Search.
             </p>
           </div>
           <div className="flex flex-col items-center gap-3 lg:flex-row lg:gap-6">
@@ -274,10 +451,12 @@ export default function AdkChat({
               }`}
             >
               <div
-                className={`absolute inset-0 rounded-full bg-gradient-to-br ${orbGlow} blur-2xl opacity-70 transition-all`}
+                className="absolute inset-0 rounded-full blur-3xl opacity-70 transition-all"
+                style={{ backgroundImage: orbGradient, boxShadow: orbShadow }}
               />
               <div
-                className={`relative h-20 w-20 rounded-full border border-white/20 bg-gradient-to-br ${orbGlow} shadow-[0_0_35px_rgba(39,171,255,0.45)]`}
+                className="relative h-20 w-20 rounded-full border border-white/20 transition-all"
+                style={{ backgroundImage: orbGradient, boxShadow: orbShadow }}
               />
             </button>
             <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-center text-[12px] text-[#cfd2e9] shadow-inner lg:text-left">
@@ -285,7 +464,32 @@ export default function AdkChat({
                 {speechSupported ? "Voice Status" : "Microphone unavailable"}
               </p>
               <p className="mt-2 text-base text-white">{speechSupported ? statusLabel : "Enable microphone to talk"}</p>
-              {interimTranscript && <p className="mt-1 text-xs text-cyan-200">“{interimTranscript}”</p>}
+              {interimTranscript && (
+                <p className="mt-1 text-xs text-cyan-200">&ldquo;{interimTranscript}&rdquo;</p>
+              )}
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+                <button
+                  type="button"
+                  onClick={handleStopAll}
+                  className="rounded-xl border border-white/20 px-3 py-1.5 text-[11px] font-semibold text-white/80 transition hover:text-white"
+                >
+                  Stop
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAutoListen((prev) => !prev)}
+                  disabled={!speechSupported}
+                  className={`rounded-xl px-3 py-1.5 text-[11px] font-semibold transition ${
+                    speechSupported
+                      ? autoListen
+                        ? "bg-white/20 text-white"
+                        : "bg-white/10 text-white/80 hover:text-white"
+                      : "bg-white/5 text-white/30 cursor-not-allowed"
+                  }`}
+                >
+                  {autoListen ? "Auto-listen on" : "Auto-listen off"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -348,7 +552,10 @@ export default function AdkChat({
         {interimTranscript && speechSupported && (
           <p className="text-xs text-white/60">Listening: {interimTranscript}</p>
         )}
-      </div>
-    </section>
+          </div>
+        </div>
+      </section>
+      <style jsx>{waveStyles}</style>
+    </>
   );
 }
