@@ -1,5 +1,4 @@
 import Hero from '@/components/Hero'
-import AssistantOrbPlaceholder from '@/components/home/AssistantOrbPlaceholder'
 import SkillsCoreCompact from '@/components/home/SkillsCoreCompact'
 import SmoothReveal from '@/components/home/SmoothReveal'
 import ProjectsShowcase from '@/components/projects/ProjectsShowcase'
@@ -20,9 +19,6 @@ export default function HomePage() {
         </section>
       </SmoothReveal>
 
-      <SmoothReveal className="block" delay={0.08}>
-        <AssistantOrbPlaceholder />
-      </SmoothReveal>
       <SmoothReveal className="block" delay={0.08}>
         <AdkChat />
       </SmoothReveal>
