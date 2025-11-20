@@ -27,7 +27,7 @@ export default function HomePage() {
         <AdkChat />
       </SmoothReveal>
 
-      <SmoothReveal as="section" className="container-max pb-16" delay={0.1}>
+      <SmoothReveal as="section" className="container-max pb-16 pt-10" delay={0.1}>
         <header className="mb-6 text-center md:mb-10">
           <p className="text-[10px] uppercase tracking-[0.45em] text-[#3f3f3f]">Active Projects</p>
           <h2 className="mt-3 text-2xl font-semibold text-[#111111] md:text-3xl">
