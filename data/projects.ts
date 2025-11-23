@@ -36,6 +36,19 @@ export const PROJECTS: ProjectSummary[] = [
     ]
   },
   {
+    id: 'pantry-coach',
+    title: 'Pantry Coach · Recipe Planner',
+    desc: 'Ingredient-aware meal planner powered by the Epicurious dataset and Gemini agents.',
+    href: '/projects/pantry-coach',
+    tag: 'LIVE',
+    status: 'Live',
+    highlights: [
+      'Searches 20k+ Epicurious recipes locally for zero-latency planning',
+      'Returns step-by-step instructions and highlights matching ingredients',
+      'Future-ready: slot in Gemini for reasoning without changing the UI'
+    ]
+  },
+  {
     id: 'text-to-sql-cortex',
     title: 'Text → SQL (Snowflake + Cortex)',
     desc: 'Natural-language queries against Tasty Bytes with live Snowflake results.',

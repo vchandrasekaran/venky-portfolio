@@ -35,3 +35,5 @@ coverage/
 # Misc
 *.swp
 *.swo
+.venv/
+data/full_format_recipes.json
