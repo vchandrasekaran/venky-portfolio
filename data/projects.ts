@@ -49,6 +49,19 @@ export const PROJECTS: ProjectSummary[] = [
     ]
   },
   {
+    id: 'ai-cricket-analyst',
+    title: 'AI Cricket & Pickleball Analyst',
+    desc: 'Computer-vision assistant that ingests live video, tags highlights, and surfaces coach-level insights for cricket and pickleball.',
+    href: '/projects/ai-analyst',
+    tag: 'IN FLIGHT',
+    status: 'In Flight',
+    highlights: [
+      'Vision models detect shots, player positions, and tempo changes in real time',
+      'Captures action items (field placements, swing mechanics, serve consistency) for coaches',
+      'Architecture extends to pickleball footage with the same tagging/insight engine'
+    ]
+  },
+  {
     id: 'text-to-sql-cortex',
     title: 'Text → SQL (Snowflake + Cortex)',
     desc: 'Natural-language queries against Tasty Bytes with live Snowflake results.',

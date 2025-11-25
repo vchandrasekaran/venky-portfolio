@@ -16,7 +16,7 @@ export default function Hero() {
   const marqueeShift = useTransform(scrollYProgress, [0, 1], ['-60%', '0%'])
 
   return (
-    <section ref={sectionRef} className="relative isolate overflow-hidden bg-[#f4f2ee]">
+    <section ref={sectionRef} className="relative isolate overflow-hidden bg-[#05091d] text-white">
       <div className="relative h-screen w-full overflow-hidden">
         {hasImage ? (
           <Image
@@ -32,10 +32,11 @@ export default function Hero() {
             Add your photo at /public/headshot.jpg
           </div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#02030b] via-transparent to-transparent" />
       </div>
 
       <motion.div
-        className="pointer-events-none absolute bottom-8 left-1/2 z-[5] w-[220vw] -translate-x-1/2 overflow-hidden text-[clamp(2.5rem,16vw,12rem)] font-semibold uppercase tracking-[0.4em] text-[#d0d0d0] drop-shadow-[0_12px_35px_rgba(0,0,0,0.35)]"
+        className="pointer-events-none absolute bottom-8 left-1/2 z-[5] w-[220vw] -translate-x-1/2 overflow-hidden text-[clamp(2.5rem,16vw,12rem)] font-semibold uppercase tracking-[0.4em] text-white/20 drop-shadow-[0_12px_35px_rgba(0,0,0,0.35)]"
         style={{ x: marqueeShift }}
         aria-hidden
       >

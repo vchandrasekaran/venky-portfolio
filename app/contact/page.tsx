@@ -75,22 +75,22 @@ export default function ContactPage(){
     <main>
       <Section title="Contact" subtitle="Let's talk BI - Snowflake, dbt, Power BI, Domo, and more.">
         <div className="card p-6">
-          <p className="text-slate-300">Prefer LinkedIn? Great - add me and mention this site.</p>
+          <p className="text-white/70">Prefer LinkedIn? Great - add me and mention this site.</p>
           <ul className="mt-4 space-y-3">
             {contactLinks.map((link) => (
               <li key={link.name}>
                 <a
-                  className="flex items-center gap-3 rounded-xl border border-transparent px-3 py-2 transition hover:border-brand.accent/40 hover:bg-white/5"
+                  className="flex items-center gap-3 rounded-xl border border-transparent px-3 py-2 transition hover:border-white/30 hover:bg-white/5"
                   href={link.href}
                   target={link.href.startsWith('mailto:') ? undefined : '_blank'}
                   rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/8">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
                     {ICONS[link.icon]}
                   </span>
                   <div>
-                    <span className="block text-xs uppercase tracking-wide text-slate-400">{link.name}</span>
-                    <span className="text-brand.accent">{link.label}</span>
+                    <span className="block text-xs uppercase tracking-wide text-white/50">{link.name}</span>
+                    <span className="text-white">{link.label}</span>
                   </div>
                 </a>
               </li>

@@ -123,8 +123,8 @@ export default function ExperiencePage(){
         <div className="grid gap-6">
           {detailedExperiences.map((exp, idx) => (
             <article key={idx} className="card p-6">
-              <h3 className="text-lg font-semibold text-slate-100">{exp.title}</h3>
-              <ul className="mt-4 ml-4 list-disc space-y-2 text-slate-300">
+              <h3 className="text-lg font-semibold text-white">{exp.title}</h3>
+              <ul className="mt-4 ml-4 list-disc space-y-2 text-white/70">
                 {exp.bullets.map((point, i) => (
                   <li key={i} className="pl-2">{point}</li>
                 ))}
