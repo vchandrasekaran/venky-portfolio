@@ -14,8 +14,9 @@ export default function HomePage() {
         <section className="container-max py-16 text-center text-white">
           <p className="text-xs font-semibold uppercase tracking-[0.8em] text-white/50">Venkatesh Naidu</p>
           <p className="mx-auto mt-4 max-w-3xl text-base text-white/80 md:text-lg">
-            Building immersive data copilots so executives can interrogate Snowflake and telemetry pipelines with a single question.
-            Every dashboard, AI agent, and automation is grounded in governed data and exec-ready context.
+            Building natural-language insight layers on top of your data that deliver clear, instant answers for leaders
+            and stakeholders. Every dashboard, AI agent, and automation is grounded in governed data and exec-ready
+            context.
           </p>
         </section>
       </SmoothReveal>
