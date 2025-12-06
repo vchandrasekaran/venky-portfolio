@@ -4,7 +4,7 @@ type Stage = {
   id: string;
   title: string;
   desc: string;
-  tools: { name: string; logo: string }[];
+  tools: { name: string; logo?: string }[];
   outputs?: string[];
 };
 
@@ -14,9 +14,9 @@ const PIPELINE_STAGES: Stage[] = [
     title: "Ingest",
     desc: "Collect from apps, events, files, and APIs.",
     tools: [
-      { name: "Matillion", logo: "/logos/matillion-logo.webp" },
-      { name: "Python", logo: "/logos/python-logo.webp" },
-      { name: "AWS", logo: "/logos/aws-logo.png" },
+      { name: "Fivetran" },
+      { name: "Kafka" },
+      { name: "Snowpipe" },
     ],
     outputs: ["Raw events", "Batch loads"],
   },
@@ -25,9 +25,10 @@ const PIPELINE_STAGES: Stage[] = [
     title: "Store",
     desc: "Land and organize data in object stores and warehouses.",
     tools: [
+      { name: "S3" },
+      { name: "Azure Data Lake" },
       { name: "Snowflake", logo: "/logos/snowflake-logo.png" },
-      { name: "Redshift", logo: "/logos/redshift-logo.png" },
-      { name: "AWS", logo: "/logos/aws-logo.png" },
+      { name: "Iceberg" },
     ],
     outputs: ["Raw tables", "Staging areas"],
   },
@@ -36,11 +37,10 @@ const PIPELINE_STAGES: Stage[] = [
     title: "Transform",
     desc: "Clean, validate, model, and enrich data for use.",
     tools: [
-      { name: "Python", logo: "/logos/python-logo.webp" },
       { name: "dbt", logo: "/logos/dbt-logo.jpg" },
-      { name: "Matillion", logo: "/logos/matillion-logo.webp" },
-      { name: "GitLab", logo: "/logos/gitlab-logo.webp" },
-      { name: "GitHub", logo: "/logos/github.svg" },
+      { name: "Spark" },
+      { name: "Airflow" },
+      { name: "Soda" },
     ],
     outputs: ["Validated models", "Metrics layer"],
   },
@@ -49,14 +49,13 @@ const PIPELINE_STAGES: Stage[] = [
     title: "Serve + Activate",
     desc: "Deliver insights to BI, APIs, alerts, and apps.",
     tools: [
-      { name: "Domo", logo: "/logos/domo-logo.webp" },
-      { name: "Power BI", logo: "/logos/powerbi-logo.png" },
       { name: "Tableau", logo: "/logos/tableau-logo.png" },
-      { name: "Salesforce", logo: "/logos/salesforce-logo.webp" },
-      { name: "TypeScript", logo: "/logos/typescript-logo.svg" },
-      { name: "JavaScript", logo: "/logos/javascript-logo.webp" },
-      { name: "Gemini", logo: "/logos/github.svg" },
-      { name: "Slack alerts", logo: "/logos/github.svg" },
+      { name: "Power BI", logo: "/logos/powerbi-logo.png" },
+      { name: "Looker" },
+      { name: "Domo", logo: "/logos/domo-logo.webp" },
+      { name: "ClickHouse" },
+      { name: "Atlan" },
+      { name: "Alerts" },
     ],
     outputs: ["Dashboards", "APIs", "Alerts", "AI + apps"],
   },
@@ -145,9 +144,15 @@ function StageCard({ stage }: { stage: Stage }) {
 function ToolChip({ tool }: { tool: Stage["tools"][number] }) {
   return (
     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/15 bg-white/10">
-        <Image src={tool.logo} alt={tool.name} width={16} height={16} className="h-4 w-4 object-contain" />
-      </span>
+      {tool.logo ? (
+        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/15 bg-white/10">
+          <Image src={tool.logo} alt={tool.name} width={16} height={16} className="h-4 w-4 object-contain" />
+        </span>
+      ) : (
+        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/15 bg-white/10 text-[10px]">
+          {tool.name.slice(0, 2)}
+        </span>
+      )}
       {tool.name}
     </div>
   );
