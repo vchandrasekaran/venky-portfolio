@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from google.adk.agents import Agent
@@ -99,6 +100,41 @@ def build_pantry_prompt(payload: PantryAsk) -> str:
     )
 
 
+def parse_agent_json(answer: str) -> dict:
+    """Attempt to recover a JSON object from the agent response, even if it was wrapped in markdown."""
+
+    def _try_load(candidate: str) -> dict:
+        data = json.loads(candidate)
+        if not isinstance(data, dict):
+            raise ValueError("Pantry agent response is not a JSON object.")
+        return data
+
+    # Happy path: already valid JSON
+    try:
+        return _try_load(answer)
+    except Exception:
+        pass
+
+    # Look for fenced code blocks like ```json {...}```
+    fenced_blocks = re.findall(r"```(?:json)?\s*({.*?})\s*```", answer, flags=re.DOTALL)
+    for block in fenced_blocks:
+        try:
+            return _try_load(block)
+        except Exception:
+            continue
+
+    # As a last resort, grab the first {...} span
+    start = answer.find("{")
+    end = answer.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        try:
+            return _try_load(answer[start : end + 1])
+        except Exception:
+            pass
+
+    raise json.JSONDecodeError("Could not parse JSON from agent response.", answer, 0)
+
+
 @app.post("/ask")
 async def ask(payload: AskIn):
     try:
@@ -116,9 +152,7 @@ async def pantry(payload: PantryAsk):
         prompt = build_pantry_prompt(payload)
         resp = await pantry_runner.run_debug(prompt)
         answer = getattr(resp, "final_response", None) or str(resp)
-        data = json.loads(answer)
-        if not isinstance(data, dict):
-            raise ValueError("Pantry agent response is not a JSON object.")
+        data = parse_agent_json(answer)
         return {
             "exactMatches": data.get("exactMatches", []),
             "alternativeMatches": data.get("alternativeMatches", []),
