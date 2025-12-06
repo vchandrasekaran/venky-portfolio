@@ -1,6 +1,5 @@
 import Hero from '@/components/Hero'
 import AutomationFeatures from '@/components/home/AutomationFeatures'
-import ToolsBoard from '@/components/home/ToolsBoard'
 import SmoothReveal from '@/components/home/SmoothReveal'
 import ProjectsShowcase from '@/components/projects/ProjectsShowcase'
 import AdkChat from '@/components/AdkChat'
@@ -41,10 +40,6 @@ export default function HomePage() {
           </p>
         </header>
         <ProjectsShowcase projects={FEATURED_HOME_PROJECTS} />
-      </SmoothReveal>
-
-      <SmoothReveal delay={0.18}>
-        <ToolsBoard />
       </SmoothReveal>
     </main>
   )
