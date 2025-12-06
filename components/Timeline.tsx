@@ -1,4 +1,4 @@
-type Item = {
+ï»¿type Item = {
   role: string
   org: string
   time: string
@@ -14,7 +14,7 @@ export default function Timeline({ items }: { items: Item[] }) {
             <span className="h-2.5 w-2.5 rounded-full bg-[#a855f7]" />
           </span>
           <h3 className="text-xl font-semibold">
-            {it.role} · {it.org}
+            {it.role} - {it.org}
           </h3>
           <time className="mb-1 block text-sm text-white/60">{it.time}</time>
           <ul className="ml-6 list-disc space-y-1 text-white/70">
