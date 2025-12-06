@@ -5,6 +5,7 @@ type Stage = {
   title: string;
   desc: string;
   tools: { name: string; logo: string }[];
+  outputs?: string[];
 };
 
 const PIPELINE_STAGES: Stage[] = [
@@ -20,6 +21,7 @@ const PIPELINE_STAGES: Stage[] = [
       { name: "Python", logo: "/logos/python-logo.webp" },
       { name: "dbt", logo: "/logos/dbt-logo.jpg" },
     ],
+    outputs: ["Raw files", "Staging tables", "Modeled marts"],
   },
   {
     id: "govern",
@@ -33,6 +35,7 @@ const PIPELINE_STAGES: Stage[] = [
       { name: "Matillion schedulers", logo: "/logos/matillion-logo.webp" },
       { name: "Cost monitors", logo: "/logos/aws-logo.png" },
     ],
+    outputs: ["CI/CD", "Data tests", "Telemetry"],
   },
   {
     id: "serve",
@@ -45,6 +48,7 @@ const PIPELINE_STAGES: Stage[] = [
       { name: "Salesforce", logo: "/logos/salesforce-logo.webp" },
       { name: "Slack alerts", logo: "/logos/github.svg" },
     ],
+    outputs: ["Dashboards", "Metrics layer", "Subscriptions"],
   },
   {
     id: "activate",
@@ -58,6 +62,7 @@ const PIPELINE_STAGES: Stage[] = [
       { name: "Slack bots", logo: "/logos/github.svg" },
       { name: "HTTP nodes", logo: "/logos/github.svg" },
     ],
+    outputs: ["AI + apps", "Slack/HTTP events", "APIs"],
   },
 ];
 
@@ -73,7 +78,7 @@ export default function AutomationFeatures() {
           </p>
         </header>
 
-        <div className="rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0a0d1c] via-[#060812] to-[#03040c] p-6 shadow-[0_45px_90px_rgba(0,0,0,0.55)]">
+        <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0a0d1c] via-[#060812] to-[#03040c] p-6 shadow-[0_45px_90px_rgba(0,0,0,0.55)]">
           <BoardHeader />
           <PipelineTrack />
         </div>
@@ -101,10 +106,15 @@ function BoardHeader() {
 }
 
 function PipelineTrack() {
+  const lastIndex = PIPELINE_STAGES.length - 1;
+
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-4">
-      {PIPELINE_STAGES.map((stage) => (
-        <StageCard key={stage.id} stage={stage} />
+    <div className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-stretch lg:gap-4">
+      {PIPELINE_STAGES.map((stage, idx) => (
+        <div key={stage.id} className="flex flex-1 flex-col lg:flex-row lg:items-center">
+          <StageCard stage={stage} />
+          {idx !== lastIndex ? <Connector /> : null}
+        </div>
       ))}
     </div>
   );
@@ -112,7 +122,7 @@ function PipelineTrack() {
 
 function StageCard({ stage }: { stage: Stage }) {
   return (
-    <div className="rounded-[24px] border border-white/12 bg-[#050712] p-5 shadow-[0_25px_60px_rgba(0,0,0,0.45)]">
+    <div className="flex h-full flex-col rounded-[24px] border border-white/12 bg-[#050712] p-5 shadow-[0_25px_60px_rgba(0,0,0,0.45)]">
       <p className="text-xs uppercase tracking-[0.35em] text-white/50">{stage.title}</p>
       <h3 className="mt-3 text-2xl font-semibold leading-tight">{stage.desc}</h3>
       <div className="mt-4 flex flex-wrap gap-2">
@@ -120,6 +130,18 @@ function StageCard({ stage }: { stage: Stage }) {
           <ToolChip key={`${stage.id}-${tool.name}`} tool={tool} />
         ))}
       </div>
+      {stage.outputs && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {stage.outputs.map((item) => (
+            <span
+              key={`${stage.id}-${item}`}
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-white/60"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -131,6 +153,15 @@ function ToolChip({ tool }: { tool: Stage["tools"][number] }) {
         <Image src={tool.logo} alt={tool.name} width={16} height={16} className="h-4 w-4 object-contain" />
       </span>
       {tool.name}
+    </div>
+  );
+}
+
+function Connector() {
+  return (
+    <div className="relative my-4 hidden h-full w-10 shrink-0 items-center justify-center lg:flex">
+      <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/60 to-transparent" />
+      <div className="absolute right-0 h-3 w-3 rotate-45 border border-transparent border-t-white/70 border-r-white/70" />
     </div>
   );
 }
