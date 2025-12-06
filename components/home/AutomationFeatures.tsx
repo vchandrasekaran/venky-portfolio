@@ -14,10 +14,9 @@ const PIPELINE_STAGES: Stage[] = [
     title: "Ingest",
     desc: "Collect from apps, events, files, and APIs.",
     tools: [
-      { name: "AWS", logo: "/logos/aws-logo.png" },
       { name: "Matillion", logo: "/logos/matillion-logo.webp" },
       { name: "Python", logo: "/logos/python-logo.webp" },
-      { name: "GitHub", logo: "/logos/github.svg" },
+      { name: "AWS", logo: "/logos/aws-logo.png" },
     ],
     outputs: ["Raw events", "Batch loads"],
   },
@@ -37,6 +36,7 @@ const PIPELINE_STAGES: Stage[] = [
     title: "Transform",
     desc: "Clean, validate, model, and enrich data for use.",
     tools: [
+      { name: "Python", logo: "/logos/python-logo.webp" },
       { name: "dbt", logo: "/logos/dbt-logo.jpg" },
       { name: "Matillion", logo: "/logos/matillion-logo.webp" },
       { name: "GitLab", logo: "/logos/gitlab-logo.webp" },
