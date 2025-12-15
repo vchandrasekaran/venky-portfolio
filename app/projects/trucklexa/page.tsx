@@ -11,28 +11,28 @@ export default function TrucklexaPage() {
   return (
     <div className="mx-auto max-w-3xl py-12 space-y-8">
       <header>
-        <p className="text-sm uppercase tracking-[0.4em] text-gray-400">Active Project</p>
-        <h1 className="mt-2 text-3xl font-semibold text-gray-900">Trucklexa · Alexa Skill for Load Booking</h1>
-        <p className="mt-3 text-gray-600">
+        <p className="text-sm uppercase tracking-[0.4em] text-white/60">Active Project</p>
+        <h1 className="mt-2 text-3xl font-semibold text-white">Trucklexa · Alexa Skill for Load Booking</h1>
+        <p className="mt-3 text-white/70">
           Voice-first broker assistant: speak a load request, Alexa hits Truckstop, Lambdas validate and book, then BI
           dashboards show what happened. Below is the end-to-end flow so you can see where each piece fits.
         </p>
       </header>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-900">Technical Snapshot</h2>
-        <ul className="mt-4 flex flex-wrap gap-2 text-sm text-gray-600">
+      <section className="rounded-2xl border border-white/15 bg-white/5 p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-white">Technical Snapshot</h2>
+        <ul className="mt-4 flex flex-wrap gap-2 text-sm text-white/80">
           {stack.map((item) => (
-            <li key={item} className="rounded-full border border-gray-200 px-3 py-1 bg-gray-50">
+            <li key={item} className="rounded-full border border-white/20 px-3 py-1 bg-white/10">
               {item}
             </li>
           ))}
         </ul>
       </section>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-900">Flowchart · How Trucklexa runs</h2>
-        <div className="mt-4 grid gap-4 text-sm text-gray-700">
+      <section className="rounded-2xl border border-white/15 bg-white/5 p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-white">Flowchart · How Trucklexa runs</h2>
+        <div className="mt-4 grid gap-4 text-sm text-white/80">
           <FlowItem
             title="1) Voice intent to Alexa"
             body="Broker says, “Alexa, ask Trucklexa for reefer loads to Dallas.” Alexa Skills Kit parses the utterance into slots (equipment, lane, dates)."
@@ -60,9 +60,9 @@ export default function TrucklexaPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-900">Why it matters</h2>
-        <ul className="mt-4 list-disc space-y-2 pl-5 text-gray-700">
+      <section className="rounded-2xl border border-white/15 bg-white/5 p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-white">Why it matters</h2>
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-white/80">
           {highlights.map((item) => (
             <li key={item}>{item}</li>
           ))}
@@ -74,9 +74,9 @@ export default function TrucklexaPage() {
 
 function FlowItem({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-gray-50/80 p-4 shadow-[0_8px_20px_rgba(0,0,0,0.05)]">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">{title}</p>
-      <p className="mt-2 text-gray-700">{body}</p>
+    <div className="rounded-xl border border-white/15 bg-white/5 p-4 shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/60">{title}</p>
+      <p className="mt-2 text-white/80">{body}</p>
     </div>
   );
 }

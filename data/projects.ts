@@ -49,16 +49,16 @@ export const PROJECTS: ProjectSummary[] = [
     ]
   },
   {
-    id: 'ai-cricket-analyst',
-    title: 'AI Cricket & Pickleball Analyst',
-    desc: 'Computer-vision assistant that ingests live video, tags highlights, and surfaces coach-level insights for cricket and pickleball.',
+    id: 'ai-analyst',
+    title: 'Patent Pending · Smart Paddle Sensing',
+    desc: 'Telemetry platform for pickleball paddles (external or embedded) with analytics, multi-device fusion, and an AI agent for coaching and broadcast.',
     href: '/projects/ai-analyst',
-    tag: 'IN FLIGHT',
-    status: 'In Flight',
+    tag: 'PATENT PENDING',
+    status: 'Concept',
     highlights: [
-      'Vision models detect shots, player positions, and tempo changes in real time',
-      'Captures action items (field placements, swing mechanics, serve consistency) for coaches',
-      'Architecture extends to pickleball footage with the same tagging/insight engine'
+      'Sensing via stickers, edge/handle clips, or embedded meshes detects impact, spin cues, and sweet-spot accuracy',
+      'Signal processing + AI derive location, force, twist, shot class, and contact quality for rallies/matches',
+      'Ecosystem streams to phones, hubs, or cloud; fuses with cameras/wearables; LLM agent delivers voice/chat guidance'
     ]
   },
   {

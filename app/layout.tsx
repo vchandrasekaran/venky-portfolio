@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${spaceGrotesk.className} bg-brand-bg text-[#111111] antialiased`}>
+      <body className={`${spaceGrotesk.className} antialiased text-white`}>
         <Header />
         <main>{children}</main>
         <HashScroller />

@@ -12,12 +12,12 @@ export default function Header() {
   return (
     <header className="site-header sticky top-0 z-[1000]">
       <div className="container-max flex h-14 items-center justify-between">
-        <Link href="/" className="text-sm font-semibold tracking-wide text-[#111111]">
+        <Link href="/" className="text-sm font-semibold tracking-wide text-white">
           Venky BI
         </Link>
-        <nav className="hidden gap-6 text-sm text-[#111111] md:flex">
+        <nav className="hidden gap-6 text-sm text-white md:flex">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className="transition-colors hover:text-[#111111]">
+            <Link key={n.href} href={n.href} className="transition-colors hover:text-white/80">
               {n.label}
             </Link>
           ))}
