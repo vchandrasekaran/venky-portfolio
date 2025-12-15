@@ -37,3 +37,4 @@ coverage/
 *.swo
 .venv/
 data/full_format_recipes.json
+__pycache__/
