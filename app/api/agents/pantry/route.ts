@@ -111,6 +111,7 @@ async function planWithPantryAgent(ingredients: string[]) {
     });
 
     const extraNeeded = entry.additionalNeeded?.filter(Boolean) ?? missingIngredients;
+    const matchScore = Number(match.score.toFixed(2));
 
     return {
       id: recipe.id,
@@ -118,6 +119,7 @@ async function planWithPantryAgent(ingredients: string[]) {
       timeMinutes: 30,
       difficulty: "easy",
       servings: 2,
+      matchScore,
       usesIngredients,
       missingButOptional: missingIngredients,
       steps,
@@ -126,13 +128,50 @@ async function planWithPantryAgent(ingredients: string[]) {
     };
   };
 
-  const exactMatches: PantryRecipe[] = (data?.exactMatches || [])
+  let exactMatches: PantryRecipe[] = (data?.exactMatches || [])
     .map((entry: PantryAgentEntry) => toRecipe(entry, "exact"))
     .filter(Boolean) as PantryRecipe[];
 
-  const alternatives: PantryRecipe[] = (data?.alternativeMatches || [])
+  let alternatives: PantryRecipe[] = (data?.alternativeMatches || [])
     .map((entry: PantryAgentEntry) => toRecipe(entry, "alternative"))
     .filter(Boolean) as PantryRecipe[];
+
+  // Fallback: if the agent returns no exact matches, surface local best-scoring recipes.
+  if (exactMatches.length === 0) {
+    const buildFromMeta = (meta: typeof candidateMeta[number], note: string): PantryRecipe => {
+      const { match, missingNormalized, normalizedRecipeIngredients } = meta;
+      const { recipe } = match;
+      const steps: PantryStep[] = recipe.instructions.map((instruction, index) => ({ index, instruction }));
+      const usesIngredients = recipe.ingredients.filter((ing, idx) => userSet.has(normalizeIngredient(ing)));
+      const missingIngredients = recipe.ingredients.filter((ing, idx) => {
+        const norm = normalizedRecipeIngredients[idx];
+        return missingNormalized.includes(norm);
+      });
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        timeMinutes: 30,
+        difficulty: "easy",
+        servings: 2,
+        matchScore: Number(match.score.toFixed(2)),
+        usesIngredients,
+        missingButOptional: missingIngredients,
+        steps,
+        note,
+        extraNeeded: missingIngredients,
+      };
+    };
+
+    const sorted = [...candidateMeta].sort((a, b) => b.match.score - a.match.score);
+    exactMatches = sorted.slice(0, 3).map((m) => buildFromMeta(m, "Top local match"));
+
+    const altFallback = sorted.slice(3, 8).map((m) => buildFromMeta(m, "Alternate local match"));
+    if (!alternatives.length) {
+      alternatives = altFallback;
+    } else {
+      alternatives = [...alternatives, ...altFallback].slice(0, 8);
+    }
+  }
 
   return { exactMatches, alternatives };
 }

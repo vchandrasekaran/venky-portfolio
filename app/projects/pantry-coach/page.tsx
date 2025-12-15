@@ -18,6 +18,8 @@ export default function PantryCoachPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"matches" | "alternatives">("matches");
+  const [altVisibleCount, setAltVisibleCount] = useState<number>(5);
 
   async function handlePlan(e: React.FormEvent) {
     e.preventDefault();
@@ -32,6 +34,7 @@ export default function PantryCoachPage() {
 
     setLoading(true);
     setError(null);
+    setAltVisibleCount(5);
 
     try {
       const res = await fetch("/api/agents/pantry", {
@@ -51,6 +54,7 @@ export default function PantryCoachPage() {
         setAlternatives(alt);
         const firstId = exact[0]?.id || alt[0]?.id || null;
         setExpandedId(firstId);
+        setActiveTab(exact.length ? "matches" : "alternatives");
       }
     } catch (err: any) {
       setError(err?.message || String(err));
@@ -61,6 +65,12 @@ export default function PantryCoachPage() {
       setLoading(false);
     }
   }
+
+  const topMatches = exactMatches.slice(0, 5);
+  const topIds = new Set(topMatches.map((r) => r.id));
+  const altFiltered = alternatives.filter((r) => !topIds.has(r.id));
+  const altSlice = altFiltered.slice(0, altVisibleCount);
+  const showMoreAlt = altFiltered.length > altVisibleCount;
 
   return (
     <div className="mx-auto max-w-4xl py-12 space-y-8 text-white">
@@ -94,12 +104,12 @@ export default function PantryCoachPage() {
         </div>
 
         <label className="block text-sm font-medium text-white/80">
-          Extra ingredients (optional)
+          Extra ingredients or recipe requests (optional)
           <textarea
             value={additionalInput}
             onChange={(e) => setAdditionalInput(e.target.value)}
             rows={3}
-            placeholder="comma or newline separated ingredients"
+            placeholder="Comma or newline separated ingredients, or ask for a style: curry, soup, pasta, tacos…"
             className="mt-2 w-full rounded-xl border border-white/20 bg-[#090b17] p-3 text-sm text-white placeholder:text-white/40 focus:border-white focus:outline-none"
           />
         </label>
@@ -119,22 +129,50 @@ export default function PantryCoachPage() {
         </div>
       )}
 
-      <div className="space-y-8">
-        <RecipeSection
-          title="Exact matches"
-          description="These recipes stay within your ingredients (plus pantry staples)."
-          recipes={exactMatches}
-          expandedId={expandedId}
-          setExpandedId={setExpandedId}
-        />
+      <div className="space-y-6">
+        <div className="flex flex-wrap gap-3">
+          <TabButton
+            label={`Top matches (${topMatches.length})`}
+            active={activeTab === "matches"}
+            onClick={() => setActiveTab("matches")}
+          />
+          <TabButton
+            label={`Alternatives (${Math.min(altFiltered.length, 5)})`}
+            active={activeTab === "alternatives"}
+            onClick={() => setActiveTab("alternatives")}
+          />
+        </div>
 
-        <RecipeSection
-          title="Alternative suggestions"
-          description="These require a few extra ingredients but still align with your pantry."
-          recipes={alternatives}
-          expandedId={expandedId}
-          setExpandedId={setExpandedId}
-        />
+        {activeTab === "matches" ? (
+          <RecipeSection
+            title="Top 5 matches"
+            description="Best-fit recipes using only what you have (plus pantry staples)."
+            recipes={topMatches}
+            expandedId={expandedId}
+            setExpandedId={setExpandedId}
+          />
+        ) : (
+          <>
+            <RecipeSection
+              title="Alternatives"
+              description="Close fits with a few extras you likely have on hand."
+              recipes={altSlice}
+              expandedId={expandedId}
+              setExpandedId={setExpandedId}
+            />
+            {showMoreAlt && (
+              <div className="flex justify-start">
+                <button
+                  type="button"
+                  onClick={() => setAltVisibleCount((c) => c + 5)}
+                  className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 hover:border-white/30"
+                >
+                  Show 5 more
+                </button>
+              </div>
+            )}
+          </>
+        )}
 
         {!exactMatches.length && !alternatives.length && !error && !loading && (
           <div className="text-sm text-white/60">
@@ -175,8 +213,8 @@ function RecipeSection({ title, description, recipes, expandedId, setExpandedId 
               <div>
                 <h3 className="text-lg font-semibold">{recipe.title}</h3>
                 <p className="text-xs text-white/60">
-                  Matches: {recipe.usesIngredients.join(", ") || "n/a"} · Serves {recipe.servings} · ~{recipe.timeMinutes}{" "}
-                  min
+                  Score: {recipe.matchScore ?? "—"} · Matches: {recipe.usesIngredients.join(", ") || "n/a"} · Serves{" "}
+                  {recipe.servings} · ~{recipe.timeMinutes} min
                 </p>
                 {recipe.note && <p className="mt-1 text-xs text-white/70">{recipe.note}</p>}
               </div>
@@ -218,5 +256,21 @@ function RecipeSection({ title, description, recipes, expandedId, setExpandedId 
         ))}
       </div>
     </section>
+  );
+}
+
+function TabButton({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-full border px-4 py-2 text-sm transition ${
+        active
+          ? "border-white/30 bg-white/10 text-white"
+          : "border-white/10 bg-white/5 text-white/70 hover:border-white/25 hover:text-white"
+      }`}
+    >
+      {label}
+    </button>
   );
 }

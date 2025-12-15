@@ -11,6 +11,7 @@ export type PantryRecipe = {
   timeMinutes: number;
   difficulty: PantryDifficulty;
   servings: number;
+  matchScore?: number;
   usesIngredients: string[];
   missingButOptional: string[];
   steps: PantryStep[];
