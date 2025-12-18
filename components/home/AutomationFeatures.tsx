@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 
 type Stage = {
   id: string;
@@ -52,9 +52,6 @@ const PIPELINE_STAGES: Stage[] = [
       { name: "SQL", logo: "/logos/powerbi-logo.png" },
       { name: "Python", logo: "/logos/python-logo.webp" },
       { name: "R", logo: "/logos/r-logo.svg" },
-      { name: "Java", logo: "/logos/java-logo.svg" },
-      { name: "JavaScript", logo: "/logos/javascript-logo.webp" },
-      { name: "TypeScript", logo: "/logos/typescript-logo.svg" },
       { name: "Git", logo: "/logos/github.svg" },
       { name: "Matillion", logo: "/logos/matillion-logo.webp" },
     ],
@@ -75,9 +72,6 @@ const PIPELINE_STAGES: Stage[] = [
       { name: "SQL", logo: "/logos/powerbi-logo.png" },
       { name: "Python", logo: "/logos/python-logo.webp" },
       { name: "R", logo: "/logos/r-logo.svg" },
-      { name: "JavaScript", logo: "/logos/javascript-logo.webp" },
-      { name: "TypeScript", logo: "/logos/typescript-logo.svg" },
-      { name: "Java" },
       { name: "Git", logo: "/logos/github.svg" },
     ],
     outputs: ["Dashboards", "APIs", "Alerts", "AI + apps"],
@@ -89,7 +83,7 @@ export default function AutomationFeatures() {
     <section className="bg-gradient-to-b from-[#02030b] via-[#05091c] to-[#02030b] text-white">
       <div className="container-max space-y-10 py-16">
         <header className="text-center">
-          <p className="text-xs uppercase tracking-[0.6em] text-white/60">Think it · build it · extend it</p>
+          <p className="text-xs uppercase tracking-[0.6em] text-white/60">Think it ú build it ú extend it</p>
           <h2 className="mt-4 text-3xl font-semibold">Automation patterns Venky ships daily</h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-white/70">
             Data pipelines first: rapid visuals when experimenting, real code when it counts, and obsessive observability once a workflow hits production.
@@ -97,29 +91,10 @@ export default function AutomationFeatures() {
         </header>
 
         <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0a0d1c] via-[#060812] to-[#03040c] p-6 shadow-[0_45px_90px_rgba(0,0,0,0.55)]">
-          <BoardHeader />
           <PipelineTrack />
         </div>
       </div>
     </section>
-  );
-}
-
-function BoardHeader() {
-  return (
-    <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-[#0d1024] px-6 py-4 text-sm">
-      <div className="flex items-center gap-3">
-        <span className="rounded-full bg-green-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-green-200">
-          Active
-        </span>
-        <p className="text-white/80">Automation command board · &quot;Atlas&quot; view</p>
-      </div>
-      <div className="flex gap-2 text-xs uppercase tracking-[0.3em] text-white/60">
-        <button className="rounded-full bg-white/10 px-4 py-1 text-white">Editor</button>
-        <button className="rounded-full px-4 py-1">Executions</button>
-        <button className="rounded-full px-4 py-1">Tests</button>
-      </div>
-    </div>
   );
 }
 

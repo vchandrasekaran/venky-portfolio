@@ -17,9 +17,9 @@ export const PROJECTS: ProjectSummary[] = [
     tag: 'LIVE',
     status: 'Live',
     highlights: [
-      'Revenue + GTM cockpit adopted by CRO and RevOps',
-      'Experiment tracker w/ uplift + guardrails',
-      'Executive KPI suite with drillable decks'
+      'Revenue intelligence dashboards: pipeline, bookings vs targets, win/loss, cohort health',
+      'Experiment hub: uplift vs control, guardrails, and roll-out reporting',
+      'Executive KPI suite: drillable decks for GTM, ops, and finance'
     ]
   },
   {
