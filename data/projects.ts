@@ -12,7 +12,7 @@ export const PROJECTS: ProjectSummary[] = [
   {
     id: 'tableau',
     title: 'Interactive Dashboards. Real Metrics',
-    desc: 'Tableau portfolio with revenue intelligence, ops KPIs, and experiments.',
+    desc: 'Tableau dashboards: revenue/GTM cockpit, experiment hub with uplift guardrails, and exec KPI decks.',
     href: 'https://public.tableau.com/app/profile/venkateshnaidu/vizzes',
     tag: 'LIVE',
     status: 'Live',
