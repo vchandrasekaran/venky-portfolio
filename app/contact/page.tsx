@@ -73,7 +73,7 @@ const contactLinks: ContactLink[] = [
 export default function ContactPage(){
   return (
     <main>
-      <Section title="Contact" subtitle="Let's talk BI: Snowflake, dbt, Power BI, Domo, and dashboards that move revenue.">
+      <Section title="Contact" subtitle="Let's talk BI and sport-tech: Snowflake, dbt, Power BI, Domo, and dashboards that move revenue and wins.">
         <div className="card p-6">
           <p className="text-white/70">Prefer LinkedIn? Great - add me and mention this site.</p>
           <ul className="mt-4 space-y-3">
