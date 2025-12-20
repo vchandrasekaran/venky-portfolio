@@ -17,9 +17,9 @@ export const PROJECTS: ProjectSummary[] = [
     tag: 'LIVE',
     status: 'Live',
     highlights: [
-      'Revenue intelligence dashboards: pipeline, bookings vs targets, win/loss, cohort health',
-      'Experiment hub: uplift vs control, guardrails, and roll-out reporting',
-      'Executive KPI suite: drillable decks for GTM, ops, and finance'
+      'Tableau Public gallery: pipeline and bookings vs targets, win/loss breakdowns, cohort health',
+      'Experiment and ops boards: uplift vs control, guardrail monitors, rollout readiness checks',
+      'Executive KPI decks: drillable dashboards for GTM, ops, and finance with interactive filters'
     ]
   },
   {
