@@ -58,8 +58,8 @@ const contactLinks: ContactLink[] = [
   },
   {
     name: 'DUPR',
-    href: 'https://dashboard.dupr.com/dashboard/player/0/profile',
-    label: 'dashboard.dupr.com/player/0/profile',
+    href: 'https://dashboard.dupr.com/dashboard/player/4836686050',
+    label: 'dashboard.dupr.com/player/4836686050',
     icon: 'dupr'
   },
   {
