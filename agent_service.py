@@ -58,7 +58,7 @@ pantry_agent = Agent(
 
 runner = InMemoryRunner(agent=root_agent)
 pantry_runner = InMemoryRunner(agent=pantry_agent)
-app = FastAPI()
+app = FastAPI(title="Venky Portfolio Agent Service")
 
 
 class ChatMessage(BaseModel):
@@ -74,6 +74,23 @@ class AskIn(BaseModel):
 class PantryAsk(BaseModel):
     ingredients: list[str]
     context: str
+
+
+@app.get("/")
+async def root():
+    return {
+        "service": "venky-portfolio-agent",
+        "status": "ok",
+        "endpoints": ["/healthz", "/ask", "/pantry"],
+    }
+
+
+@app.get("/healthz")
+async def healthz():
+    return {
+        "status": "ok",
+        "google_api_key_configured": bool(GOOGLE_API_KEY),
+    }
 
 
 def build_prompt(messages: list[ChatMessage], context: str | None) -> str:

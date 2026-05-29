@@ -11,7 +11,7 @@ export function suggestNav(question: string): NavSuggestion {
   if (has('experience') || has('resume') || has('work history')) return { path: '/experience', label: 'Experience' };
   if (has('contact') || has('email') || has('linkedin')) return { path: '/contact', label: 'Contact' };
   if (has('sports')) return { path: '/sports', label: 'Sports' };
-  if (has('skills') || has('stack') || has('tools')) return { path: '/', hash: '#skills', label: 'Skills' };
-  if (has('ops') || has('loadout')) return { path: '/', hash: '#ops', label: 'Ops Loadout' };
+  if (has('skills') || has('stack') || has('tools') || has('workflow')) return { path: '/', hash: '#workflow', label: 'Workflow' };
+  if (has('assistant') || has('chat') || has('guide')) return { path: '/', hash: '#assistant', label: 'Website Guide' };
   return null;
 }

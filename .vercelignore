@@ -1,0 +1,16 @@
+.git
+.next
+.venv
+node_modules
+snapshots
+__pycache__
+
+*.log
+*.response.txt
+api-adk-check.json
+chat-response.txt
+pantry-response.txt
+preview-*.log
+sql-response.txt
+
+data/full_format_recipes.json

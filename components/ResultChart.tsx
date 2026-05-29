@@ -22,6 +22,8 @@ function isNumeric(v: any) {
   return Number.isFinite(n)
 }
 
+const COLORS = ['#2563eb', '#14b8a6', '#7c3aed']
+
 export default function ResultChart({
   rows,
   prefer = 'bar',
@@ -48,34 +50,46 @@ export default function ResultChart({
   }, [rows, maxPoints])
 
   if (!rows?.length) return null
+
   if (!dimKey || !metKeys.length) {
     return (
-      <div className="rounded-lg border p-3 text-sm text-gray-600">
-        Not enough structured data to chart (need one text/date column and one numeric column).
+      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+        Not enough structured data to chart. The result set needs one text or date column and at least one numeric column.
       </div>
     )
   }
 
   const Chart = prefer === 'line' ? LineChart : BarChart
-  const Series = prefer === 'line' ? Line : Bar
 
   return (
-    <div className="w-full h-80">
+    <div className="h-80 w-full rounded-lg border border-slate-200 bg-white p-4">
       <ResponsiveContainer>
         <Chart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={dimKey} tick={{ fontSize: 12 }} />
-          <YAxis tick={{ fontSize: 12 }} />
-          <Tooltip />
+          <CartesianGrid stroke="#e2e8f0" strokeDasharray="3 3" />
+          <XAxis dataKey={dimKey} tick={{ fontSize: 12, fill: '#64748b' }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fontSize: 12, fill: '#64748b' }} axisLine={false} tickLine={false} />
+          <Tooltip
+            contentStyle={{
+              borderRadius: '8px',
+              border: '1px solid #e2e8f0',
+              boxShadow: '0 18px 40px rgba(15, 23, 42, 0.08)'
+            }}
+          />
           <Legend />
-          {metKeys.map((k) => (
-            <Series
-              key={k}
-              dataKey={k}
-              type={prefer === 'line' ? 'monotone' : undefined}
-              barSize={prefer === 'bar' ? 28 : undefined}
-            />
-          ))}
+          {metKeys.map((k, idx) =>
+            prefer === 'line' ? (
+              <Line
+                key={k}
+                dataKey={k}
+                type="monotone"
+                stroke={COLORS[idx % COLORS.length]}
+                strokeWidth={3}
+                dot={{ r: 3 }}
+              />
+            ) : (
+              <Bar key={k} dataKey={k} fill={COLORS[idx % COLORS.length]} radius={[8, 8, 0, 0]} barSize={28} />
+            )
+          )}
         </Chart>
       </ResponsiveContainer>
     </div>

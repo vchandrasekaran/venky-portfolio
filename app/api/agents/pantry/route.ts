@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { normalizeIngredient, searchRecipesByIngredients } from "@/lib/recipes/search";
 import type { PantryRecipe, PantryStep } from "@/lib/agents/pantry/types";
+import { publicDemosEnabled } from "@/lib/featureFlags";
 
 const PANTRY_AGENT_URL = process.env.ADK_PANTRY_URL ?? "http://127.0.0.1:8787/pantry";
 
@@ -17,6 +18,13 @@ type PantryAgentEntry = {
 
 export async function POST(req: Request) {
   try {
+    if (!publicDemosEnabled()) {
+      return NextResponse.json(
+        { error: "Pantry Coach is disabled in the public deployment." },
+        { status: 403 }
+      );
+    }
+
     const body = await req.json();
     const mode: PantryMode = body?.mode === "guide" ? "guide" : "plan";
 

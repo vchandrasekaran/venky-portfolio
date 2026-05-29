@@ -12,6 +12,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 snowflake.log
+dev-server.log
+preview-server.log
+streamlit-raiders.log
+preview-*.log
+*.response.txt
+chat-response.txt
+pantry-response.txt
+sql-response.txt
+api-adk-check.json
 
 # Env
 .env
@@ -38,3 +47,6 @@ coverage/
 .venv/
 data/full_format_recipes.json
 __pycache__/
+snapshots/
+
+.vercel

@@ -4,19 +4,18 @@ import SmoothReveal from '@/components/home/SmoothReveal'
 type SectionProps = {
   title: string
   subtitle?: string
+  eyebrow?: string
+  id?: string
   children: ReactNode
 }
 
-export default function Section({ title, subtitle, children }: SectionProps) {
+export default function Section({ title, subtitle, eyebrow = 'Portfolio', id, children }: SectionProps) {
   return (
-    <SmoothReveal as="section" className="container-max py-16 text-white">
-      <header className="relative mb-10 max-w-3xl">
-        <span
-          className="pointer-events-none absolute -left-6 top-1 hidden h-12 w-px bg-gradient-to-b from-[#38bdf8] via-[#c084fc] to-transparent md:block"
-          aria-hidden="true"
-        />
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
-        {subtitle ? <p className="mt-3 text-lg text-white/70">{subtitle}</p> : null}
+    <SmoothReveal as="section" className="container-max py-14" id={id}>
+      <header className="mb-10 max-w-3xl">
+        <span className="eyebrow">{eyebrow}</span>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">{title}</h1>
+        {subtitle ? <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">{subtitle}</p> : null}
       </header>
       <div className="grid gap-6 lg:gap-8">{children}</div>
     </SmoothReveal>

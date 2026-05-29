@@ -1,82 +1,92 @@
-"use client";
+"use client"
+
+const stack = ['Alexa Skills Kit', 'Node.js', 'Python', 'AWS Lambda', 'API Gateway', 'Truckstop APIs']
+const highlights = [
+  'End-to-end voice booking flow that trims multi-screen workflows down to a single Alexa request.',
+  'Lambda orchestration handles authentication, slot validation, and response formatting for a hands-free workflow.',
+  'Events can flow into Truckstop and Snowflake for auditability, telemetry, and BI reporting.'
+]
+
+const flow = [
+  {
+    title: '1. Voice intent',
+    body: 'A broker speaks a load request and Alexa parses equipment, lane, and other intent slots.'
+  },
+  {
+    title: '2. Validation',
+    body: 'Node.js Lambda normalizes slots, applies business rules, and checks authentication.'
+  },
+  {
+    title: '3. Search',
+    body: 'Python logic calls Truckstop APIs, ranks options, and prepares the best match set.'
+  },
+  {
+    title: '4. Confirmation',
+    body: 'Follow-up intents confirm the booking and trigger notifications or downstream events.'
+  },
+  {
+    title: '5. Telemetry',
+    body: 'Each action becomes a measurable event that can power dashboarding and workflow analytics.'
+  }
+]
 
 export default function TrucklexaPage() {
-  const stack = ["Alexa Skills Kit", "Node.js", "Python", "AWS Lambda", "API Gateway", "Truckstop APIs"];
-  const highlights = [
-    "End-to-end voice booking flow that trims multi-screen workflows down to a single Alexa request.",
-    "Lambda orchestrations handle authentication, slot validation, and status checks so brokers keep their hands free.",
-    "Events land in Truckstop + Snowflake for audit trails and BI dashboards, proving out conversational BI patterns.",
-  ];
-
   return (
-    <div className="mx-auto max-w-3xl py-12 space-y-8">
-      <header>
-        <p className="text-sm uppercase tracking-[0.4em] text-white/60">Active Project</p>
-        <h1 className="mt-2 text-3xl font-semibold text-white">Trucklexa · Alexa Skill for Load Booking</h1>
-        <p className="mt-3 text-white/70">
-          Voice-first broker assistant: speak a load request, Alexa hits Truckstop, Lambdas validate and book, then BI
-          dashboards show what happened. Below is the end-to-end flow so you can see where each piece fits.
+    <div className="container-max space-y-8 pb-16 pt-6">
+      <section className="section-shell p-8 md:p-10">
+        <p className="eyebrow">Prototype</p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
+          Trucklexa | Alexa skill for load booking
+        </h1>
+        <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
+          A voice-first broker assistant that compresses a multi-screen booking workflow into a spoken request, then
+          hands the result back through Alexa and downstream operational systems.
         </p>
-      </header>
 
-      <section className="rounded-2xl border border-white/15 bg-white/5 p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-white">Technical Snapshot</h2>
-        <ul className="mt-4 flex flex-wrap gap-2 text-sm text-white/80">
+        <div className="mt-6 flex flex-wrap gap-2">
           {stack.map((item) => (
-            <li key={item} className="rounded-full border border-white/20 px-3 py-1 bg-white/10">
+            <span key={item} className="pill">
               {item}
-            </li>
+            </span>
           ))}
-        </ul>
-      </section>
-
-      <section className="rounded-2xl border border-white/15 bg-white/5 p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-white">Flowchart · How Trucklexa runs</h2>
-        <div className="mt-4 grid gap-4 text-sm text-white/80">
-          <FlowItem
-            title="1) Voice intent to Alexa"
-            body="Broker says, “Alexa, ask Trucklexa for reefer loads to Dallas.” Alexa Skills Kit parses the utterance into slots (equipment, lane, dates)."
-          />
-          <FlowItem
-            title="2) Intent router (Lambda · Node.js)"
-            body="Validates slots, normalizes city/state, and enforces auth against a pre-registered broker profile. Bad/missing slots trigger a reprompt."
-          />
-          <FlowItem
-            title="3) Search (Lambda · Python)"
-            body="Calls Truckstop load search APIs, applies business filters (equipment, distance, deadhead), and ranks options by score."
-          />
-          <FlowItem
-            title="4) Voice response + SSML"
-            body="Alexa responds with the top option(s): lane, rate, pickup ETA. SSML adds brief pauses so it’s easy to follow while driving."
-          />
-          <FlowItem
-            title="5) Booking confirmation"
-            body="“Book it” follow-up intent hits a secure Lambda to confirm the load, log the decision, and trigger notifications (Slack/email)."
-          />
-          <FlowItem
-            title="6) Telemetry + BI"
-            body="All intents, responses, and bookings stream into Snowflake (or Domo) for dashboards: intent volume, success rate, and top lanes."
-          />
         </div>
       </section>
 
-      <section className="rounded-2xl border border-white/15 bg-white/5 p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-white">Why it matters</h2>
-        <ul className="mt-4 list-disc space-y-2 pl-5 text-white/80">
-          {highlights.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
+      <section className="grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
+        <div className="section-shell p-6 md:p-8">
+          <p className="eyebrow">Flow</p>
+          <div className="mt-6 grid gap-4">
+            {flow.map((item) => (
+              <article key={item.title} className="card p-5">
+                <h2 className="text-lg font-semibold text-slate-950">{item.title}</h2>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="card p-6">
+            <p className="eyebrow">Why it matters</p>
+            <ul className="mt-4 space-y-3 text-sm text-slate-600">
+              {highlights.map((item) => (
+                <li key={item} className="flex gap-3">
+                <span className="mt-1 h-2 w-2 rounded-full bg-blue-600" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="card p-6">
+            <p className="eyebrow">Positioning</p>
+            <p className="mt-3 text-sm leading-6 text-slate-600">
+              This project sits at the intersection of conversational interfaces and operational BI. It is less about the
+              device itself and more about reducing friction in a workflow that operators repeat constantly.
+            </p>
+          </div>
+        </div>
       </section>
     </div>
-  );
-}
-
-function FlowItem({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="rounded-xl border border-white/15 bg-white/5 p-4 shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/60">{title}</p>
-      <p className="mt-2 text-white/80">{body}</p>
-    </div>
-  );
+  )
 }

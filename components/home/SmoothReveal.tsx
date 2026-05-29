@@ -8,13 +8,15 @@ type SmoothRevealProps = {
   className?: string
   delay?: number
   as?: 'div' | 'section'
+  id?: string
 }
 
-export default function SmoothReveal({ children, className = '', delay = 0, as = 'div' }: SmoothRevealProps) {
+export default function SmoothReveal({ children, className = '', delay = 0, as = 'div', id }: SmoothRevealProps) {
   const MotionTag = as === 'section' ? motion.section : motion.div
 
   return (
     <MotionTag
+      id={id}
       className={className}
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}

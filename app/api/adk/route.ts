@@ -2,7 +2,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
-import { getTopKContext } from "@/lib/rag/retrieve";
+import { helpResponse, retrieveKnowledge, summarizeChunks } from "@/lib/assistant/retrieval";
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -18,41 +18,19 @@ export async function POST(req: Request) {
     }
 
     const lastUser = [...messages].reverse().find((m: ChatMessage) => m.role === "user");
-    const question = lastUser?.content ?? "";
-
-    let context = "";
-    if (question) {
-      try {
-        context = await getTopKContext(question, 5);
-      } catch (err) {
-        console.error("RAG error", err);
-      }
+    const question = lastUser?.content?.trim() ?? "";
+    if (!question) {
+      return NextResponse.json({ error: "A user question is required." }, { status: 400 });
     }
 
-    const url = process.env.ADK_URL ?? "http://127.0.0.1:8787/ask";
-
-    const payload = { messages, context } as { messages: ChatMessage[]; context: string };
-
-    const r = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const raw = await r.text();
-    let data: any = null;
-    try {
-      data = raw ? JSON.parse(raw) : null;
-    } catch {
-      console.error("ADK response not JSON:", raw);
-      return NextResponse.json({ error: raw || "ADK returned invalid response" }, { status: r.status || 502 });
+    const normalized = question.toLowerCase();
+    if (["help", "what can you answer", "what can you do"].includes(normalized)) {
+      return NextResponse.json({ answer: helpResponse() });
     }
 
-    if (!r.ok) {
-      return NextResponse.json({ error: data?.detail || "ADK backend error" }, { status: r.status || 502 });
-    }
-
-    return NextResponse.json({ answer: data?.answer });
+    const { chunks, sources } = await retrieveKnowledge(question, process.cwd(), 4);
+    const answer = summarizeChunks(question, chunks);
+    return NextResponse.json({ answer, sources });
   } catch (e: any) {
     return NextResponse.json({ error: e.message || String(e) }, { status: 500 });
   }

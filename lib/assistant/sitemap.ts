@@ -3,9 +3,9 @@ export type NavItem = { path: string; label: string; keywords?: string[]; hash?:
 export function siteMap(): NavItem[] {
   return [
     { path: '/', label: 'Home', keywords: ['home','start','landing'] },
-    { path: '/', hash: '#skills', label: 'Skills', keywords: ['skills','stack','tools','capability'] },
-    { path: '/', hash: '#ops', label: 'Ops Loadout', keywords: ['ops','loadout','modules'] },
-    { path: '/', hash: '#projects', label: 'Projects', keywords: ['projects','portfolio','case studies','operations deck'] },
+    { path: '/', hash: '#workflow', label: 'Workflow', keywords: ['workflow','stack','tools','capability'] },
+    { path: '/', hash: '#assistant', label: 'Website Guide', keywords: ['assistant','chat','voice','guide'] },
+    { path: '/', hash: '#projects', label: 'Featured Work', keywords: ['projects','portfolio','case studies','featured work'] },
     { path: '/projects', label: 'Projects Index', keywords: ['projects page','portfolio projects'] },
     { path: '/experience', label: 'Experience', keywords: ['experience','resume','work history','roles'] },
     { path: '/contact', label: 'Contact', keywords: ['contact','email','linkedin','message'] },

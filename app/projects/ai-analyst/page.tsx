@@ -1,80 +1,72 @@
-"use client";
+"use client"
 
 const HIGHLIGHTS = [
-  "Patent-pending sensing for pickleball paddles: external stickers, edge/handle clips, or embedded meshes capture vibration, impact, and orientation.",
-  "Analytics pipeline turns raw signals into impact location, force, spin cues, sweet-spot accuracy, mishit/pop-up detection, and rally summaries.",
-  "Multi-device ecosystem: paddles, court cameras, wearables, and sensors stream to a hub/cloud for coaching, broadcast overlays, and officiating.",
-  "Agentic LLM layer converts paddle telemetry into natural language/voice guidance, strategy prompts, and session reports.",
-];
+  'Patent-pending sensing for pickleball paddles using external stickers, edge or handle clips, or embedded meshes.',
+  'Analytics pipeline derives impact location, force, spin cues, sweet-spot accuracy, mishit detection, and rally summaries.',
+  'Multi-device ecosystem combines paddle telemetry with cameras, wearables, and court-side sensors.',
+  'An LLM layer converts telemetry into coaching prompts, voice guidance, and post-session summaries.'
+]
 
 const FLOW = [
   {
-    title: "Sense",
-    body:
-      "Attach or embed: adhesive stickers, thin films, edge clips, handle wraps, or internal meshes. Capture vibration, acceleration, angular rate, acoustic and pressure signatures at impact.",
+    title: 'Sense',
+    body: 'Capture vibration, acceleration, angular rate, acoustic signals, and pressure signatures directly from the paddle.'
   },
   {
-    title: "Process",
-    body:
-      "Signal processing + physics models + ML/AI extract impact detection, location, force, paddle angle/twist, spin cues, shot class, sweet-spot accuracy, and contact quality scores.",
+    title: 'Process',
+    body: 'Use signal processing, physics models, and machine learning to classify impacts and estimate shot quality.'
   },
   {
-    title: "Sync",
-    body:
-      "Send data to phone, watch, court hub, or cloud over any wired/wireless link. Stream live, near real time, or batch upload; keep full audit trails.",
+    title: 'Sync',
+    body: 'Stream data to phones, watches, courtside hubs, or cloud services in real time or batch mode.'
   },
   {
-    title: "Fuse",
-    body:
-      "Combine paddle telemetry with court cameras, line/net sensors, biometrics, and environment feeds to build complete rally context.",
+    title: 'Fuse',
+    body: 'Combine paddle telemetry with video, officiating systems, biometrics, and environmental data.'
   },
   {
-    title: "Deliver",
-    body:
-      "Surface insights in mobile apps, coaching dashboards, broadcast overlays, league/tournament systems, and officiating tools.",
+    title: 'Deliver',
+    body: 'Surface insight through coaching apps, broadcast overlays, officiating tools, and training dashboards.'
   },
   {
-    title: "Guide (LLM Agent)",
-    body:
-      "Agentic LLM consumes paddle analytics to generate chat/voice guidance, strategy recommendations, training plans, and match summaries.",
-  },
-];
+    title: 'Guide',
+    body: 'Use an LLM agent to explain rallies, suggest drills, summarize sessions, and generate strategy prompts.'
+  }
+]
 
 export default function AIAnalystPage() {
   return (
-    <div className="mx-auto max-w-5xl space-y-10 pb-16 pt-10 text-white">
-      <header className="space-y-3">
-        <p className="text-sm uppercase tracking-[0.4em] text-white/60">Patent Pending</p>
-        <h1 className="text-3xl font-semibold md:text-4xl">Patent Pending · Smart Sensing System for Pickleball Paddles</h1>
-        <p className="text-white/70">
-          Universal paddle telemetry platform that detects, processes, and analyzes real on-paddle impacts—no passive gear.
-          Works with external attachments or embedded builds, streams to an analytics hub, and feeds an AI agent for
-          coaching, broadcast, and officiating.
+    <div className="container-max space-y-8 pb-16 pt-6">
+      <section className="section-shell p-8 md:p-10">
+        <p className="eyebrow">Patent pending concept</p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
+          Smart sensing system for pickleball paddles
+        </h1>
+        <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
+          A universal telemetry platform for paddles that detects impacts, interprets shot quality, and feeds coaching,
+          broadcast, and officiating experiences with structured data.
         </p>
-      </header>
+      </section>
 
-      <section className="rounded-[32px] border border-white/10 bg-gradient-to-br from-[#050712] via-[#080c1a] to-[#040411] p-6 shadow-[0_45px_90px_rgba(0,0,0,0.55)] space-y-6">
-        <h2 className="text-2xl font-semibold">Flow</h2>
-        <div className="grid gap-4 md:grid-cols-2">
+      <section className="section-shell p-6 md:p-8">
+        <p className="eyebrow">System flow</p>
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {FLOW.map((item) => (
-            <div key={item.title} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/60">{item.title}</p>
-              <p className="mt-2">{item.body}</p>
-            </div>
+            <article key={item.title} className="card p-5">
+              <h2 className="text-lg font-semibold text-slate-950">{item.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{item.body}</p>
+            </article>
           ))}
         </div>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Highlights</h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          {HIGHLIGHTS.map((highlight) => (
-            <div key={highlight} className="rounded-3xl border border-white/10 bg-[#050713] p-5 text-white/80">
-              {highlight}
-            </div>
-          ))}
-        </div>
+      <section className="grid gap-6 md:grid-cols-2">
+        {HIGHLIGHTS.map((highlight) => (
+          <article key={highlight} className="card p-6">
+            <p className="text-sm leading-7 text-slate-600">{highlight}</p>
+          </article>
+        ))}
       </section>
     </div>
-  );
+  )
 }

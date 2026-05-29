@@ -4,9 +4,17 @@ export const dynamic = "force-dynamic"; // avoid static optimization for API
 
 import { NextResponse } from "next/server";
 import { getConnection, exec } from "@/lib/snowflake";
+import { publicDemosEnabled } from "@/lib/featureFlags";
 
 export async function POST(req: Request) {
   try {
+    if (!publicDemosEnabled()) {
+      return NextResponse.json(
+        { error: "Text-to-SQL is disabled in the public deployment." },
+        { status: 403 }
+      );
+    }
+
     const { queryText } = await req.json();
 
     if (!queryText || typeof queryText !== "string") {
