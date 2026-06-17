@@ -5,7 +5,7 @@
 ---
 
 ## Summary
-Data & Analytics professional with 6+ years of experience building and optimizing data pipelines, BI dashboards, and predictive analytics that drive strategic, data-backed decisions. Skilled in Power BI, SQL, dbt, Snowflake, and Domo with hands-on experience bridging data engineering, analytics, and financial modeling. Adept at designing automated credit and performance reporting, forecasting models, and valuation analyses. Known for translating complex data into executive-ready insights using Power BI, Looker, and Tableau.
+Data & Analytics professional with 7+ years of experience building and optimizing data pipelines, BI dashboards, and predictive analytics that drive strategic, data-backed decisions. Skilled in Power BI, SQL, dbt, Snowflake, and Domo with hands-on experience bridging data engineering, analytics, and financial modeling. Adept at designing automated credit and performance reporting, forecasting models, and valuation analyses. Known for translating complex data into executive-ready insights using Power BI, Looker, and Tableau.
 
 ---
 

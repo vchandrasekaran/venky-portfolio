@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 const HERO_IMAGE = '/headshot.jpg'
 const METRICS = [
-  { value: '6+', label: 'years in analytics' },
+  { value: '7+', label: 'years in analytics' },
   { value: '200+', label: 'dashboards consolidated' },
   { value: '22%', label: 'Snowflake cost reduction' }
 ]
