@@ -1,15 +1,13 @@
 import Hero from '@/components/Hero'
 import AutomationFeatures from '@/components/home/AutomationFeatures'
 import SmoothReveal from '@/components/home/SmoothReveal'
-import ProjectsShowcase from '@/components/projects/ProjectsShowcase'
 import AdkChat from '@/components/AdkChat'
-import { FEATURED_HOME_PROJECTS } from '@/data/projects'
 
 export default function HomePage() {
   const siteBlocks = [
     {
       title: 'Analytics engineering',
-      body: 'Snowflake, dbt, ELT, certified datasets, cost controls, and metric layers that stay usable after launch.'
+      body: 'Snowflake, DBT, ELT, certified datasets, cost controls, and metric layers that stay usable after launch.'
     },
     {
       title: 'Business intelligence',
@@ -26,10 +24,10 @@ export default function HomePage() {
   ]
 
   return (
-    <main className="pb-12">
+    <main className="pb-8">
       <Hero />
 
-      <SmoothReveal as="section" className="container-max py-8" delay={0.05}>
+      <SmoothReveal as="section" className="container-max py-6" delay={0.05}>
         <div className="grid gap-6 lg:grid-cols-[0.92fr,1.08fr] lg:items-start">
           <div>
             <p className="eyebrow">Overview</p>
@@ -38,8 +36,7 @@ export default function HomePage() {
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
               This site is organized around how the work gets shipped: the data platform, the business problem, the
-              interface people use, and the measurable outcome. Public demos stay content-only by default so the site is
-              safe to publish.
+              interface people use, and the measurable outcome.
             </p>
           </div>
 
@@ -54,26 +51,12 @@ export default function HomePage() {
         </div>
       </SmoothReveal>
 
-      <SmoothReveal id="workflow" className="block" delay={0.06}>
+      <SmoothReveal id="workflow" className="block scroll-mt-24" delay={0.06}>
         <AutomationFeatures />
       </SmoothReveal>
 
-      <SmoothReveal id="assistant" className="block" delay={0.08}>
+      <SmoothReveal id="assistant" className="block scroll-mt-24" delay={0.08}>
         <AdkChat />
-      </SmoothReveal>
-
-      <SmoothReveal as="section" id="projects" className="container-max pb-10 pt-10" delay={0.1}>
-        <header className="mb-6 max-w-3xl md:mb-10">
-          <p className="eyebrow">Featured work</p>
-          <h2 className="mt-3 text-3xl font-semibold text-slate-950 md:text-4xl">
-            Explore project pages and case studies
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm text-slate-600 md:text-base">
-            Jump straight into dashboards, prototypes, and technical concepts. Each card opens an external visualization,
-            a portfolio page, or a deeper write-up.
-          </p>
-        </header>
-        <ProjectsShowcase projects={FEATURED_HOME_PROJECTS} />
       </SmoothReveal>
     </main>
   )

@@ -1,13 +1,13 @@
 import json
 import os
 import re
+import uuid
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
 from google.adk.runners import InMemoryRunner
 from google.genai import types
-from google.adk.tools import google_search
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -25,18 +25,19 @@ retry_config = types.HttpRetryOptions(
 root_agent = Agent(
     name="site_helper",
     model=Gemini(model="gemini-2.5-flash-lite", retry_options=retry_config),
-    description="Conversational assistant for Venky and general questions.",
+    description="Conversational assistant for Venky's portfolio website.",
     instruction=(
-        "You are a helpful, conversational assistant for Venky's portfolio website. "
-        "You are given optional context chunks from the website. "
-        "1) ALWAYS prefer answering directly from that context if it clearly contains the answer. "
-        "2) If the context does not contain the answer and the question is about general knowledge, current events, "
-        "or anything unrelated to Venky, you MUST invoke the Google Search tool and answer using those results. "
-        "3) Only say 'I don't have that knowledge yet based on this website's content, but I'll soon be able to help.' "
-        "when both the site context and Google Search fail to provide a clear answer. "
-        "Keep answers concise and friendly."
+        "You are the conversational website guide for Venkatesh Naidu's portfolio. "
+        "Answer only from the provided website context and the current conversation. "
+        "Be direct, accurate, and conversational, like a strong portfolio walkthrough. "
+        "When answering about a role, project, patent, or skill, include the specific outcomes, metrics, tools, "
+        "and page details that are present in the website context. "
+        "If the context includes bullet points for the relevant topic, use the strongest 2 or 3 bullets in your answer. "
+        "Do not mention retrieval, context chunks, source files, ADK, Gemini, or implementation details. "
+        "Do not use outside knowledge, search the web, or invent missing facts. "
+        "If the website context does not contain the answer, say that plainly and offer the closest related website detail. "
+        "Keep most answers to 2-5 sentences. Use bullets only when the user asks for a list or comparison."
     ),
-    tools=[google_search],
 )
 
 pantry_agent = Agent(
@@ -117,6 +118,32 @@ def build_pantry_prompt(payload: PantryAsk) -> str:
     )
 
 
+def extract_agent_answer(events) -> str:
+    for event in reversed(events or []):
+        error_message = getattr(event, "error_message", None)
+        if error_message:
+            raise RuntimeError(error_message)
+
+        content = getattr(event, "content", None)
+        parts = getattr(content, "parts", None) or []
+        texts = [getattr(part, "text", "") for part in parts if getattr(part, "text", "")]
+        if texts:
+            return "\n".join(texts).strip()
+
+    return ""
+
+
+async def run_agent_prompt(active_runner: InMemoryRunner, prompt: str, session_prefix: str) -> str:
+    session_id = f"{session_prefix}_{uuid.uuid4().hex}"
+    events = await active_runner.run_debug(
+        prompt,
+        user_id="site_user",
+        session_id=session_id,
+        quiet=True,
+    )
+    return extract_agent_answer(events) or str(events)
+
+
 def parse_agent_json(answer: str) -> dict:
     """Attempt to recover a JSON object from the agent response, even if it was wrapped in markdown."""
 
@@ -156,8 +183,7 @@ def parse_agent_json(answer: str) -> dict:
 async def ask(payload: AskIn):
     try:
         prompt = build_prompt(payload.messages, payload.context)
-        resp = await runner.run_debug(prompt)
-        answer = getattr(resp, "final_response", None) or str(resp)
+        answer = await run_agent_prompt(runner, prompt, "site")
         return {"answer": answer}
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
@@ -167,8 +193,7 @@ async def ask(payload: AskIn):
 async def pantry(payload: PantryAsk):
     try:
         prompt = build_pantry_prompt(payload)
-        resp = await pantry_runner.run_debug(prompt)
-        answer = getattr(resp, "final_response", None) or str(resp)
+        answer = await run_agent_prompt(pantry_runner, prompt, "pantry")
         data = parse_agent_json(answer)
         return {
             "exactMatches": data.get("exactMatches", []),

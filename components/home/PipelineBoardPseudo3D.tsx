@@ -26,7 +26,7 @@ const STAGES = [
     title: "Transform",
     desc: "Models, tests, orchestration",
     tools: [
-      { name: "dbt", logo: "/logos/dbt-logo.jpg" },
+      { name: "DBT", logo: "/logos/dbt-logo.jpg" },
       { name: "Spark", logo: "/logos/spark-logo.svg" },
       { name: "Airflow", logo: "/logos/airflow-logo.png" },
       { name: "Matillion", logo: "/logos/matillion-logo.webp" },

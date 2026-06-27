@@ -4,10 +4,8 @@ const routes = [
   '',
   '/projects',
   '/projects/trucklexa',
-  '/projects/pantry-coach',
   '/projects/cricket-analyst-raiders',
   '/projects/ai-analyst',
-  '/projects/text-to-sql-cortex',
   '/experience',
   '/sports',
   '/contact'

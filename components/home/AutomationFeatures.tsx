@@ -38,7 +38,7 @@ const PIPELINE_STAGES: Stage[] = [
     title: 'Transform',
     desc: 'Validate, model, enrich, and govern business metrics.',
     tools: [
-      { name: 'dbt', logo: '/logos/dbt-logo.jpg' },
+      { name: 'DBT', logo: '/logos/dbt-logo.jpg' },
       { name: 'Spark', logo: '/logos/spark-logo.svg' },
       { name: 'Airflow', logo: '/logos/airflow-logo.png' },
       { name: 'Python', logo: '/logos/python-logo.webp' }
@@ -61,8 +61,8 @@ const PIPELINE_STAGES: Stage[] = [
 
 export default function AutomationFeatures() {
   return (
-    <section className="container-max py-8">
-      <div className="section-shell space-y-10 p-8 md:p-10">
+    <section className="container-max py-6">
+      <div className="section-shell space-y-7 p-6 md:p-8">
         <header className="max-w-3xl">
           <p className="eyebrow">Workflow</p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">How the work gets shipped</h2>
@@ -72,8 +72,8 @@ export default function AutomationFeatures() {
           </p>
         </header>
 
-        <div className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50 p-4 md:p-6">
-          <div className="mt-2 flex flex-col gap-6 lg:flex-row lg:items-stretch lg:gap-4">
+        <div className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50 p-4 md:p-5">
+          <div className="mt-2 flex flex-col items-start gap-6 lg:flex-row lg:gap-4">
             {PIPELINE_STAGES.map((stage, idx) => (
               <div key={stage.id} className="flex flex-1 flex-col lg:flex-row lg:items-center">
                 <StageCard stage={stage} />
@@ -89,7 +89,7 @@ export default function AutomationFeatures() {
 
 function StageCard({ stage }: { stage: Stage }) {
   return (
-    <div className="flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5">
+    <div className="flex flex-col rounded-lg border border-slate-200 bg-white p-4">
       <p className="font-mono text-xs uppercase tracking-[0.18em] text-slate-400">{stage.title}</p>
       <h3 className="mt-3 text-xl font-semibold leading-tight text-slate-950">{stage.desc}</h3>
 
@@ -134,7 +134,7 @@ function ToolChip({ tool }: { tool: Stage['tools'][number] }) {
 
 function Connector() {
   return (
-    <div className="relative my-4 hidden h-full w-10 shrink-0 items-center justify-center lg:flex">
+    <div className="relative my-4 hidden h-10 w-10 shrink-0 items-center justify-center lg:flex">
       <div className="h-px w-full bg-gradient-to-r from-slate-200 via-blue-300 to-transparent" />
       <div className="absolute right-0 h-3 w-3 rotate-45 border border-transparent border-r-blue-400 border-t-blue-400" />
     </div>

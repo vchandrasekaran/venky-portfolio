@@ -1,9 +1,9 @@
 const nodes = [
   { id: "sources", label: "Sources", items: ["Snowflake", "Salesforce", "APIs"], x: 15, y: 22 },
-  { id: "logic", label: "Orchestrator", items: ["dbt tests", "LLM checks"], x: 55, y: 20 },
+  { id: "logic", label: "Orchestrator", items: ["DBT tests", "LLM checks"], x: 55, y: 20 },
   { id: "ai", label: "AI Assist", items: ["Gemini plan", "Guardrails"], x: 70, y: 55 },
   { id: "alerts", label: "Telemetry", items: ["Slack", "Status Page"], x: 25, y: 68 },
-  { id: "apps", label: "Apps", items: ["Tableau", "Pantry Coach"], x: 70, y: 82 },
+  { id: "apps", label: "Apps", items: ["Tableau", "Dashboards"], x: 70, y: 82 },
 ];
 
 const connections: [string, string][] = [

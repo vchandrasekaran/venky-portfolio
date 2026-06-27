@@ -32,7 +32,7 @@ const STAGES = [
     title: "Transform",
     color: "#ffc887",
     tools: [
-      { name: "dbt", logo: "/logos/dbt-logo.jpg" },
+      { name: "DBT", logo: "/logos/dbt-logo.jpg" },
       { name: "Spark", logo: "/logos/spark-logo.svg" },
       { name: "Airflow", logo: "/logos/airflow-logo.png" },
       { name: "Python", logo: "/logos/python-logo.webp" },

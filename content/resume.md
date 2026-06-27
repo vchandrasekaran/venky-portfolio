@@ -1,37 +1,43 @@
 ﻿# Venkatesh Naidu Chandrasekaran — Business Intelligence & Data Analytics
 
-**Houston, TX 77027 • (331) 307-9250 • venkateshkishan11@gmail.com • [LinkedIn](http://www.linkedin.com/in/venkateshnaidu)**
+**Houston, TX 77027 • (331) 307-9250 • venkateshkishan11@gmail.com • [LinkedIn](http://www.linkedin.com/in/venkateshnaidu) • [GitHub](https://github.com/vchandrasekaran)**
 
 ---
 
 ## Summary
-Data & Analytics professional with 7+ years of experience building and optimizing data pipelines, BI dashboards, and predictive analytics that drive strategic, data-backed decisions. Skilled in Power BI, SQL, dbt, Snowflake, and Domo with hands-on experience bridging data engineering, analytics, and financial modeling. Adept at designing automated credit and performance reporting, forecasting models, and valuation analyses. Known for translating complex data into executive-ready insights using Power BI, Looker, and Tableau.
+Data and Analytics professional with 7+ years of experience designing scalable data pipelines, dimensional data models, and self-service BI solutions that drive data-backed decisions. Expert in SQL, Snowflake, DBT, and Python, bridging data engineering, analytics engineering, and business intelligence. Skilled at building ETL/ELT workflows, standardizing KPIs, enforcing data governance, and translating complex datasets into executive-ready insights using Power BI, Tableau, and Domo. Track record of cutting reporting time, reducing cloud cost, and delivering trusted single sources of truth adopted across the enterprise. Inventor on a patent-pending sensor-based sports analytics system.
 
 ---
 
 ## Technical Skills
-- **Data Engineering & Modeling:** SQL, Snowflake, Redshift, dbt, Matillion, Python, Dimensional Modeling, ETL/ELT
+- **Data Engineering & Modeling:** SQL, Snowflake, Redshift, DBT, Matillion, Python, Dimensional Modeling, ETL/ELT
 - **Business Intelligence:** Domo, Power BI, Tableau, Dashboard Design, KPI Standardization, Data Governance, Salesforce Reporting
-- **Orchestration:** Airflow (concepts), Domo DataFlows, Matillion Schedulers
-- **Cloud & Integrations:** AWS (S3, Lambda), Salesforce API, RevOps Data Models
+- **Orchestration:** Apache Airflow, Domo DataFlows, Matillion Schedulers
+- **Cloud & Integrations:** AWS (S3, Lambda), Salesforce Cloud, Oracle, Jira, ServiceNow, Pendo
 - **Programming & Analytics:** Python, R, Java, C#, JavaScript, TypeScript, NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn, Streamlit
 - **Collaboration & Delivery:** Git/Version Control, CI/CD (GitHub Actions, GitLab), Stakeholder Engagement, Data Governance, Cost Optimization, Cross-Functional Training
-- **Emerging Tech:** AI/ML Concepts (Fraud Detection, Automation), Data Quality/Validation Frameworks
+- **Emerging Tech:** Machine Learning, LLMs, RAG, Agent Orchestration, Google ADK, Generative AI APIs, Text-to-SQL, Snowflake Cortex
 
 ---
 
 ## Professional Experience
 
+### NBCUniversal — Houston, TX (Remote)
+**Data Analytics Engineer** (Jan 2026 – Present)
+- Built the company's first end-to-end Power BI dashboard for sports broadcast reliability, defining and tracking core media KPIs with custom DAX measures across 10,000+ hours of live broadcasts spanning the Olympics, NBA, College Football, College Basketball, and Golf, increasing broadcast reliability from 97.0% to 98.8%.
+- Developed Python and Apache Airflow ETL pipelines processing ~2M records/day across ServiceNow, AWS, and Oracle reporting systems, enabling near real-time reporting and reducing issue-detection time from 20 hours to under 1 hour.
+- Delivered centralized Power BI and Tableau reporting for Sports TPR operations, improving visibility into vendor failures, equipment issues, billing workflows, and live production risk, and trained teams on automated reporting processes.
+
 ### Truckstop.com — Chicago, IL (May 2019 – Nov 2025)
 **Business Intelligence Analyst III** (Mar 2024 – Nov 2025)
-- Automated RevOps & Finance reporting by replacing Salesforce/Excel processes with dbt + Snowflake pipelines feeding Domo dashboards; eliminated 30+ ad-hoc spreadsheets and saved Finance/Operations 20+ hours monthly.
+- Automated RevOps & Finance reporting by replacing Salesforce/Excel processes with DBT + Snowflake pipelines feeding Domo dashboards; eliminated 30+ ad-hoc spreadsheets and saved Finance/Operations 20+ hours monthly.
 - Standardized KPIs across Product, Marketing, HR and Customer Success to create trusted North Star metrics used in board and leadership meetings.
 - Consolidated 200+ dashboards into 14 Domo apps, boosting dataset reuse 50%+, cutting row volume from 25B to 10B, and reducing storage/compute costs by >50%.
 - Served as sole Domo administrator, implementing dataset certification, usage tracking, and GitLab CI/CD pipelines that halved spend and improved refresh performance.
 - Optimized Snowflake query costs by 22% through warehouse right-sizing and query profiling.
 
 **Business Intelligence Analyst II** (Jan 2023 – Mar 2024)
-- Built dbt + Snowflake proof-of-concept for payments pipelines, modernizing legacy Power BI logic and increasing daily metric trust with executives.
+- Built DBT + Snowflake proof-of-concept for payments pipelines, modernizing legacy Power BI logic and increasing daily metric trust with executives.
 - Automated SLA monitoring for Integrations/Partner Support/IT by piping Jira + SQL into Domo, enabling real-time SLA dashboards.
 - Built & maintained Power BI service downtime dashboard with external APIs to improve incident response speed and reduce recurring outages.
 - Enabled Marketing Analysts to self-serve campaign performance tracking in Domo & Power BI, cutting turnaround time ~40% and boosting campaign ROI.
@@ -67,6 +73,7 @@ Data & Analytics professional with 7+ years of experience building and optimizin
 
 ## Personal Projects
 - **Trucklexa (Node.js, Python, AWS Lambda):** Alexa skill for voice-based load booking that reduces steps and showcases voice-enabled BI.
+- **Cricket Performance Analytics Platform (Python, Streamlit):** Scraped and structured ball-by-ball data into a custom dataset, generating real-time insights and broadcast-ready metrics that supported match strategy and a top-4 finish.
 - **Credit Card Fraud Detection (Python, Tableau Prep, Scikit-learn):** Balanced 0.17% imbalanced data using SMOTE/ROSE to achieve 99%+ accuracy.
 - **Big Data Weather Analysis (Java, Hadoop, Tableau):** Analyzed 100 years of weather data via Sqoop + MapReduce to surface climate patterns.
 - **Front-End Testing Framework (Cypress, Angular, GitLab CI/CD):** Automated regression testing pipelines to improve release quality.
@@ -79,3 +86,8 @@ Data & Analytics professional with 7+ years of experience building and optimizin
 - Microsoft Certified: Data Analyst Associate
 - Data Analyst with Python — Datacamp
 - Computer Science with Python — MITx
+
+---
+
+## Patents
+- Inventor - "Smart Sensor System for Pickleball Paddles and Analytics Ecosystem," Patent Pending, USPTO Application No. 63/934,339, filed 2025.

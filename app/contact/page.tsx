@@ -19,6 +19,12 @@ const contactLinks = [
     note: 'A good starting point for professional networking.'
   },
   {
+    name: 'GitHub',
+    href: 'https://github.com/vchandrasekaran',
+    label: 'github.com/vchandrasekaran',
+    note: 'Code, project work, and technical experiments.'
+  },
+  {
     name: 'DUPR',
     href: 'https://dashboard.dupr.com/dashboard/player/4836686050',
     label: 'dashboard.dupr.com/player/4836686050',
@@ -34,10 +40,10 @@ const contactLinks = [
 
 export default function ContactPage() {
   return (
-    <main className="pb-16">
+    <main className="pb-10">
       <Section title="Contact" eyebrow="Get in touch" subtitle="Reach out for BI roles, analytics consulting, sports-tech ideas, or project conversations.">
-        <div className="grid gap-6 lg:grid-cols-[0.9fr,1.1fr]">
-          <div className="section-shell p-8 md:p-10">
+        <div className="grid items-start gap-6 lg:grid-cols-[0.9fr,1.1fr]">
+          <div className="section-shell p-6 md:p-8">
             <p className="eyebrow">Availability</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">Open to thoughtful conversations.</h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-slate-600">
@@ -49,7 +55,7 @@ export default function ContactPage() {
               <div className="card p-5">
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">Focus areas</p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Snowflake, dbt, dashboard strategy, automation design, analytics product thinking, and sports-tech concepts.
+                  Snowflake, DBT, dashboard strategy, automation design, analytics product thinking, and sports-tech concepts.
                 </p>
               </div>
               <div className="card p-5">
@@ -65,7 +71,7 @@ export default function ContactPage() {
             {contactLinks.map((link) => (
               <a
                 key={link.name}
-                className="card p-6"
+                className="card p-5"
                 href={link.href}
                 target={link.href.startsWith('mailto:') ? undefined : '_blank'}
                 rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}

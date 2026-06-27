@@ -86,9 +86,9 @@ const highlightReel = orderedPhotos.slice().reverse().slice(0, 6)
 
 export default function SportsPage() {
   return (
-    <main className="container-max space-y-10 pb-20 pt-6">
-      <section className="section-shell overflow-hidden p-8 md:p-10">
-        <div className="grid gap-8 lg:grid-cols-[1fr,1.05fr] lg:items-center">
+    <main className="container-max space-y-6 pb-12 pt-5">
+      <section className="section-shell overflow-hidden p-6 md:p-8">
+        <div className="grid gap-6 lg:grid-cols-[1fr,1.05fr] lg:items-center">
           <div>
             <p className="eyebrow">Sports + media</p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
@@ -125,9 +125,9 @@ export default function SportsPage() {
         </div>
       </section>
 
-      <section className="space-y-6">
+      <section className="space-y-5">
         {sportsSections.map((sport) => (
-          <article key={sport.title} id={slugify(sport.title)} className="section-shell p-6 md:p-8">
+          <article key={sport.title} id={slugify(sport.title)} className="section-shell p-5 md:p-6">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="eyebrow">Gallery</p>
@@ -139,7 +139,7 @@ export default function SportsPage() {
               </span>
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {sport.photos.map((src, photoIdx) => (
                 <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-lg border border-white/70 bg-white shadow-[0_15px_35px_rgba(15,23,42,0.06)]">
                   <Image

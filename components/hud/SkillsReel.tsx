@@ -7,7 +7,7 @@ type Skill = { name: string; category: string; logo: string };
 const SKILLS: Skill[] = [
   { name: 'Snowflake', category: 'Data Engineering', logo: '/logos/snowflake-logo.png' },
   { name: 'Amazon Redshift', category: 'Data Warehousing', logo: '/logos/redshift-logo.png' },
-  { name: 'dbt', category: 'Modeling', logo: '/logos/dbt-logo.jpg' },
+  { name: 'DBT', category: 'Modeling', logo: '/logos/dbt-logo.jpg' },
   { name: 'Matillion', category: 'ELT Orchestration', logo: '/logos/matillion-logo.webp' },
   { name: 'AWS', category: 'Cloud Platform', logo: '/logos/aws-logo.png' },
   { name: 'Domo', category: 'Business Intelligence', logo: '/logos/domo-logo.webp' },

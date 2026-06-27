@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function ProjectsPage() {
   return (
-    <main className="pb-16">
+    <main className="pb-10">
       <Section
         title="Projects"
         eyebrow="Project index"
@@ -18,7 +18,7 @@ export default function ProjectsPage() {
       >
         <ProjectsShowcase projects={PROJECTS} />
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid items-stretch gap-6 md:grid-cols-2">
           {PROJECTS.map((project) => (
             <ProjectCard
               key={project.id}

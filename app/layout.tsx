@@ -35,25 +35,25 @@ export const metadata: Metadata = {
     default: 'Venkatesh Naidu | BI and Data Analytics',
     template: '%s | Venkatesh Naidu'
   },
-  description: 'Portfolio for BI, analytics engineering, Snowflake, dbt, dashboards, AI-assisted data workflows, and sports-tech projects.',
+  description: 'Portfolio for BI, analytics engineering, Snowflake, DBT, dashboards, AI-assisted data workflows, and sports-tech projects.',
   applicationName: 'Venkatesh Naidu Portfolio',
   authors: [{ name: 'Venkatesh Naidu' }],
   creator: 'Venkatesh Naidu',
   publisher: 'Venkatesh Naidu',
-  keywords: ['business intelligence', 'data analytics', 'Snowflake', 'dbt', 'Power BI', 'Domo', 'Tableau', 'analytics engineering'],
+  keywords: ['business intelligence', 'data analytics', 'Snowflake', 'DBT', 'Power BI', 'Domo', 'Tableau', 'analytics engineering'],
   alternates: {
     canonical: '/'
   },
   openGraph: {
     type: 'website',
     title: 'Venkatesh Naidu | BI and Data Analytics',
-    description: 'Analytics portfolio covering Snowflake, dbt, dashboards, AI-assisted workflows, and sports-tech projects.',
+    description: 'Analytics portfolio covering Snowflake, DBT, dashboards, AI-assisted workflows, and sports-tech projects.',
     images: ['/og.svg']
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Venkatesh Naidu | BI and Data Analytics',
-    description: 'Analytics portfolio covering Snowflake, dbt, dashboards, AI-assisted workflows, and sports-tech projects.',
+    description: 'Analytics portfolio covering Snowflake, DBT, dashboards, AI-assisted workflows, and sports-tech projects.',
     images: ['/og.svg']
   },
   metadataBase: resolveMetadataBase()
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${plexMono.variable} min-h-screen antialiased`}>
+      <body className={`${manrope.variable} ${plexMono.variable} theme-broadcast min-h-screen antialiased`}>
         <Header />
         {children}
         <Footer />

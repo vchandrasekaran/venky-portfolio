@@ -32,8 +32,8 @@ const flow = [
 
 export default function TrucklexaPage() {
   return (
-    <div className="container-max space-y-8 pb-16 pt-6">
-      <section className="section-shell p-8 md:p-10">
+    <div className="container-max space-y-6 pb-10 pt-5">
+      <section className="section-shell p-6 md:p-8">
         <p className="eyebrow">Prototype</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
           Trucklexa | Alexa skill for load booking
@@ -52,7 +52,7 @@ export default function TrucklexaPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
+      <section className="grid items-start gap-6 lg:grid-cols-[1.1fr,0.9fr]">
         <div className="section-shell p-6 md:p-8">
           <p className="eyebrow">Flow</p>
           <div className="mt-6 grid gap-4">

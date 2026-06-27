@@ -17,7 +17,7 @@ export const SKILL_CATEGORIES: SkillBlock[] = [
     tools: [
       { name: 'Snowflake', logo: '/logos/snowflake-logo.png' },
       { name: 'Redshift', logo: '/logos/redshift-logo.png' },
-      { name: 'dbt', logo: '/logos/dbt-logo.jpg' },
+      { name: 'DBT', logo: '/logos/dbt-logo.jpg' },
       { name: 'Matillion', logo: '/logos/matillion-logo.webp' },
       { name: 'AWS', logo: '/logos/aws-logo.png' },
       { name: 'Python', logo: '/logos/python-logo.webp' }

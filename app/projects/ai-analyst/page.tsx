@@ -1,6 +1,7 @@
 "use client"
 
 const HIGHLIGHTS = [
+  'Inventor on "Smart Sensor System for Pickleball Paddles and Analytics Ecosystem," Patent Pending, USPTO Application No. 63/934,339, filed 2025.',
   'Patent-pending sensing for pickleball paddles using external stickers, edge or handle clips, or embedded meshes.',
   'Analytics pipeline derives impact location, force, spin cues, sweet-spot accuracy, mishit detection, and rally summaries.',
   'Multi-device ecosystem combines paddle telemetry with cameras, wearables, and court-side sensors.',
@@ -36,8 +37,8 @@ const FLOW = [
 
 export default function AIAnalystPage() {
   return (
-    <div className="container-max space-y-8 pb-16 pt-6">
-      <section className="section-shell p-8 md:p-10">
+    <div className="container-max space-y-6 pb-10 pt-5">
+      <section className="section-shell p-6 md:p-8">
         <p className="eyebrow">Patent pending concept</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
           Smart sensing system for pickleball paddles
@@ -46,6 +47,13 @@ export default function AIAnalystPage() {
           A universal telemetry platform for paddles that detects impacts, interprets shot quality, and feeds coaching,
           broadcast, and officiating experiences with structured data.
         </p>
+        <div className="mt-6 rounded-lg border border-slate-200 bg-white/80 p-5">
+          <p className="eyebrow">Patent detail</p>
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            Inventor - &quot;Smart Sensor System for Pickleball Paddles and Analytics Ecosystem,&quot; Patent Pending, USPTO
+            Application No. 63/934,339, filed 2025.
+          </p>
+        </div>
       </section>
 
       <section className="section-shell p-6 md:p-8">

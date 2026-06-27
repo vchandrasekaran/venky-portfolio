@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Team Analyst Raiders',
-  description: 'Cricket intelligence app case study for player analysis, team comparison, ground context, and matchup planning.'
+  title: 'Cricket Performance Analytics Platform',
+  description: 'Python and Streamlit cricket analytics platform for ball-by-ball data, real-time insights, broadcast-ready metrics, and match strategy.'
 }
 
 export default function CricketAnalystRaidersLayout({ children }: { children: React.ReactNode }) {

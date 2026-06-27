@@ -13,39 +13,39 @@ const STACK = [
 
 const MODULES = [
   {
-    title: 'Player Stats',
-    body: 'Tabbed player analysis with overview, form, batting, bowling, and an ask-style view for grounded questions about the selected player.'
+    title: 'Ball-by-ball dataset',
+    body: 'Scraped and structured ball-by-ball data into a custom dataset that supports repeatable cricket analysis.'
   },
   {
-    title: 'Team Comparison',
-    body: 'Side-by-side batting and bowling comparison across squads so match prep starts with strengths, weaknesses, and matchup edges.'
+    title: 'Real-time insights',
+    body: 'Generated current-form views and matchup signals that helped translate raw cricket data into match strategy.'
   },
   {
-    title: 'Grounds',
-    body: 'Ground analysis with innings, phase, month, and time-bucket filters plus win-signal views that show what usually converts to wins.'
+    title: 'Broadcast-ready metrics',
+    body: 'Packaged player and team metrics for cleaner storytelling, review sessions, and broadcast-style analysis.'
   },
   {
-    title: 'Matchup Report',
-    body: 'Print-oriented team plan for a fixture with current form, player plans, key threats, ground context, strengths, weaknesses, and broadcast notes.'
+    title: 'Match strategy',
+    body: 'Supported match planning and a top-4 finish by giving the team structured evidence before and during competition.'
   }
 ]
 
 const PIPELINE = [
   {
     title: 'Scrape',
-    body: 'Collectors pull team, player, series, and ball-by-ball data from CricClubs and tournament sources into repeatable local datasets.'
+    body: 'Collectors pull ball-by-ball cricket data from tournament sources into a repeatable custom dataset.'
   },
   {
-    title: 'Consolidate',
-    body: 'Workbook builders merge history, profiles, recent form, and live tournament sheets into a single analytics base plus a cached balls pickle.'
+    title: 'Structure',
+    body: 'Python and pandas normalize match, player, team, and innings-level views for analysis.'
   },
   {
-    title: 'Model',
-    body: 'Derived metrics break performance down by innings, phase, pace vs spin, batting position, wickets, extras, and matchup behavior.'
+    title: 'Analyze',
+    body: 'Streamlit views generate real-time insights, matchup context, and performance metrics.'
   },
   {
     title: 'Deliver',
-    body: 'Outputs land in a Streamlit app, print-style reports, a ground-analysis PDF, and a Power BI pack for tournament review.'
+    body: 'Outputs become broadcast-ready metrics and strategy support for match planning.'
   }
 ]
 
@@ -59,23 +59,23 @@ const ARTIFACTS = [
 ]
 
 const IMPACT = [
-  'Turns scattered cricket data into something usable for selection, prep, and on-the-day planning.',
-  'Keeps historical depth while layering in current tournament form, which is exactly how actual match decisions get made.',
-  'Bridges analytics and communication by packaging outputs for coaching, team review, and broadcast-style storytelling.'
+  'Scraped and structured ball-by-ball data into a custom dataset.',
+  'Generated real-time insights and broadcast-ready metrics that supported match strategy.',
+  'Supported a top-4 finish by packaging analytics into a format the team could use.'
 ]
 
 export default function CricketAnalystRaidersPage() {
   return (
-    <div className="container-max space-y-8 pb-16 pt-6">
-      <section className="grid gap-6 lg:grid-cols-[1.08fr,0.92fr]">
-        <div className="section-shell p-8 md:p-10">
+    <div className="container-max space-y-6 pb-10 pt-5">
+      <section className="grid items-start gap-6 lg:grid-cols-[1.08fr,0.92fr]">
+        <div className="section-shell p-6 md:p-8">
           <p className="eyebrow">Prototype sports analytics app</p>
           <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
-            Team Analyst Raiders
+            Cricket Performance Analytics Platform
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-            A Streamlit cricket intelligence workspace built around squad prep, opponent scouting, ground context,
-            current form, and print-ready matchup planning for the Prime Raider Gladiators workflow.
+            A Python and Streamlit platform that scraped and structured ball-by-ball data into a custom dataset,
+            generating real-time insights and broadcast-ready metrics that supported match strategy and a top-4 finish.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
@@ -100,7 +100,7 @@ export default function CricketAnalystRaidersPage() {
           <div className="relative h-64 w-full max-w-sm">
             <Image
               src="/projects/cricket-analyst-raiders/prime-raider-logo-watermark.png"
-              alt="Team Analyst Raiders logo"
+              alt="Cricket Performance Analytics Platform logo"
               fill
               className="object-contain"
             />
@@ -132,7 +132,7 @@ export default function CricketAnalystRaidersPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1.05fr,0.95fr]">
+      <section className="grid items-start gap-6 lg:grid-cols-[1.05fr,0.95fr]">
         <div className="card p-6">
           <p className="eyebrow">Project artifacts</p>
           <ul className="mt-4 space-y-3 text-sm text-slate-600">

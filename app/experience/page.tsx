@@ -12,6 +12,7 @@ type Item = {
 }
 
 const workItems: Item[] = [
+  { role: 'Data Analytics Engineer', org: 'NBCUniversal', timeLabel: 'Jan 2026 - Present | Houston, TX (Remote)' },
   { role: 'Business Intelligence Analyst III', org: 'Truckstop.com', timeLabel: 'Mar 2024 - Nov 2025 | Chicago, IL' },
   { role: 'Business Intelligence Analyst II', org: 'Truckstop.com', timeLabel: 'Jan 2023 - Mar 2024 | Chicago, IL' },
   { role: 'Business Intelligence Analyst I', org: 'Truckstop.com', timeLabel: 'Jan 2021 - Jan 2023 | Chicago, IL' },
@@ -32,18 +33,18 @@ const sportsItems: Item[] = [
   { role: 'Brand Partner', org: 'Mars Cricket', timeLabel: '2019 - Present' }
 ]
 
-const strengths = ['Snowflake + dbt pipelines', 'Domo, Tableau, Power BI', 'Revenue and GTM reporting', 'Automation and AI workflow prototyping']
+const strengths = ['Snowflake + DBT pipelines', 'Domo, Tableau, Power BI', 'Revenue and GTM reporting', 'Automation and AI workflow prototyping']
 
 export default function ExperiencePage() {
   return (
-    <main className="pb-16">
+    <main className="pb-10">
       <Section title="Experience" eyebrow="Career timeline" subtitle="A cleaner view of the work history, education path, and sports/media milestones behind the portfolio.">
-        <div className="grid gap-6 lg:grid-cols-[1.15fr,0.85fr]">
-          <div className="section-shell p-8 md:p-10">
+        <div className="grid items-start gap-6 lg:grid-cols-[1.15fr,0.85fr]">
+          <div className="section-shell p-6 md:p-8">
             <p className="eyebrow">Career path</p>
-            <div className="mt-6 space-y-4">
+            <div className="mt-5 space-y-3">
               {workItems.map((item) => (
-                <article key={`${item.role}-${item.timeLabel}`} className="card p-5">
+                <article key={`${item.role}-${item.timeLabel}`} className="card p-4">
                   <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">{item.timeLabel}</p>
                   <h3 className="mt-2 text-xl font-semibold text-slate-950">{item.role}</h3>
                   <p className="mt-1 text-slate-600">{item.org}</p>
@@ -52,8 +53,8 @@ export default function ExperiencePage() {
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="card p-6">
+          <div className="space-y-4">
+            <div className="card p-5">
               <p className="eyebrow">Strengths</p>
               <ul className="mt-4 space-y-3 text-sm text-slate-600">
                 {strengths.map((strength) => (
@@ -65,7 +66,7 @@ export default function ExperiencePage() {
               </ul>
             </div>
 
-            <div className="card p-6">
+            <div className="card p-5">
               <p className="eyebrow">Education</p>
               <div className="mt-4 space-y-4">
                 {educationItems.map((item) => (
@@ -78,7 +79,7 @@ export default function ExperiencePage() {
               </div>
             </div>
 
-            <div className="card p-6">
+            <div className="card p-5">
               <p className="eyebrow">Sport + media</p>
               <div className="mt-4 space-y-4">
                 {sportsItems.map((item) => (

@@ -13,7 +13,7 @@ export default function AssistantOrbPlaceholder() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content: "Tap the orb and ask anything about Venky, his BI stack, or even general trivia.",
+      content: "Tap the orb and ask about Venky, his BI stack, projects, sports background, or contact details.",
     },
   ]);
   const [status, setStatus] = useState<OrbStatus>("idle");
@@ -23,18 +23,74 @@ export default function AssistantOrbPlaceholder() {
   const [speechOutSupported, setSpeechOutSupported] = useState(false);
   const recognitionRef = useRef<any>(null);
   const messagesRef = useRef(messages);
+  const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
   useEffect(() => {
     messagesRef.current = messages;
   }, [messages]);
 
-  const normalizeSpeechText = (text: string) =>
-    text
-      .replace(/\s+\*/g, " times ")
-      .replace(/\*/g, " times ")
-      .replace(/#/g, " number ")
+  const pickExpressiveVoice = (voices: SpeechSynthesisVoice[]) => {
+    const englishVoices = voices.filter((voice) => voice.lang.toLowerCase().startsWith("en"));
+    const preferred = [
+      "aria",
+      "jenny",
+      "guy",
+      "samantha",
+      "google us english",
+      "google uk english",
+      "natural",
+      "zira",
+      "david",
+      "alex",
+    ];
+
+    return (
+      preferred
+        .map((name) => englishVoices.find((voice) => voice.name.toLowerCase().includes(name)))
+        .find(Boolean) ??
+      englishVoices[0] ??
+      voices[0] ??
+      null
+    );
+  };
+
+  const cleanSpokenLine = useCallback((line: string) =>
+    line
+      .replace(/\[(.*?)\]\((.*?)\)/g, "$1")
+      .replace(/\*\*(.*?)\*\*/g, "$1")
+      .replace(/`([^`]+)`/g, "$1")
+      .replace(/github\.com\/vchandrasekaran/gi, "GitHub, github dot com slash vchandrasekaran")
+      .replace(/linkedin\.com\/in\/venkateshnaidu/gi, "LinkedIn, linkedin dot com slash in slash venkatesh naidu")
+      .replace(/@venky_6/g, "at venky 6")
+      .replace(/DBT/g, "D B T")
+      .replace(/BI/g, "B I")
+      .replace(/ETL/g, "E T L")
+      .replace(/LLM/g, "L L M")
+      .replace(/USPTO/g, "U S P T O")
       .replace(/\s{2,}/g, " ")
-      .trim();
+      .trim(), []);
+
+  const normalizeSpeechText = useCallback((text: string) => {
+    const lines = text
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    const regularLines: string[] = [];
+    const bulletLines: string[] = [];
+
+    for (const line of lines) {
+      if (/^[-*]\s+/.test(line)) bulletLines.push(cleanSpokenLine(line.replace(/^[-*]\s+/, "")));
+      else regularLines.push(cleanSpokenLine(line));
+    }
+
+    const spokenBullets = bulletLines.map((line, index) => {
+      const lead = ["First", "Next", "Also", "Finally"][index] ?? "Also";
+      return `${lead}, ${line.replace(/[.!?]$/, "")}.`;
+    });
+
+    return [...regularLines, ...spokenBullets].join(" ").replace(/\s*:\s*/g, ": ").replace(/\s{2,}/g, " ").trim();
+  }, [cleanSpokenLine]);
 
   const speak = useCallback(
     (text: string) => {
@@ -43,8 +99,10 @@ export default function AssistantOrbPlaceholder() {
         setStatus("speaking");
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(normalizeSpeechText(text));
-        utterance.rate = 1.15;
-        utterance.pitch = 1.05;
+        if (voiceRef.current) utterance.voice = voiceRef.current;
+        utterance.rate = 0.94;
+        utterance.pitch = 1.08;
+        utterance.volume = 1;
         utterance.onend = () => setStatus("idle");
         utterance.onerror = () => setStatus("idle");
         window.speechSynthesis.speak(utterance);
@@ -52,7 +110,7 @@ export default function AssistantOrbPlaceholder() {
         setStatus("idle");
       }
     },
-    [speechOutSupported]
+    [normalizeSpeechText, speechOutSupported]
   );
 
   const sendPrompt = useCallback(
@@ -127,10 +185,18 @@ export default function AssistantOrbPlaceholder() {
     }
     if ("speechSynthesis" in window) {
       setSpeechOutSupported(true);
+      const loadVoices = () => {
+        voiceRef.current = pickExpressiveVoice(window.speechSynthesis.getVoices());
+      };
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
     }
     return () => {
       if (recognitionRef.current) recognitionRef.current.stop();
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = null;
+        window.speechSynthesis.cancel();
+      }
     };
   }, [sendPrompt, status]);
 
@@ -186,7 +252,7 @@ export default function AssistantOrbPlaceholder() {
           <p className="text-[10px] uppercase tracking-[0.5em] text-[#7f88a9]">Voice Orb</p>
           <h3 className="text-2xl font-semibold text-white">Ask out loud</h3>
           <p className="text-sm text-slate-300">
-            Leveraging the same ADK agent used in chat, the orb listens, sends the prompt, and plays back the response.
+            The orb listens, sends the prompt to the site guide, and plays back a grounded response from the portfolio.
           </p>
           <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200 shadow-[0_15px_30px_rgba(0,0,0,0.35)] backdrop-blur">
             <p className="text-[10px] uppercase tracking-[0.4em] text-[#b3b3b3]">

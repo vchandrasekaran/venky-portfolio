@@ -11,24 +11,24 @@ const PIPELINE_STAGES: Stage[] = [
   {
     id: "ingest",
     title: "Ingest + Model",
-    desc: "Snowflake-first ingestion, dbt models, and governed ELT jobs.",
+    desc: "Snowflake-first ingestion, DBT models, and governed ELT jobs.",
     tools: [
       { name: "Snowflake", logo: "/logos/snowflake-logo.png" },
       { name: "Redshift", logo: "/logos/redshift-logo.png" },
       { name: "Matillion", logo: "/logos/matillion-logo.webp" },
       { name: "AWS", logo: "/logos/aws-logo.png" },
       { name: "Python", logo: "/logos/python-logo.webp" },
-      { name: "dbt", logo: "/logos/dbt-logo.jpg" },
+      { name: "DBT", logo: "/logos/dbt-logo.jpg" },
     ],
   },
   {
     id: "govern",
     title: "Orchestrate + Govern",
-    desc: "CI/CD, dbt tests, telemetry, and cost controls keep pipelines reliable.",
+    desc: "CI/CD, DBT tests, telemetry, and cost controls keep pipelines reliable.",
     tools: [
       { name: "GitHub", logo: "/logos/github.svg" },
       { name: "GitLab", logo: "/logos/gitlab-logo.webp" },
-      { name: "dbt tests", logo: "/logos/dbt-logo.jpg" },
+      { name: "DBT tests", logo: "/logos/dbt-logo.jpg" },
       { name: "Snowflake Optimizer", logo: "/logos/snowflake-logo.png" },
       { name: "Matillion schedulers", logo: "/logos/matillion-logo.webp" },
       { name: "Cost monitors", logo: "/logos/aws-logo.png" },

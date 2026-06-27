@@ -95,7 +95,7 @@ export default function ParallaxPortrait({
         <div className="pointer-events-none absolute inset-x-5 bottom-5 rounded-2xl border border-white/15 bg-black/30 px-5 py-4 text-left text-sm text-slate-100 backdrop-blur">
           <p className="text-[11px] uppercase tracking-[0.35em] text-brand.subtle">BI + AI</p>
           <p className="text-lg font-semibold">Signal Architect</p>
-          <p className="text-xs text-slate-300">Snowflake · dbt · Tableau · Copilots</p>
+          <p className="text-xs text-slate-300">Snowflake · DBT · Tableau · Copilots</p>
         </div>
       </div>
     </motion.div>

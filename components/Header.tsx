@@ -24,14 +24,14 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 lg:mx-0 lg:overflow-visible lg:pb-0" aria-label="Main navigation">
+        <nav className="no-scrollbar -mx-1 flex gap-1 overflow-x-auto px-1 pb-1 lg:mx-0 lg:overflow-visible lg:pb-0" aria-label="Main navigation">
           {NAV.map((n) => {
             const active = pathname === n.href || (n.href !== '/' && pathname.startsWith(n.href))
             return (
               <Link
                 key={n.href}
                 href={n.href}
-                className={`whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition ${
+                className={`whitespace-nowrap rounded-md px-2 py-2 text-xs font-medium transition sm:px-3 sm:text-sm ${
                   active
                     ? 'bg-slate-950 text-white shadow-[0_10px_24px_rgba(15,23,42,0.16)]'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'

@@ -55,7 +55,7 @@ export default function AdkChat({
     {
       role: "assistant",
       content:
-        "Ask about the projects, experience, sports pages, or contact details on this site. I answer only from content published on this website."
+        "Ask me about Venky's experience, projects, sports background, or contact details. I answer from what is published on this site."
     }
   ])
   const [input, setInput] = useState("")
@@ -69,6 +69,7 @@ export default function AdkChat({
   const [speechOutputSupported, setSpeechOutputSupported] = useState(false)
   const [speakReplies, setSpeakReplies] = useState(false)
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null)
+  const voiceRef = useRef<SpeechSynthesisVoice | null>(null)
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [autoListen, setAutoListen] = useState(false)
 
@@ -80,11 +81,17 @@ export default function AdkChat({
     if (typeof window === "undefined") return
     if ("speechSynthesis" in window) {
       setSpeechOutputSupported(true)
-      setSpeakReplies(true)
+      const loadVoices = () => {
+        const voices = window.speechSynthesis.getVoices()
+        voiceRef.current = pickExpressiveVoice(voices)
+      }
+      loadVoices()
+      window.speechSynthesis.onvoiceschanged = loadVoices
     }
 
     return () => {
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.onvoiceschanged = null
         window.speechSynthesis.cancel()
       }
     }
@@ -131,16 +138,72 @@ export default function AdkChat({
     setIsListening(false)
   }, [])
 
-  const normalizeSpeakText = (text: string) =>
-    text
+  const pickExpressiveVoice = (voices: SpeechSynthesisVoice[]) => {
+    const englishVoices = voices.filter((voice) => voice.lang.toLowerCase().startsWith("en"))
+    const preferred = [
+      "aria",
+      "jenny",
+      "guy",
+      "samantha",
+      "google us english",
+      "google uk english",
+      "natural",
+      "zira",
+      "david",
+      "alex"
+    ]
+
+    return (
+      preferred
+        .map((name) => englishVoices.find((voice) => voice.name.toLowerCase().includes(name)))
+        .find(Boolean) ??
+      englishVoices[0] ??
+      voices[0] ??
+      null
+    )
+  }
+
+  const cleanSpokenLine = useCallback((line: string) =>
+    line
+      .replace(/\[(.*?)\]\((.*?)\)/g, "$1")
       .replace(/\*\*(.*?)\*\*/g, "$1")
       .replace(/`([^`]+)`/g, "$1")
-      .replace(/^[\s]*[-*]\s*/gm, " bullet ")
-      .replace(/[-*]\s+/g, " bullet ")
-      .replace(/#/g, " number ")
+      .replace(/github\.com\/vchandrasekaran/gi, "GitHub, github dot com slash vchandrasekaran")
+      .replace(/linkedin\.com\/in\/venkateshnaidu/gi, "LinkedIn, linkedin dot com slash in slash venkatesh naidu")
+      .replace(/@venky_6/g, "at venky 6")
+      .replace(/DBT/g, "D B T")
+      .replace(/BI/g, "B I")
+      .replace(/ETL/g, "E T L")
+      .replace(/LLM/g, "L L M")
+      .replace(/USPTO/g, "U S P T O")
       .replace(/\s{2,}/g, " ")
-      .replace(/[\r\n]+/g, ". ")
+      .trim(), [])
+
+  const normalizeSpeakText = useCallback((text: string) => {
+    const lines = text
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+
+    const regularLines: string[] = []
+    const bulletLines: string[] = []
+
+    for (const line of lines) {
+      if (/^[-*]\s+/.test(line)) bulletLines.push(cleanSpokenLine(line.replace(/^[-*]\s+/, "")))
+      else regularLines.push(cleanSpokenLine(line))
+    }
+
+    const spokenBullets = bulletLines.map((line, index) => {
+      const lead = ["First", "Next", "Also", "Finally"][index] ?? "Also"
+      return `${lead}, ${line.replace(/[.!?]$/, "")}.`
+    })
+
+    return [...regularLines, ...spokenBullets]
+      .join(" ")
+      .replace(/\s*:\s*/g, ": ")
+      .replace(/\s{2,}/g, " ")
       .trim()
+  }, [cleanSpokenLine])
 
   const speakText = useCallback(
     (text: string) => {
@@ -149,8 +212,10 @@ export default function AdkChat({
       try {
         stopSpeaking()
         const utterance = new SpeechSynthesisUtterance(normalizeSpeakText(text))
-        utterance.pitch = 1.05
-        utterance.rate = 1.08
+        if (voiceRef.current) utterance.voice = voiceRef.current
+        utterance.pitch = 1.08
+        utterance.rate = 0.94
+        utterance.volume = 1
         utterance.onstart = () => setIsSpeaking(true)
         utterance.onend = () => {
           setIsSpeaking(false)
@@ -166,7 +231,7 @@ export default function AdkChat({
         if (autoListen) startListening()
       }
     },
-    [autoListen, speechOutputSupported, startListening, stopSpeaking]
+    [autoListen, normalizeSpeakText, speechOutputSupported, startListening, stopSpeaking]
   )
 
   const handleSend = useCallback(
@@ -192,7 +257,7 @@ export default function AdkChat({
         if (!res.ok || data.error) {
           setError(data.error || "Unknown error")
         } else {
-          const formatted = formatAnswer(data.answer)
+          const formatted = formatAnswer(data.answer) || "I could not produce a response. Try rephrasing the question."
           const assistantReply: ChatMessage = { role: "assistant", content: formatted }
           setMessages([...newMessages, assistantReply])
 
@@ -296,16 +361,16 @@ export default function AdkChat({
   const statusLabel = isListening ? "Listening" : isSpeaking ? "Speaking" : loading ? "Thinking" : "Ready"
 
   return (
-    <section className="container-max py-6">
-      <div className="section-shell p-8 md:p-10">
-        <div className="grid gap-6 lg:grid-cols-[0.9fr,1.1fr]">
+    <section className="container-max py-5">
+      <div className="section-shell p-6 md:p-8">
+        <div className="grid gap-6 lg:grid-cols-[0.9fr,1.1fr] lg:items-start">
           <div className="space-y-5">
             <div>
               <p className="eyebrow">Assistant</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{title}</h2>
               <p className="mt-3 max-w-xl text-base leading-7 text-slate-600">
-                This assistant uses only the content published on this website. It does not call external models, web
-                search, or paid APIs.
+                Ask direct questions about the portfolio and get grounded answers from the site content. If a detail is
+                not published here yet, the assistant will say so plainly.
               </p>
             </div>
 
@@ -384,13 +449,13 @@ export default function AdkChat({
               <div className="card p-5">
                 <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-slate-400">Good prompts</p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Ask about Truckstop work, featured projects, sports sections, contact details, or the purpose of a page.
+                  Ask about NBCUniversal, Truckstop work, featured projects, the patent, sports sections, or contact details.
                 </p>
               </div>
               <div className="card p-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-slate-400">Fallback behavior</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-slate-400">Grounding</p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  If something is not on the site, the assistant says so instead of searching the web or making it up.
+                  Answers stay tied to what is published on the website instead of pulling in unrelated web results.
                 </p>
               </div>
             </div>

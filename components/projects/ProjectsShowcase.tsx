@@ -32,15 +32,15 @@ export default function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
   if (!active) return null
 
   return (
-    <div className="mt-8 w-full">
+    <div className="mt-5 w-full">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="section-shell relative overflow-hidden p-6 md:p-8"
+        className="section-shell relative overflow-hidden p-5 md:p-6"
       >
-        <div className="relative z-10 grid items-stretch gap-8 md:grid-cols-[1.1fr,0.9fr]">
+        <div className="relative z-10 grid items-start gap-6 md:grid-cols-[1.1fr,0.9fr]">
           <div className="flex flex-col justify-between">
             <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.16em] text-slate-400">
               <span className="rounded-md border border-slate-200 bg-white px-2.5 py-1 text-slate-700">{active.tag || 'Module'}</span>
@@ -82,7 +82,7 @@ export default function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
           </div>
 
           <div className="relative">
-            <div className="flex min-h-[240px] flex-col rounded-lg border border-slate-200 bg-white p-5">
+            <div className="flex flex-col rounded-lg border border-slate-200 bg-white p-5">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-400">Inside the project</p>
               <h3 className="mt-2 text-xl font-semibold text-slate-950">What you&apos;ll see</h3>
               <ul className="mt-5 flex-1 space-y-3 text-sm text-slate-600">
@@ -97,7 +97,7 @@ export default function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((project, idx) => {
             const isActive = idx === index
             return (
