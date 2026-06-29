@@ -115,7 +115,7 @@ export default function Hero() {
                   priority
                   unoptimized
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="z-[1] origin-bottom translate-x-16 translate-y-8 scale-[0.78] object-contain object-top p-2 drop-shadow-[0_34px_44px_rgba(0,0,0,0.65)] sm:translate-x-0 sm:translate-y-24 sm:scale-[0.98]"
+                  className="z-[1] origin-bottom translate-x-16 translate-y-16 scale-[0.78] object-contain object-top p-2 drop-shadow-[0_34px_44px_rgba(0,0,0,0.65)] sm:translate-x-0 sm:translate-y-24 sm:scale-[0.98]"
                   onError={() => setHasImage(false)}
                 />
               </motion.button>
@@ -133,7 +133,7 @@ export default function Hero() {
             </div>
 
             <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8">
-              <p className="font-mono text-xs uppercase tracking-[0.28em] text-[#38bdf8]">
+              <p className="max-w-[11.5rem] font-mono text-[10px] uppercase leading-[1.45] tracking-[0.22em] text-[#38bdf8] sm:max-w-none sm:text-xs sm:leading-normal sm:tracking-[0.28em]">
                 Business Intelligence & Data Analytics
               </p>
               <h1 aria-label="Venkatesh Naidu" className="mt-3 text-4xl font-black leading-none tracking-normal text-white sm:text-6xl">
@@ -141,11 +141,11 @@ export default function Hero() {
                 <span className="block text-[#f59e0b]">Naidu</span>
               </h1>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              <div className="mt-5 grid w-[48%] max-w-[178px] gap-2 sm:mt-6 sm:w-auto sm:max-w-none sm:grid-cols-3 sm:gap-3">
                 {metrics.map((metric) => (
-                  <div key={metric.label} className="rounded-md border border-white/15 bg-white/10 p-4 backdrop-blur">
-                    <p className="text-3xl font-black text-white">{metric.value}</p>
-                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-white/58">{metric.label}</p>
+                  <div key={metric.label} className="rounded-md border border-white/15 bg-white/10 p-3 backdrop-blur sm:p-4">
+                    <p className="text-2xl font-black text-white sm:text-3xl">{metric.value}</p>
+                    <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-white/58 sm:text-xs sm:tracking-[0.12em]">{metric.label}</p>
                   </div>
                 ))}
               </div>
