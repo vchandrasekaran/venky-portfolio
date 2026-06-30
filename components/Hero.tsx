@@ -158,7 +158,7 @@ export default function Hero() {
                 <div>
                   <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#f59e0b]">Analytics details</p>
                   <h2 className="mt-3 max-w-3xl text-4xl font-black leading-[1.02] tracking-normal text-white md:text-5xl">
-                    Data products for operators and executives.
+                    Dashboards, Pipelines, and AI workflows that make data usable.
                   </h2>
                 </div>
 
@@ -173,9 +173,8 @@ export default function Hero() {
               </div>
 
               <p className="mt-5 max-w-3xl text-lg leading-8 text-white/68">
-                Currently a Data Analytics Engineer at NBCUniversal. I build data products for operators and executives:
-                trusted pipelines, clean dashboards, and natural-language interfaces that turn warehouse data into answers
-                people can act on.
+                My work focuses on reliable ELT, governed datasets, executive reporting, and conversational analytics that
+                help teams move from warehouse data to decisions.
               </p>
 
               <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
