@@ -2,7 +2,8 @@ import Image from 'next/image'
 
 export const metadata = {
   title: 'Sports',
-  description: 'Sports and media gallery across competitive pickleball, cricket, brand partnerships, and sports-tech innovation.'
+  description:
+    'Sports and media gallery across competitive pickleball, cricket, soccer, brand partnerships, and sports-tech innovation.'
 }
 
 const orderedPhotos = [
@@ -60,28 +61,35 @@ const soccerIndexes = [...Array.from({ length: 15 }, (_, idx) => idx), 15, 16, 1
 const baseCricketIndexes = Array.from({ length: 15 }, (_, idx) => idx + 15).filter((idx) => !soccerIndexes.includes(idx))
 const movedFromPickleballIndexes = Array.from({ length: 10 }, (_, idx) => idx + 30)
 
+const soccerPhotos = soccerIndexes.map((idx) => orderedPhotos[idx])
 const cricketPhotos = [...baseCricketIndexes.map((idx) => orderedPhotos[idx]), ...movedFromPickleballIndexes.map((idx) => orderedPhotos[idx])]
 const pickleballPhotos = orderedPhotos.filter((_, idx) => idx >= 30 && !movedFromPickleballIndexes.includes(idx))
 
 const sportsSections = [
   {
     title: 'Pickleball',
-    subtitle: 'Competitive pickleball player since 2024.',
+    subtitle: 'Competitive player since 2024 with tournament play, DUPR coaching, and brand ambassador work.',
     photos: pickleballPhotos.slice().reverse()
   },
   {
     title: 'Cricket',
-    subtitle: 'Competitive cricketer having played Minor League.',
+    subtitle: 'Competitive cricketer with Minor League experience, Mars Cricket partnership work, and cricket analytics.',
     photos: cricketPhotos.slice().reverse()
+  },
+  {
+    title: 'Soccer',
+    subtitle: 'Earlier competitive and training background captured in the sports gallery.',
+    photos: soccerPhotos.slice().reverse()
   }
 ]
 
 const highlightReel = orderedPhotos.slice().reverse().slice(0, 6)
 const sportsHighlights = [
-  'Competitive pickleball player since 2024.',
-  'Competitive cricketer having played Minor League.',
+  'Competitive pickleball player since 2024, with tournament play and coaching experience.',
+  'Competitive cricketer with Minor League experience and cricket analytics work.',
+  'Soccer background from earlier competitive and training years.',
   'Brand ambassador for Mars Cricket, Holey Performance, and Paddletek.',
-  'Sports-tech innovation with paddle patent and cricket analytics work.'
+  'Sports-tech innovation through smart paddle sensing, patent work, and cricket performance analytics.'
 ]
 
 export default function SportsPage() {
@@ -95,7 +103,7 @@ export default function SportsPage() {
               Competitive sports, brand partnerships, and sports-tech innovation.
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
-              A focused view of the sports side of the portfolio: competitive pickleball, competitive cricket, brand
+              A focused view of the sports side of the portfolio: competitive pickleball, cricket, soccer, brand
               ambassador work, and technology ideas that connect paddle sensing with cricket analytics.
             </p>
 
