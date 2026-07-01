@@ -1,6 +1,5 @@
 import Section from '@/components/Section'
 import ProjectCard from '@/components/ProjectCard'
-import ProjectsShowcase from '@/components/projects/ProjectsShowcase'
 import { PROJECTS } from '@/data/projects'
 
 export const metadata = {
@@ -16,15 +15,14 @@ export default function ProjectsPage() {
         eyebrow="Project index"
         subtitle="Portfolio case studies, technical builds, and project pages that show how the work is framed and delivered."
       >
-        <ProjectsShowcase projects={PROJECTS} />
-
-        <div className="grid items-stretch gap-6 md:grid-cols-2">
+        <div className="grid auto-rows-fr items-stretch gap-6 md:grid-cols-2">
           {PROJECTS.map((project) => (
             <ProjectCard
               key={project.id}
               title={project.title}
               desc={project.desc}
               href={project.href}
+              highlights={project.highlights}
             />
           ))}
         </div>

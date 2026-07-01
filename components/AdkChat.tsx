@@ -52,7 +52,6 @@ const promptSuggestions = [
 ]
 
 export default function AdkChat({
-  title = "Chat with the Website Guide",
   placeholder = "Ask about projects, experience, sports, or contact details from this site"
 }: {
   title?: string
@@ -372,16 +371,7 @@ export default function AdkChat({
     <section className="container-max py-5">
       <div className="section-shell p-6 md:p-8">
         <div className="mx-auto max-w-5xl">
-          <div>
-            <p className="eyebrow">Assistant</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{title}</h2>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
-              Ask direct questions about the portfolio and get grounded answers from the site content. If a detail is
-              not published here yet, the assistant will say so plainly.
-            </p>
-          </div>
-
-          <div className="card mt-6 p-4 sm:p-5">
+          <div className="card p-4 sm:p-5">
             <div className="flex flex-col gap-4 border-b border-slate-200 px-1 pb-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">Site chat</p>

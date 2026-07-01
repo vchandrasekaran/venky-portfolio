@@ -74,10 +74,10 @@ export default function Hero() {
         <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#2563eb,#06b6d4_45%,#8b5cf6)]" />
 
         <div className="grid gap-0 lg:grid-cols-[0.92fr,1.08fr]">
-          <div className="relative min-h-[620px] overflow-hidden border-b border-white/10 bg-[#080b10] lg:h-full lg:min-h-[760px] lg:border-b-0 lg:border-r">
+          <div className="relative min-h-[560px] overflow-hidden border-b border-white/10 bg-[#080b10] sm:min-h-[620px] lg:h-full lg:min-h-[680px] lg:border-b-0 lg:border-r">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(56,189,248,0.28),transparent_34%),radial-gradient(circle_at_52%_74%,rgba(139,92,246,0.22),transparent_28%),linear-gradient(180deg,#10151d_0%,#080b10_100%)]" />
-            <div className="absolute left-1/2 top-16 h-[520px] w-[520px] -translate-x-1/2 rounded-full border border-white/10 bg-white/[0.035] shadow-[inset_0_0_70px_rgba(56,189,248,0.16)]" />
-            <div className="absolute inset-x-10 bottom-24 h-24 rounded-[50%] bg-[#020617] opacity-75 blur-2xl" />
+            <div className="absolute left-1/2 top-6 h-[520px] w-[520px] -translate-x-1/2 rounded-full border border-white/10 bg-white/[0.035] shadow-[inset_0_0_70px_rgba(56,189,248,0.16)]" />
+            <div className="absolute inset-x-10 bottom-10 h-24 rounded-[50%] bg-[#020617] opacity-75 blur-2xl" />
 
             {hasImage ? (
               <motion.button
@@ -115,7 +115,7 @@ export default function Hero() {
                   priority
                   unoptimized
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="z-[1] origin-bottom translate-x-16 translate-y-16 scale-[0.78] object-contain object-top p-2 drop-shadow-[0_34px_44px_rgba(0,0,0,0.65)] sm:translate-x-0 sm:translate-y-24 sm:scale-[0.98]"
+                  className="z-[1] origin-bottom translate-x-16 translate-y-0 scale-[0.9] object-contain object-bottom p-0 drop-shadow-[0_34px_44px_rgba(0,0,0,0.65)] sm:translate-x-10 sm:-translate-y-10 sm:scale-[1.22] lg:translate-x-16 lg:-translate-y-16 lg:scale-[1.32]"
                   onError={() => setHasImage(false)}
                 />
               </motion.button>
@@ -127,12 +127,7 @@ export default function Hero() {
 
             <div className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(180deg,rgba(8,11,16,0)_0%,rgba(8,11,16,0.08)_44%,rgba(8,11,16,0.76)_72%,#080b10_100%)]" />
 
-            <div className="absolute left-5 top-5 z-10 hidden rounded-md border border-white/15 bg-black/45 px-4 py-3 backdrop-blur sm:block">
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#06b6d4]">Profile snapshot</p>
-              <p className="mt-1 text-sm font-semibold text-white">BI and data analytics portfolio</p>
-            </div>
-
-            <div className="absolute inset-x-0 top-6 z-10 px-6 sm:bottom-0 sm:top-auto sm:p-6 md:p-8">
+            <div className="absolute inset-x-0 bottom-0 z-10 px-6 pb-6 sm:p-6 md:p-8">
               <p className="max-w-[11.5rem] font-mono text-[10px] uppercase leading-[1.45] tracking-[0.22em] text-[#38bdf8] sm:max-w-none sm:text-xs sm:leading-normal sm:tracking-[0.28em]">
                 Business Intelligence & Data Analytics
               </p>
@@ -152,7 +147,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-5 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_34%),#10151d] p-6 md:p-8">
+          <div className="flex flex-col gap-4 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_34%),#10151d] p-6 md:p-8">
             <div>
               <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/12 pb-5">
                 <div>
@@ -177,9 +172,9 @@ export default function Hero() {
                 help teams move from warehouse data to decisions.
               </p>
 
-              <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              <div className="mt-5 grid auto-rows-fr gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {attributeGroups.map((group) => (
-                  <article key={group.label} className="rounded-lg border border-white/12 bg-white/[0.055] p-4">
+                  <article key={group.label} className="flex min-h-[150px] flex-col rounded-lg border border-white/12 bg-white/[0.055] p-4">
                     <div className="flex items-start justify-between gap-3">
                       <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">{group.label}</p>
                       <p className="text-2xl font-black text-[#8b5cf6]">{group.score}</p>
@@ -203,13 +198,13 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="grid items-start gap-4 lg:grid-cols-[1fr,0.82fr]">
-              <div className="rounded-lg border border-white/12 bg-[#07090d] p-5">
+            <div className="grid auto-rows-fr items-stretch gap-4 lg:grid-cols-2">
+              <div className="flex h-full flex-col rounded-lg border border-white/12 bg-[#07090d] p-5">
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/42">Now building</p>
-                <h3 className="mt-2 text-2xl font-bold leading-tight text-white">
+                <h3 className="mt-2 text-xl font-bold leading-tight text-white">
                   BI systems, lighter workflows, and more human interfaces to data.
                 </h3>
-                <ul className="mt-4 space-y-3 text-sm leading-6 text-white/64">
+                <ul className="mt-4 space-y-2.5 text-sm leading-6 text-white/64">
                   {proofPoints.map((point) => (
                     <li key={point} className="flex gap-3">
                       <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#38bdf8]" />
@@ -219,7 +214,7 @@ export default function Hero() {
                 </ul>
               </div>
 
-              <div className="rounded-lg border border-white/12 bg-white/[0.055] p-5">
+              <div className="flex h-full flex-col rounded-lg border border-white/12 bg-white/[0.055] p-5">
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/42">Primary stack</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {stack.map((item) => (
@@ -229,7 +224,7 @@ export default function Hero() {
                   ))}
                 </div>
 
-                <div className="mt-5 flex flex-col gap-3">
+                <div className="mt-auto flex flex-col gap-3 pt-5">
                   <Link
                     href="/projects"
                     className="inline-flex items-center justify-center rounded-md bg-[#f8fafc] px-5 py-3 text-sm font-semibold text-[#07090d] transition hover:bg-[#e2e8f0]"
