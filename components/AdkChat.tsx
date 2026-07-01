@@ -371,67 +371,51 @@ export default function AdkChat({
   return (
     <section className="container-max py-5">
       <div className="section-shell p-6 md:p-8">
-        <div className="grid gap-6 lg:grid-cols-[0.9fr,1.1fr] lg:items-start">
-          <div className="space-y-5">
-            <div>
-              <p className="eyebrow">Assistant</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{title}</h2>
-              <p className="mt-3 max-w-xl text-base leading-7 text-slate-600">
-                Ask direct questions about the portfolio and get grounded answers from the site content. If a detail is
-                not published here yet, the assistant will say so plainly.
-              </p>
-            </div>
+        <div className="mx-auto max-w-5xl">
+          <div>
+            <p className="eyebrow">Assistant</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{title}</h2>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+              Ask direct questions about the portfolio and get grounded answers from the site content. If a detail is
+              not published here yet, the assistant will say so plainly.
+            </p>
+          </div>
 
-            <div className="rounded-lg bg-slate-950 p-6 text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)]">
-              <div className="flex items-center gap-4">
+          <div className="card mt-6 p-4 sm:p-5">
+            <div className="flex flex-col gap-4 border-b border-slate-200 px-1 pb-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">Site chat</p>
+                <p className="mt-2 text-sm text-slate-600">
+                  Ask about the portfolio, Venky&apos;s background, or anything already published on this site.
+                </p>
+                <p className="mt-2 text-xs font-medium text-slate-500">Voice: {statusLabel}</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={toggleListening}
                   disabled={!speechSupported}
-                  className={`ai-orb relative inline-flex h-20 w-20 items-center justify-center rounded-full border transition ${
+                  className={`inline-flex items-center gap-3 rounded-md border px-3 py-2 text-sm font-medium transition ${
                     speechSupported
-                      ? "border-white/15 bg-white/10 hover:bg-white/15"
-                      : "cursor-not-allowed border-white/10 bg-white/5 opacity-40"
-                  } ${isListening ? "listening" : ""}`}
+                      ? "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-slate-950"
+                      : "cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400"
+                  }`}
                 >
                   <span
-                    className={`h-10 w-10 rounded-full ${
-                      isListening
-                        ? "bg-teal-400"
-                        : isSpeaking
-                          ? "bg-blue-400"
-                          : loading
-                            ? "bg-violet-300"
-                            : "bg-white"
+                    className={`h-3 w-3 rounded-full ${
+                      isListening ? "bg-blue-400" : isSpeaking ? "bg-blue-500" : loading ? "bg-slate-400" : "bg-blue-600"
                     }`}
                   />
-                </button>
-
-                <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/55">Voice status</p>
-                  <p className="mt-2 text-2xl font-semibold">{statusLabel}</p>
-                  <p className="mt-2 text-sm text-white/70">
-                    {speechSupported
-                      ? "Tap the orb to talk. Tap again to stop listening or speaking."
-                      : "Microphone access is not available in this browser."}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={handleStopAll}
-                  className="rounded-md border border-white/15 px-4 py-2 text-sm text-white/80 transition hover:bg-white/10 hover:text-white"
-                >
-                  Stop
+                  {isListening || isSpeaking ? "Stop voice" : "Start voice"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setAutoListen((prev) => !prev)}
                   disabled={!speechSupported}
-                  className={`rounded-md px-4 py-2 text-sm transition ${
-                    autoListen ? "bg-white text-slate-900" : "border border-white/15 text-white/80 hover:bg-white/10"
+                  className={`rounded-md border px-3 py-2 text-sm font-medium transition ${
+                    autoListen
+                      ? "border-blue-500 bg-blue-600 text-white"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-slate-950"
                   } ${!speechSupported ? "cursor-not-allowed opacity-40" : ""}`}
                 >
                   {autoListen ? "Auto-listen on" : "Auto-listen off"}
@@ -440,73 +424,23 @@ export default function AdkChat({
                   type="button"
                   onClick={() => setSpeakReplies((prev) => !prev)}
                   disabled={!speechOutputSupported}
-                  className={`rounded-md px-4 py-2 text-sm transition ${
-                    speakReplies ? "bg-blue-500 text-white" : "border border-white/15 text-white/80 hover:bg-white/10"
+                  className={`rounded-md border px-3 py-2 text-sm font-medium transition ${
+                    speakReplies
+                      ? "border-blue-500 bg-blue-600 text-white"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-slate-950"
                   } ${!speechOutputSupported ? "cursor-not-allowed opacity-40" : ""}`}
                 >
                   {speechOutputSupported ? (speakReplies ? "Voice replies on" : "Voice replies off") : "No voice output"}
                 </button>
               </div>
-
-              {interimTranscript ? (
-                <p className="mt-4 rounded-lg bg-white/10 px-4 py-3 text-sm text-white/80">Listening: {interimTranscript}</p>
-              ) : null}
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="card p-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-slate-400">Prompt shortcuts</p>
-                <div className="mt-3 flex flex-col gap-2">
-                  {promptSuggestions.map((prompt) => (
-                    <button
-                      key={prompt}
-                      type="button"
-                      onClick={() => handleSend(prompt)}
-                      disabled={loading}
-                      className="rounded-md border border-slate-200 bg-white px-3 py-2 text-left text-sm leading-5 text-slate-700 transition hover:border-blue-300 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      {prompt}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="card p-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-slate-400">Grounding</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Answers stay tied to what is published on the website instead of pulling in unrelated web results.
-                </p>
-              </div>
-            </div>
-          </div>
-
-            <div className="card p-4 sm:p-5">
-            <div className="flex flex-col gap-4 border-b border-slate-200 px-1 pb-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">Site chat</p>
-                <p className="mt-2 text-sm text-slate-600">
-                  Ask about the portfolio, Venky&apos;s background, or anything already published on this site.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={toggleListening}
-                disabled={!speechSupported}
-                className={`inline-flex items-center gap-3 rounded-md border px-3 py-2 text-sm font-medium transition ${
-                  speechSupported
-                    ? "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-slate-950"
-                    : "cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400"
-                }`}
-              >
-                <span
-                  className={`h-3 w-3 rounded-full ${
-                    isListening ? "bg-blue-400" : isSpeaking ? "bg-blue-500" : loading ? "bg-slate-400" : "bg-blue-600"
-                  }`}
-                />
-                {isListening || isSpeaking ? "Stop voice" : "Start voice"}
-              </button>
-            </div>
+            {interimTranscript ? (
+              <p className="mt-4 rounded-lg bg-slate-950 px-4 py-3 text-sm text-white">Listening: {interimTranscript}</p>
+            ) : null}
 
             <div className="mt-4 flex flex-wrap gap-2">
+              <span className="py-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400">Try</span>
               {promptSuggestions.map((prompt) => (
                 <button
                   key={`chat-${prompt}`}
@@ -549,22 +483,7 @@ export default function AdkChat({
                 className="w-full resize-none rounded-lg border border-slate-200 bg-white px-4 py-4 text-sm text-slate-900 outline-none transition focus:border-blue-300"
               />
 
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={toggleListening}
-                    disabled={!speechSupported}
-                    className={`rounded-md px-4 py-2 text-sm font-medium transition ${
-                      speechSupported
-                        ? "border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900"
-                        : "cursor-not-allowed border border-slate-200 bg-slate-100 text-slate-400"
-                    }`}
-                  >
-                    {isListening || isSpeaking ? "Stop voice" : "Start voice"}
-                  </button>
-                </div>
-
+              <div className="flex justify-end">
                 <button
                   disabled={loading || !input.trim()}
                   className="rounded-md bg-blue-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
