@@ -6,11 +6,10 @@ import { motion } from 'framer-motion'
 type ProjectCardProps = {
   title: string
   desc: string
-  status?: string
   href?: string
 }
 
-export default function ProjectCard({ title, desc, status, href }: ProjectCardProps) {
+export default function ProjectCard({ title, desc, href }: ProjectCardProps) {
   const base = (
     <motion.article
       whileHover={{ y: -6, scale: 1.005 }}
@@ -21,11 +20,6 @@ export default function ProjectCard({ title, desc, status, href }: ProjectCardPr
       <div className="relative z-10 flex h-full flex-col">
         <div className="flex items-start justify-between gap-4">
           <h3 className="text-xl font-semibold leading-tight text-slate-950">{title}</h3>
-          {status ? (
-            <span className="shrink-0 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-600">
-              {status}
-            </span>
-          ) : null}
         </div>
 
         <p className="mt-5 max-w-2xl text-slate-600">{desc}</p>

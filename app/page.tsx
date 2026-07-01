@@ -14,12 +14,12 @@ export default function HomePage() {
       body: 'Executive dashboards, revenue reporting, operational scorecards, and BI governance across Domo, Tableau, and Power BI.'
     },
     {
-      title: 'AI workflow prototypes',
+      title: 'AI workflows',
       body: 'Natural-language analytics, ingredient-aware planning, voice flows, and assistant interfaces grounded in controlled data.'
     },
     {
       title: 'Sports-tech storytelling',
-      body: 'Cricket analysis, pickleball sensing ideas, media work, and personal projects presented as product case studies.'
+      body: 'Cricket analytics, paddle patent work, brand partnerships, and sports media presented as product case studies.'
     }
   ]
 

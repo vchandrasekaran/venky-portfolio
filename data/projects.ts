@@ -3,8 +3,6 @@ export type ProjectSummary = {
   title: string
   desc: string
   href: string
-  tag: string
-  status: 'Live' | 'Prototype' | 'Concept' | 'In Flight'
   highlights: string[]
 }
 
@@ -14,8 +12,6 @@ export const PROJECTS: ProjectSummary[] = [
     title: 'Interactive Dashboards. Real Metrics',
     desc: 'Tableau dashboards: revenue/GTM cockpit, experiment hub with uplift guardrails, and exec KPI decks.',
     href: 'https://public.tableau.com/app/profile/venkateshnaidu/vizzes',
-    tag: 'LIVE',
-    status: 'Live',
     highlights: [
       'Tableau Public gallery: pipeline and bookings vs targets, win/loss breakdowns, cohort health',
       'Experiment and ops boards: uplift vs control, guardrail monitors, rollout readiness checks',
@@ -27,12 +23,10 @@ export const PROJECTS: ProjectSummary[] = [
     title: 'Trucklexa Alexa Skill',
     desc: 'Voice-enabled load booking assistant built with Node.js, Python, and AWS Lambda.',
     href: '/projects/trucklexa',
-    tag: 'POC COMPLETED',
-    status: 'Prototype',
     highlights: [
       'Hands-free brokerage workflow that reduces booking steps dramatically',
       'Alexa + Lambda workflow pipes requests into Truckstop APIs securely',
-      'Showcases conversational BI concepts Venky is applying to freight data'
+      'Showcases conversational BI workflows Venky is applying to freight data'
     ]
   },
   {
@@ -40,8 +34,6 @@ export const PROJECTS: ProjectSummary[] = [
     title: 'Cricket Performance Analytics Platform',
     desc: 'Python and Streamlit platform that scrapes and structures ball-by-ball data into a custom dataset for real-time insights and broadcast-ready metrics.',
     href: '/projects/cricket-analyst-raiders',
-    tag: 'MATCH DAY APP',
-    status: 'Prototype',
     highlights: [
       'Scraped and structured ball-by-ball data into a custom cricket dataset',
       'Generated real-time insights and broadcast-ready metrics for match strategy',
@@ -50,11 +42,9 @@ export const PROJECTS: ProjectSummary[] = [
   },
   {
     id: 'ai-analyst',
-    title: 'Patent Pending - Smart Paddle Sensing',
+    title: 'Smart Paddle Sensing',
     desc: 'Telemetry platform for pickleball paddles (external or embedded) with analytics, multi-device fusion, and an AI agent for coaching and broadcast.',
     href: '/projects/ai-analyst',
-    tag: 'PATENT PENDING',
-    status: 'Concept',
     highlights: [
       'Inventor on "Smart Sensor System for Pickleball Paddles and Analytics Ecosystem," USPTO Application No. 63/934,339, filed 2025',
       'Sensing via stickers, edge or handle clips, or embedded meshes detects impact, spin cues, and sweet-spot accuracy',

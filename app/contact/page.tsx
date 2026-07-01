@@ -55,7 +55,7 @@ export default function ContactPage() {
               <div className="card p-5">
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">Focus areas</p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Snowflake, DBT, dashboard strategy, automation design, analytics product thinking, and sports-tech concepts.
+                  Snowflake, DBT, dashboard strategy, automation design, analytics product thinking, and sports-tech innovation.
                 </p>
               </div>
               <div className="card p-5">

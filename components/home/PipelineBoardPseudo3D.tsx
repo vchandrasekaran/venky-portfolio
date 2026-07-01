@@ -50,7 +50,7 @@ export default function PipelineBoardPseudo3D() {
   return (
     <section className="container-max pb-16 text-white">
       <header className="mb-8 text-center">
-        <p className="text-[10px] uppercase tracking-[0.45em] text-white/60">Concept</p>
+        <p className="text-[10px] uppercase tracking-[0.45em] text-white/60">Workflow</p>
         <h2 className="mt-3 text-2xl font-semibold md:text-3xl">3D board — pipeline lanes</h2>
         <p className="mx-auto mt-2 max-w-2xl text-sm text-white/70 md:text-base">
           Pseudo-3D board inspired by n8n: tilt, glow, and hover states, using the real tool logos we track above.

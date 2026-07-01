@@ -26,9 +26,16 @@ export default function OrchestrationWhiteboard() {
             orchestration canvas, but tailored to BI + AI data copilots.
           </p>
           <ul className="space-y-2 text-sm text-white/80">
-            <li>• Nodes glow when hovered, mirroring live workflow health.</li>
-            <li>• Connectors illustrate lineage from source to app.</li>
-            <li>• Use this to explain new automation engagements in seconds.</li>
+            {[
+              'Nodes glow when hovered, mirroring workflow health.',
+              'Connectors illustrate lineage from source to app.',
+              'Use this to explain new automation engagements in seconds.'
+            ].map((item) => (
+              <li key={item} className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-blue-400" />
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
 

@@ -102,7 +102,7 @@ export default function PipelineBoardR3F() {
   return (
     <section className="container-max pb-16 text-white">
       <header className="mb-8 text-center">
-        <p className="text-[10px] uppercase tracking-[0.45em] text-white/60">Concept</p>
+        <p className="text-[10px] uppercase tracking-[0.45em] text-white/60">Workflow</p>
         <h2 className="mt-3 text-2xl font-semibold md:text-3xl">3D board — react-three-fiber</h2>
         <p className="mx-auto mt-2 max-w-2xl text-sm text-white/70 md:text-base">
           Orbit/tilt a lightweight 3D lane of the ETL toolchain. Hover highlights nodes; lines show stage flow.

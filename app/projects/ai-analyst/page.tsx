@@ -39,7 +39,7 @@ export default function AIAnalystPage() {
   return (
     <div className="container-max space-y-6 pb-10 pt-5">
       <section className="section-shell p-6 md:p-8">
-        <p className="eyebrow">Patent pending concept</p>
+        <p className="eyebrow">Sports-tech innovation</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
           Smart sensing system for pickleball paddles
         </h1>

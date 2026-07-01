@@ -69,7 +69,7 @@ export default function CricketAnalystRaidersPage() {
     <div className="container-max space-y-6 pb-10 pt-5">
       <section className="grid items-start gap-6 lg:grid-cols-[1.08fr,0.92fr]">
         <div className="section-shell p-6 md:p-8">
-          <p className="eyebrow">Prototype sports analytics app</p>
+          <p className="eyebrow">Cricket analytics app</p>
           <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
             Cricket Performance Analytics Platform
           </h1>

@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export const metadata = {
   title: 'Sports',
-  description: 'Sports and media gallery across pickleball, cricket, and soccer.'
+  description: 'Sports and media gallery across competitive pickleball, cricket, brand partnerships, and sports-tech innovation.'
 }
 
 const orderedPhotos = [
@@ -57,7 +57,6 @@ const orderedPhotos = [
 const slugify = (value: string) => value.toLowerCase().replace(/\s+/g, '-')
 
 const soccerIndexes = [...Array.from({ length: 15 }, (_, idx) => idx), 15, 16, 17, 22, 23]
-const soccerPhotos = soccerIndexes.map((idx) => orderedPhotos[idx])
 const baseCricketIndexes = Array.from({ length: 15 }, (_, idx) => idx + 15).filter((idx) => !soccerIndexes.includes(idx))
 const movedFromPickleballIndexes = Array.from({ length: 10 }, (_, idx) => idx + 30)
 
@@ -67,22 +66,23 @@ const pickleballPhotos = orderedPhotos.filter((_, idx) => idx >= 30 && !movedFro
 const sportsSections = [
   {
     title: 'Pickleball',
-    subtitle: 'PPA Milwaukee, Minor League Nationals, and DUPR coaching.',
+    subtitle: 'Competitive pickleball player since 2024.',
     photos: pickleballPhotos.slice().reverse()
   },
   {
     title: 'Cricket',
-    subtitle: 'Community, content, and Mars Cricket partnership.',
+    subtitle: 'Competitive cricketer having played Minor League.',
     photos: cricketPhotos.slice().reverse()
-  },
-  {
-    title: 'Soccer',
-    subtitle: 'Early competitive runs and training blocks.',
-    photos: soccerPhotos.slice().reverse()
   }
 ]
 
 const highlightReel = orderedPhotos.slice().reverse().slice(0, 6)
+const sportsHighlights = [
+  'Competitive pickleball player since 2024.',
+  'Competitive cricketer having played Minor League.',
+  'Brand ambassador for Mars Cricket, Holey Performance, and Paddletek.',
+  'Sports-tech innovation with paddle patent and cricket analytics work.'
+]
 
 export default function SportsPage() {
   return (
@@ -92,12 +92,21 @@ export default function SportsPage() {
           <div>
             <p className="eyebrow">Sports + media</p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
-              A visual timeline across pickleball, cricket, and soccer.
+              Competitive sports, brand partnerships, and sports-tech innovation.
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
-              This page balances the professional portfolio with a more personal record: competition, coaching, community,
-              travel, and media work grouped into a cleaner gallery experience.
+              A focused view of the sports side of the portfolio: competitive pickleball, competitive cricket, brand
+              ambassador work, and technology ideas that connect paddle sensing with cricket analytics.
             </p>
+
+            <ul className="mt-5 space-y-3 text-sm leading-6 text-slate-600">
+              {sportsHighlights.map((highlight) => (
+                <li key={highlight} className="flex gap-3">
+                  <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-blue-500" />
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {sportsSections.map((sport) => (

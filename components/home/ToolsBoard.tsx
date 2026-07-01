@@ -69,7 +69,7 @@ export default function ToolsBoard() {
           <p className="text-xs uppercase tracking-[0.6em] text-white/60">Full pipeline atlas</p>
           <h2 className="mt-4 text-3xl font-semibold md:text-4xl">Exactly where each skill lives in orchestration</h2>
           <p className="mx-auto mt-3 max-w-3xl text-sm text-white/70">
-            Modeled after the n8n orchestration UI: every stage sits inside a dark module, tools live in neon trays, and
+            Modeled after the n8n orchestration UI: every stage sits inside a dark module, tools sit in neon trays, and
             directed arrows show the flow from ingestion to activation.
           </p>
         </header>
@@ -87,8 +87,8 @@ function BoardHeader() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-[#0d1024] px-6 py-4 text-sm">
       <div className="flex items-center gap-3">
-        <span className="rounded-full bg-green-500/25 px-3 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-green-200">
-          Active
+        <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-blue-200">
+          Atlas
         </span>
         <p className="text-white/80">Automation command board · “Atlas” view</p>
       </div>

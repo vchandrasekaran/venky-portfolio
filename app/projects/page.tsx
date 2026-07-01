@@ -14,7 +14,7 @@ export default function ProjectsPage() {
       <Section
         title="Projects"
         eyebrow="Project index"
-        subtitle="Portfolio case studies, concepts, and project pages that show how the work is framed and delivered."
+        subtitle="Portfolio case studies, technical builds, and project pages that show how the work is framed and delivered."
       >
         <ProjectsShowcase projects={PROJECTS} />
 
@@ -24,7 +24,6 @@ export default function ProjectsPage() {
               key={project.id}
               title={project.title}
               desc={project.desc}
-              status={project.status}
               href={project.href}
             />
           ))}

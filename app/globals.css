@@ -331,8 +331,8 @@ a {
   --page-surface: rgba(17, 22, 30, 0.78);
   --page-surface-strong: #10151d;
   --page-surface-muted: #151c25;
-  --page-accent: #f59e0b;
-  --page-accent-strong: #22c55e;
+  --page-accent: #06b6d4;
+  --page-accent-strong: #8b5cf6;
   --page-secondary: #38bdf8;
   --page-shadow: 0 20px 54px rgba(0, 0, 0, 0.32);
   --page-shadow-lg: 0 30px 76px rgba(0, 0, 0, 0.42);
@@ -348,7 +348,7 @@ body.theme-broadcast {
 
 body.theme-broadcast::before {
   background:
-    linear-gradient(90deg, rgba(245, 158, 11, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.07) 1px, transparent 1px),
     linear-gradient(rgba(56, 189, 248, 0.045) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: linear-gradient(180deg, black 0%, transparent 78%);
@@ -366,7 +366,7 @@ body.theme-broadcast::before {
   position: absolute;
   inset: 0 0 auto;
   height: 2px;
-  background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e, #38bdf8);
+  background: linear-gradient(90deg, #2563eb, #06b6d4, #8b5cf6);
 }
 
 .theme-broadcast .section-shell,
@@ -390,17 +390,17 @@ body.theme-broadcast::before {
   position: absolute;
   inset: 0 0 auto;
   height: 3px;
-  background: linear-gradient(90deg, #ef4444, #f59e0b 32%, #22c55e 66%, #38bdf8);
+  background: linear-gradient(90deg, #2563eb, #06b6d4 52%, #8b5cf6);
   opacity: 0.86;
 }
 
 .theme-broadcast .card:hover {
-  border-color: rgba(245, 158, 11, 0.4);
+  border-color: rgba(6, 182, 212, 0.42);
   box-shadow: var(--page-shadow-lg);
 }
 
 .theme-broadcast .eyebrow {
-  color: #f59e0b;
+  color: #06b6d4;
 }
 
 .theme-broadcast .pill,
@@ -451,14 +451,14 @@ body.theme-broadcast::before {
 }
 
 .theme-broadcast :is(.bg-blue-600, .hover\:bg-blue-700:hover) {
-  background: linear-gradient(90deg, #ef4444, #f59e0b 44%, #22c55e) !important;
+  background: linear-gradient(90deg, #2563eb, #06b6d4 50%, #8b5cf6) !important;
   color: #07090d !important;
 }
 
 .theme-broadcast .site-header a.bg-slate-950 {
-  background: linear-gradient(90deg, #ef4444, #f59e0b 48%, #22c55e) !important;
+  background: linear-gradient(90deg, #2563eb, #06b6d4 50%, #8b5cf6) !important;
   color: #07090d !important;
-  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.2);
+  box-shadow: 0 12px 28px rgba(6, 182, 212, 0.22);
 }
 
 .theme-broadcast .site-header a:not(.bg-slate-950):hover,

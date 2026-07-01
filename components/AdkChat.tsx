@@ -44,6 +44,13 @@ function formatAnswer(answer: unknown): string {
   return String(answer)
 }
 
+const promptSuggestions = [
+  "What projects are featured on this site?",
+  "Tell me about the smart paddle patent.",
+  "What is the cricket analytics work?",
+  "What sports background is listed here?"
+]
+
 export default function AdkChat({
   title = "Chat with the Website Guide",
   placeholder = "Ask about projects, experience, sports, or contact details from this site"
@@ -350,8 +357,9 @@ export default function AdkChat({
 
   const toggleListening = () => {
     if (!speechSupported) return
-    if (isListening) {
-      stopListening()
+    if (isListening || isSpeaking) {
+      setAutoListen(false)
+      handleStopAll()
       return
     }
     stopSpeaking()
@@ -393,7 +401,7 @@ export default function AdkChat({
                         : isSpeaking
                           ? "bg-blue-400"
                           : loading
-                            ? "bg-amber-300"
+                            ? "bg-violet-300"
                             : "bg-white"
                     }`}
                   />
@@ -404,7 +412,7 @@ export default function AdkChat({
                   <p className="mt-2 text-2xl font-semibold">{statusLabel}</p>
                   <p className="mt-2 text-sm text-white/70">
                     {speechSupported
-                      ? "Tap the orb to talk, or type below for a regular chat."
+                      ? "Tap the orb to talk. Tap again to stop listening or speaking."
                       : "Microphone access is not available in this browser."}
                   </p>
                 </div>
@@ -447,10 +455,20 @@ export default function AdkChat({
 
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="card p-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-slate-400">Good prompts</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Ask about NBCUniversal, Truckstop work, featured projects, the patent, sports sections, or contact details.
-                </p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-slate-400">Prompt shortcuts</p>
+                <div className="mt-3 flex flex-col gap-2">
+                  {promptSuggestions.map((prompt) => (
+                    <button
+                      key={prompt}
+                      type="button"
+                      onClick={() => handleSend(prompt)}
+                      disabled={loading}
+                      className="rounded-md border border-slate-200 bg-white px-3 py-2 text-left text-sm leading-5 text-slate-700 transition hover:border-blue-300 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
               </div>
               <div className="card p-5">
                 <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-slate-400">Grounding</p>
@@ -462,13 +480,44 @@ export default function AdkChat({
           </div>
 
             <div className="card p-4 sm:p-5">
-            <div className="flex flex-col gap-2 border-b border-slate-200 px-1 pb-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex flex-col gap-4 border-b border-slate-200 px-1 pb-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">Live chat</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">Site chat</p>
                 <p className="mt-2 text-sm text-slate-600">
                   Ask about the portfolio, Venky&apos;s background, or anything already published on this site.
                 </p>
               </div>
+              <button
+                type="button"
+                onClick={toggleListening}
+                disabled={!speechSupported}
+                className={`inline-flex items-center gap-3 rounded-md border px-3 py-2 text-sm font-medium transition ${
+                  speechSupported
+                    ? "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-slate-950"
+                    : "cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400"
+                }`}
+              >
+                <span
+                  className={`h-3 w-3 rounded-full ${
+                    isListening ? "bg-blue-400" : isSpeaking ? "bg-blue-500" : loading ? "bg-slate-400" : "bg-blue-600"
+                  }`}
+                />
+                {isListening || isSpeaking ? "Stop voice" : "Start voice"}
+              </button>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {promptSuggestions.map((prompt) => (
+                <button
+                  key={`chat-${prompt}`}
+                  type="button"
+                  onClick={() => handleSend(prompt)}
+                  disabled={loading}
+                  className="rounded-md border border-slate-200 bg-white px-3 py-2 text-left text-xs font-medium text-slate-600 transition hover:border-blue-300 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {prompt}
+                </button>
+              ))}
             </div>
 
             <div className="mt-4 max-h-[420px] space-y-3 overflow-y-auto rounded-lg bg-slate-50 p-3 sm:p-4">
@@ -512,7 +561,7 @@ export default function AdkChat({
                         : "cursor-not-allowed border border-slate-200 bg-slate-100 text-slate-400"
                     }`}
                   >
-                    {isListening ? "Stop voice" : "Start voice"}
+                    {isListening || isSpeaking ? "Stop voice" : "Start voice"}
                   </button>
                 </div>
 

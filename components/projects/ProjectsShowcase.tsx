@@ -43,10 +43,6 @@ export default function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
         <div className="relative z-10 grid items-start gap-6 md:grid-cols-[1.1fr,0.9fr]">
           <div className="flex flex-col justify-between">
             <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.16em] text-slate-400">
-              <span className="rounded-md border border-slate-200 bg-white px-2.5 py-1 text-slate-700">{active.tag || 'Module'}</span>
-              {active.status ? (
-                <span className="rounded-md border border-blue-100 bg-blue-50 px-2.5 py-1 text-blue-700">{active.status}</span>
-              ) : null}
               <span>
                 {index + 1}/{items.length}
               </span>
@@ -111,7 +107,6 @@ export default function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                     : 'border-slate-200 bg-slate-50/80 hover:border-slate-300 hover:bg-white'
                 }`}
               >
-                <p className="text-[10px] uppercase tracking-[0.16em] text-slate-400">{project.tag || 'Module'}</p>
                 <p className="mt-2 line-clamp-2 text-sm font-semibold leading-snug text-slate-950">{project.title}</p>
                 {isActive ? <span className="hud-sweep" aria-hidden /> : null}
               </motion.button>

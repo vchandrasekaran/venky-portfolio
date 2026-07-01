@@ -27,10 +27,10 @@ const educationItems: Item[] = [
 ]
 
 const sportsItems: Item[] = [
-  { role: 'DUPR Coach & Media', org: 'Coaching, travel, broadcast features', timeLabel: '2024 - Ongoing' },
-  { role: 'PPA Milwaukee Open', org: "Gold (Men's Doubles), Silver (Men's Singles)", timeLabel: '2024 | Milwaukee, WI' },
-  { role: 'Minor League Nationals', org: 'Invite + Lake Geneva golds', timeLabel: '2024 | Lake Geneva, WI' },
-  { role: 'Brand Partner', org: 'Mars Cricket', timeLabel: '2019 - Present' }
+  { role: 'Competitive pickleball player', org: 'Playing competitively since 2024', timeLabel: '2024 - Present' },
+  { role: 'Competitive cricketer', org: 'Minor League experience', timeLabel: 'Cricket' },
+  { role: 'Brand ambassador', org: 'Mars Cricket, Holey Performance, Paddletek', timeLabel: 'Partnerships' },
+  { role: 'Sports-tech innovation', org: 'Paddle patent and cricket analytics work', timeLabel: 'Patent + analytics' }
 ]
 
 const strengths = ['Snowflake + DBT pipelines', 'Domo, Tableau, Power BI', 'Revenue and GTM reporting', 'Automation and AI workflow prototyping']

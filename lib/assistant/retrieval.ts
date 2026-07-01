@@ -130,12 +130,12 @@ const GUIDE_TOPICS: GuideTopic[] = [
     title: "Projects",
     aliases: ["projects", "featured work", "case studies", "portfolio projects", "project pages"],
     summary:
-      "The project section focuses on practical BI, automation, sports analytics, and sports-tech concepts rather than generic screenshots.",
+      "The project section focuses on practical BI, automation, sports analytics, and sports-tech innovation rather than generic screenshots.",
     bullets: [
       "Interactive Dashboards. Real Metrics: Tableau dashboards for GTM, experiments, and executive KPI reporting.",
       "Trucklexa: a voice-enabled load booking assistant using Alexa, Node.js, Python, and AWS Lambda.",
       "Cricket Performance Analytics Platform: Python and Streamlit app for ball-by-ball cricket analytics.",
-      "Patent Pending - Smart Paddle Sensing: pickleball telemetry, analytics, and AI coaching/broadcast concept."
+      "Patent Pending - Smart Paddle Sensing: pickleball telemetry, analytics, and AI coaching/broadcast work."
     ],
     page: "Projects"
   },
@@ -145,7 +145,7 @@ const GUIDE_TOPICS: GuideTopic[] = [
     title: "Interactive Dashboards. Real Metrics",
     aliases: ["tableau", "dashboards", "interactive dashboards", "real metrics", "executive kpi", "gtm cockpit"],
     summary:
-      "The Tableau work is positioned as live dashboarding and reporting work across revenue/GTM, experiments, cohort health, and executive KPI decks.",
+      "The Tableau work is positioned as dashboarding and reporting work across revenue/GTM, experiments, cohort health, and executive KPI decks.",
     bullets: [
       "Includes pipeline and bookings vs targets, win/loss breakdowns, and cohort health.",
       "Covers experiment and ops boards with uplift vs control, guardrail monitors, and rollout readiness checks.",
@@ -159,7 +159,7 @@ const GUIDE_TOPICS: GuideTopic[] = [
     title: "Trucklexa",
     aliases: ["trucklexa", "alexa", "voice assistant", "load booking", "aws lambda", "broker assistant"],
     summary:
-      "Trucklexa is a prototype Alexa skill for voice-based load booking. It compresses a multi-screen broker workflow into a spoken request and downstream operational handoff.",
+      "Trucklexa is an Alexa skill for voice-based load booking. It compresses a multi-screen broker workflow into a spoken request and downstream operational handoff.",
     bullets: [
       "Built with Alexa Skills Kit, Node.js, Python, AWS Lambda, API Gateway, and Truckstop APIs.",
       "The flow covers voice intent, validation, search, confirmation, and telemetry.",
@@ -187,9 +187,9 @@ const GUIDE_TOPICS: GuideTopic[] = [
     title: "Smart Paddle Sensing patent",
     aliases: ["patent", "smart paddle", "paddle sensing", "pickleball sensor", "uspto", "63/934,339", "analytics ecosystem"],
     summary:
-      "The smart paddle concept is tied to Venky's patent-pending sports analytics system: Smart Sensor System for Pickleball Paddles and Analytics Ecosystem, USPTO Application No. 63/934,339, filed 2025.",
+      "The smart paddle work is tied to Venky's patent-pending sports analytics system: Smart Sensor System for Pickleball Paddles and Analytics Ecosystem, USPTO Application No. 63/934,339, filed 2025.",
     bullets: [
-      "The concept uses external stickers, edge or handle clips, or embedded meshes to detect impact, spin cues, and sweet-spot accuracy.",
+      "The system uses external stickers, edge or handle clips, or embedded meshes to detect impact, spin cues, and sweet-spot accuracy.",
       "Signal processing and AI derive location, force, twist, shot class, and contact quality.",
       "The ecosystem can stream to phones, hubs, or cloud services and support coaching, broadcast, voice, and chat guidance."
     ],
@@ -215,11 +215,12 @@ const GUIDE_TOPICS: GuideTopic[] = [
     title: "Sports background",
     aliases: ["sports", "pickleball", "cricket", "soccer", "dupr", "ppa", "mars cricket", "media"],
     summary:
-      "The sports page is a personal and media gallery across pickleball, cricket, and soccer. It balances the professional portfolio with competition, coaching, travel, community, and media work.",
+      "The sports page highlights competitive pickleball, cricket, brand partnerships, and sports-tech innovation.",
     bullets: [
-      "Pickleball includes DUPR coaching, PPA Milwaukee, and Minor League Nationals context.",
-      "Cricket includes community, content, and Mars Cricket partnership.",
-      "Soccer appears as early competitive and training context."
+      "Pickleball: competitive player since 2024.",
+      "Cricket: competitive cricketer with Minor League experience.",
+      "Brand ambassador: Mars Cricket, Holey Performance, and Paddletek.",
+      "Sports-tech innovation: paddle patent and cricket analytics work."
     ],
     page: "Sports"
   },
@@ -354,14 +355,14 @@ const SITE_GUIDE_DOCS: RawChunk[] = [
     source: "site/projects",
     chunkIndex: 0,
     text:
-      "The Smart Paddle Sensing project is tied to Venkatesh Naidu's patent-pending concept: Inventor on \"Smart Sensor System for Pickleball Paddles and Analytics Ecosystem,\" USPTO Application No. 63/934,339, filed 2025. The project describes a telemetry platform for pickleball paddles with sensing, analytics, multi-device fusion, and an LLM agent for coaching, broadcast, voice, and chat guidance."
+      "The Smart Paddle Sensing project is tied to Venkatesh Naidu's patent-pending sports analytics system: Inventor on \"Smart Sensor System for Pickleball Paddles and Analytics Ecosystem,\" USPTO Application No. 63/934,339, filed 2025. The project describes a telemetry platform for pickleball paddles with sensing, analytics, multi-device fusion, and an LLM agent for coaching, broadcast, voice, and chat guidance."
   },
   {
     id: "site/sports",
     source: "site/sports",
     chunkIndex: 0,
     text:
-      "The sports page is a visual gallery across pickleball, cricket, and soccer. It highlights competition, coaching, travel, community work, and media content."
+      "The sports page highlights competitive pickleball since 2024, competitive cricket with Minor League experience, brand ambassador work for Mars Cricket, Holey Performance, and Paddletek, plus sports-tech innovation through the paddle patent and cricket analytics work."
   },
   {
     id: "site/contact",
@@ -420,7 +421,7 @@ function buildProjectDocs() {
     id: `project:${project.id}`,
     source: `projects/${project.id}`,
     chunkIndex: index,
-    text: `${project.title}. ${project.desc} Status: ${project.status}. Tag: ${project.tag}. Highlights: ${project.highlights.join(
+    text: `${project.title}. ${project.desc} Highlights: ${project.highlights.join(
       " "
     )}`
   }));
@@ -517,7 +518,7 @@ function projectAnswer(chunks: KnowledgeChunk[]) {
   if (!project) return null;
 
   return [
-    `${project.title} is a ${project.status.toLowerCase()} project. ${project.desc}`,
+    `${project.title}: ${project.desc}`,
     "",
     "The main points on the site are:",
     ...project.highlights.slice(0, 4).map((highlight) => `- ${highlight}`)
@@ -588,7 +589,7 @@ function directFactAnswer(question: string, chunks: KnowledgeChunk[]) {
     hasSportsContext &&
     (q.includes("which sports") || q.includes("what sports") || q.includes("sports did") || q.includes("sports has"))
   ) {
-    return "Venky has played pickleball, cricket, and soccer.";
+    return "Venky is a competitive pickleball player and competitive cricketer with Minor League experience.";
   }
 
   return null;

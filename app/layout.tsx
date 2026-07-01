@@ -48,13 +48,20 @@ export const metadata: Metadata = {
     type: 'website',
     title: 'Venkatesh Naidu | BI and Data Analytics',
     description: 'Analytics portfolio covering Snowflake, DBT, dashboards, AI-assisted workflows, and sports-tech projects.',
-    images: ['/og.svg']
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Venkatesh Naidu BI and data analytics portfolio thumbnail'
+      }
+    ]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Venkatesh Naidu | BI and Data Analytics',
     description: 'Analytics portfolio covering Snowflake, DBT, dashboards, AI-assisted workflows, and sports-tech projects.',
-    images: ['/og.svg']
+    images: ['/og-image.png']
   },
   metadataBase: resolveMetadataBase()
 }
